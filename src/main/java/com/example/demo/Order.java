@@ -29,8 +29,7 @@ public class Order {
     }
 
     public void addProductToOrder(Item product){
-        if(product != null){
-            items.add(product);
+        if(product != null){items.add(product);
         }
     }
 
