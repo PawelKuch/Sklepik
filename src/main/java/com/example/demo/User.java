@@ -14,7 +14,7 @@ public class User {
     private String userId;
     private String name;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>(); //TUTAJ Mam findbyorder, a jest stworzona lista
+    private List<Order> orders = new ArrayList<>();
 
     public void setUserId(String userId) {
         this.userId = userId;
