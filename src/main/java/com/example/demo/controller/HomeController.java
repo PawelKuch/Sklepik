@@ -1,5 +1,9 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.entity.Item;
+import com.example.demo.entity.Order;
+import com.example.demo.entity.User;
+import com.example.demo.service.DataBaseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +38,7 @@ public class HomeController {
     @PostMapping("/shop")
     public RedirectView saveOrder(@RequestParam("selectedUser") String userId, @RequestParam("selectedItem") String itemId, RedirectAttributes ra){
         if(!userId.isEmpty() && !itemId.isEmpty()){
-            Order order = new Order();
-            order.setUser(dataBaseService.getUser(userId)); //znajdz usera po id
-            order.addProductToOrder(dataBaseService.getItem(itemId));
-            dataBaseService.addOrder(order);
+            dataBaseService.addOrder(dataBaseService.getUser(userId), dataBaseService.getItem(itemId));
         }
         return new RedirectView("/shop");
     }

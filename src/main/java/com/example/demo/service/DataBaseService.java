@@ -1,5 +1,11 @@
-package com.example.demo;
+package com.example.demo.service;
 
+import com.example.demo.entity.Item;
+import com.example.demo.entity.Order;
+import com.example.demo.entity.User;
+import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +31,12 @@ public class DataBaseService {
         userRepository.save(user);
     }
     @Transactional
-    public void addOrder(Order order){
-        if (order != null){
+    public void addOrder(User user, Item item){
+        if (user != null && item != null){
+            Order order = new Order();
+            order.setUser(user);
             order.setOrderId(UUID.randomUUID().toString());
+            order.addProductToOrder(item);
             orderRepository.save(order);
         }
     }

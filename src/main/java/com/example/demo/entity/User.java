@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.entity;
 
+import com.example.demo.entity.Order;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

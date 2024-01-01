@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.service;
 
+import com.example.demo.OwnerStatistics;
+import com.example.demo.entity.Item;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
