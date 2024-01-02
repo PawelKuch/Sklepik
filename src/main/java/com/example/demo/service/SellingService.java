@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.OwnerStatistics;
+import com.example.demo.data.OwnerStatistics;
 import com.example.demo.entity.Item;
 import org.springframework.stereotype.Service;
 

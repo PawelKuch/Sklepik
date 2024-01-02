@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.data;
 
 public class OwnerStatistics {
     private String owner;

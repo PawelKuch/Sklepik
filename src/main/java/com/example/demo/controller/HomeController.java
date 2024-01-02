@@ -23,7 +23,7 @@ public class HomeController {
 
         this.dataBaseService = dataBaseService;
     }
-    @GetMapping("/home")
+    @GetMapping("")
     public String getHome(){
         return "home";
     }
@@ -80,11 +80,9 @@ public class HomeController {
     @GetMapping("/orderDetails/{id}")
     public String getOrderDetails(@PathVariable String id, Model model){
         Order order = dataBaseService.getOrder(id);
-        List<Item> products = dataBaseService.getItemsForOrder(order);
-        User user = dataBaseService.getUserForOrder(order);
         model.addAttribute("order", order);
-        model.addAttribute("user", user);
-        model.addAttribute("products", products);
+        model.addAttribute("user", dataBaseService.getItemsForOrder(order));
+        model.addAttribute("products", dataBaseService.getItemsForOrder(order));
         return "orderDetails";
     }
 
