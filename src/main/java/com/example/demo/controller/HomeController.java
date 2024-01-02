@@ -36,11 +36,15 @@ public class HomeController {
         return "shop";
     }
     @PostMapping("/shop")
-    public RedirectView saveOrder(@RequestParam("selectedUser") String userId, @RequestParam("selectedItem") String itemId, RedirectAttributes ra){
+    public RedirectView saveOrder(@RequestParam("selectedUser") String userId,
+                                  @RequestParam("selectedItem") String itemId,
+                                  @RequestParam("amount") String amount,
+                                  RedirectAttributes ra){
         if(!userId.isEmpty() && !itemId.isEmpty()){
-            dataBaseService.addOrder(dataBaseService.getUser(userId), dataBaseService.getItem(itemId));
+            dataBaseService.addOrder(dataBaseService.getUser(userId), dataBaseService.getItem(itemId), Integer.parseInt(amount));
+            return new RedirectView("/shop");
         }
-        return new RedirectView("/shop");
+        return new RedirectView("/error");
     }
 
     @GetMapping("/addUser")
@@ -64,9 +68,10 @@ public class HomeController {
     }
 
     @PostMapping("/products")
-    public RedirectView addItem(@RequestParam String itemName){
+    public RedirectView addItem(@RequestParam String itemName,
+                                @RequestParam("purchasePrice") String purchasePrice){
         if(!itemName.isEmpty()){
-            dataBaseService.addItem(itemName);
+            dataBaseService.addItem(itemName, Double.parseDouble(purchasePrice));
         }
         return new RedirectView("/products");
     }
@@ -81,8 +86,8 @@ public class HomeController {
     public String getOrderDetails(@PathVariable String id, Model model){
         Order order = dataBaseService.getOrder(id);
         model.addAttribute("order", order);
-        model.addAttribute("user", dataBaseService.getItemsForOrder(order));
-        model.addAttribute("products", dataBaseService.getItemsForOrder(order));
+        model.addAttribute("user", dataBaseService.getUserForOrder(order));
+        model.addAttribute("product", dataBaseService.getItemForOrder(order));
         return "orderDetails";
     }
 

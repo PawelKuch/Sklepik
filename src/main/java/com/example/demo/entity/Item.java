@@ -27,6 +27,10 @@ public class Item {
         this.itemId = itemId;
     }
 
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
     public void setOrder(Order order) {
         this.order = order;
     }

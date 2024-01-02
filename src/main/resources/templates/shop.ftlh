@@ -7,54 +7,38 @@
 
 
     <style>
-        #itemForm{
-        display:none;
+        #itemForm {
+            display:none;
         }
-        #buttonAdd{
-        display:block;
+        #buttonAdd {
+            display:block;
+        }
+        select {
+            min-width: 100px;
+        }
+        option {
+            min-width: 100px;
         }
     </style>
 </head>
 
 <body>
    <div id="container">
-        <#if items?has_content>
-            <table class="table table-bordered mt-3">
-                <thead>
-                    <tr>
-                        <th>Kto</th>
-                        <th>Co</th>
-                        <th>Ilość</th>
-                        <th>Cena zakupu</th>
-                        <th>Cena sprzedaży</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <#list items as item>
-                        <tr>
-                            <td>${item.owner}</td>
-                            <td>${item.name}</td>
-                            <td>${item.amount}</td>
-                            <td>${item.purchasePrice}</td>
-                            <td>${item.salesPrice}</td>
-                        </tr>
-                    </#list>
-                </tbody>
-            </table>
-
-        </#if>
 
         <form id="orderForm" action="/shop" method="post" class="mt-3">
             <select name="selectedUser">
+                <option> - </option>
                 <#list users as user>
                     <option value=${user.userId}>${user.name}</option>
                 </#list>
             </select>
             <select name="selectedItem">
+                    <option> - </option>
                 <#list products as product>
                     <option value=${product.itemId}>${product.name}</option>
                 </#list>
             </select>
+            <input type="number" name="amount" value="1" min="1" class="form_control mb-3" placeholder="1">
             <button type="submit" class="btn btn-dark"> Zatwierdź </button>
         </form>
         <#if owner?has_content && itemname?has_content && pprice?has_content && sprice?has_content>
@@ -69,13 +53,27 @@
                                 <th>Zamówienia w systemie:</th>
                             </tr>
                             <tr>
-                                <th>ID zamówienia:</th>
+                                <th> ID zamówienia: </th>
+                                <th> Użytkownik: </th>
+                                <th> Produkt: </th>
+                                <th> Ilość: </th>
+                                <th> Cena: </th>
+                                <th> Wartość: </th>
+                                <th> Cena sprzedaży: </th>
+                                <th> Przychód z sprzedaży: </th>
+                                <th> Zysk: </th>
+
                             </tr>
                         </thead>
                         <tbody>
                             <#list orders as order>
                                 <tr>
                                     <td><a href="/orderDetails/${order.orderId}">${order.orderId}</a></td>
+                                    <td> ${order.user.name} </td>
+                                    <td> ${order.item.name} </td>
+                                    <td> ${order.amount} </td>
+                                    <td> ${order.item.purchasePrice} </td>
+                                    <td? ${order.totalPurchaseValue} </td>
                                 </tr>
                             </#list>
                         </tbody>

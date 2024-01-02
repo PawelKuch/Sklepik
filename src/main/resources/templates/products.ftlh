@@ -25,11 +25,16 @@
                     <tr>
                         <th>Dostępne produkty:</th>
                     </tr>
+                    <tr>
+                        <th> Produkt: </th>
+                        <th> Cena zakupu: </th>
+                    </tr>
                 </thead>
                 <tbody>
                     <#list items as item>
                         <tr>
                             <td>${item.name}</td>
+                            <td> ${item.purchasePrice} </td>
                         </tr>
                     </#list>
                 </tbody>
@@ -38,7 +43,10 @@
         <button id="addButton" class="btn btn-dark" onclick="toggleProductForm()"> Dodaj produkt </button>
 
         <form id="productForm" action="/products" method="post" class="mt-3">
-            <input type="text" name="itemName" class="form-control mb-3" placeholder="nazwa produktu">
+            <label for="itemName"> Nazwa produktu: </label>
+            <input id="itemName" type="text" name="itemName" class="form-control mb-3" placeholder="nazwa produktu">
+            <label for="purchasePrice"> Cena: </label>
+            <input id="purchasePrice" type="number" name="purchasePrice" min="0.01" class="form-control mb-3" placeholder="0,01">
             <button type="submit" class="btn btn-dark">Zatwierdź</button>
         </form>
    </div>

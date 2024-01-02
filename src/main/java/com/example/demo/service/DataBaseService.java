@@ -31,10 +31,12 @@ public class DataBaseService {
         userRepository.save(user);
     }
     @Transactional
-    public void addOrder(User user, Item item){
+    public void addOrder(User user, Item item, int amount){
         if (user != null && item != null){
             Order order = new Order();
             order.setUser(user);
+            order.setAmount(amount);
+            order.setTotalPurchaseValue(item.getPurchasePrice());
             order.setOrderId(UUID.randomUUID().toString());
             order.addProductToOrder(item);
             orderRepository.save(order);
@@ -42,9 +44,10 @@ public class DataBaseService {
     }
 
     @Transactional
-    public void addItem(String name) {
+    public void addItem(String name, double purchasePrice) {
         Item item = new Item();
             item.setName(name);
+            item.setPurchasePrice(purchasePrice);
             item.setItemId(UUID.randomUUID().toString());
             itemRepository.save(item);
     }
@@ -82,9 +85,9 @@ public class DataBaseService {
         List<Item> items = itemRepository.findAll();
         return items;
     }
-    public List<Item> getItemsForOrder(Order order){
-        List<Item> items = itemRepository.findByOrder(order);
-        return items;
+    public Item getItemForOrder(Order order){
+        Item item = itemRepository.findByOrder(order);
+        return item;
     }
     public Item getItem(String productId){
         Item item = itemRepository.findByItemId(productId);
