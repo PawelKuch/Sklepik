@@ -31,66 +31,44 @@ public class DataBaseService {
         userRepository.save(user);
     }
     @Transactional
-    public void addOrder(User user, Item item, int amount){
-        if (user != null && item != null){
-            Order order = new Order();
-            order.setUser(user);
-            order.setAmount(amount);
-            order.setTotalPurchaseValue(item.getPurchasePrice());
-            order.setOrderId(UUID.randomUUID().toString());
-            order.addProductToOrder(item);
-            orderRepository.save(order);
-        }
+    public void addOrder(String userId, String itemId, int amount, double purchasePrice){
+        User user = userRepository.findByUserId(userId);
+        if (user == null) throw new RuntimeException();
+
+        Item item = itemRepository.findByItemId(itemId);
+        if (item == null) throw new RuntimeException();
+        Order order = new Order();
+        order.setUser(user);
+        order.setAmount(amount);
+        order.setPurchasePrice(purchasePrice);
+        order.setOrderId(UUID.randomUUID().toString());
+        order.addProductToOrder(item);
+        orderRepository.save(order);
+    }
+
+
+    @Transactional
+    public void addItem(String name) {
+        Item item = new Item();
+        item.setName(name);
+        item.setItemId(UUID.randomUUID().toString());
+        itemRepository.save(item);
     }
 
     @Transactional
-    public void addItem(String name, double purchasePrice) {
-        Item item = new Item();
-            item.setName(name);
-            item.setPurchasePrice(purchasePrice);
-            item.setItemId(UUID.randomUUID().toString());
-            itemRepository.save(item);
-    }
-
     public List<User> getUsers(){
         List<User> users = (List<User>) userRepository.findAll();
         return users;
     }
-    public User getUser(String userId){
-        User user = userRepository.findByUserId(userId);
-        return user;
-    }
-
-    public User getUserForOrder(Order order){
-        List<Order> orders = (List<Order>) orderRepository.findAll();
-        for (Order o : orders){
-            if(o.getOrderId() == order.getOrderId()){
-                User user = o.getUser();
-                return user;
-            }
-        }
-        return null;
-    }
+    @Transactional
     public List<Order> getOrders(){
         List<Order> orders = (List<Order>) orderRepository.findAll();
         return orders;
     }
-
-    public Order getOrder(String orderId){
-        Order order = orderRepository.findOrderByOrderId(orderId);
-        return order;
-    }
-
+    @Transactional
     public List<Item> getItems(){
         List<Item> items = itemRepository.findAll();
         return items;
     }
-    public Item getItemForOrder(Order order){
-        Item item = itemRepository.findByOrder(order);
-        return item;
-    }
-    public Item getItem(String productId){
-        Item item = itemRepository.findByItemId(productId);
-        return item;
-    }
+
 }

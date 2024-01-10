@@ -7,23 +7,45 @@
 
 
     <style>
-
+        body{
+            background-color:#174001;
+            color:white;
+        }
+        #backBtn {
+            border: solid 1px #000000;
+            width: 100px;
+        }
+        a {
+            color:white;
+            text-decoration:none;
+        }
+        a:hover {
+            color:white;
+            text-decoration:none;
+        }
+        a:visited {
+            color:white;
+            text-decoration:none;
+        }
+        #usersTable {
+            color:white;
+        }
     </style>
 </head>
 
 <body>
    <div id="container">
 
-   Stwórz osobę:
-           <form id="userForm" action="/addUser" method="post" clas="mt-3">
-               <input type="text" name="userName" class="form-control mb-3" placeholder="imię">
-               <button type="submit" class="btn btn-dark">Dodaj użytkownika</button>
+   Enter a username:
+           <form id="userForm" action="/users" method="post" clas="mt-3">
+               <input type="text" name="userName" class="form-control mb-3" placeholder="first name">
+               <button type="submit" class="btn btn-dark">Add user</button>
            </form>
         <#if users?has_content>
-            <table class="table table-bordered mt-3">
+            <table id="usersTable" class="table table-bordered mt-3">
                 <thead>
                     <tr>
-                        <th>Istniejący użytkownicy:</th>
+                        <th>Available users:</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +57,7 @@
                 </tbody>
             </table>
         </#if>
+        <a href="/"><div id="backBtn">Back</div></a>
    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

@@ -7,6 +7,10 @@
 
 
     <style>
+        body{
+            background-color:#174001;
+            color:white;
+        }
         #itemForm {
             display:none;
         }
@@ -19,12 +23,32 @@
         option {
             min-width: 100px;
         }
+        #backBtn {
+            border: solid 1px #000000;
+            width: 100px;
+        }
+        a {
+            color:white;
+            text-decoration:none;
+        }
+        a:hover {
+            color:white;
+            text-decoration:none;
+        }
+        a:visited {
+            color:white;
+            text-decoration:none;
+        }
+        #orderTable {
+            color:white;
+        }
     </style>
 </head>
 
 <body>
    <div id="container">
 
+    <#if users?has_content && products?has_content>
         <form id="orderForm" action="/shop" method="post" class="mt-3">
             <select name="selectedUser">
                 <option> - </option>
@@ -33,36 +57,36 @@
                 </#list>
             </select>
             <select name="selectedItem">
-                    <option> - </option>
+                <option> - </option>
                 <#list products as product>
                     <option value=${product.itemId}>${product.name}</option>
                 </#list>
             </select>
-            <input type="number" name="amount" value="1" min="1" class="form_control mb-3" placeholder="1">
-            <button type="submit" class="btn btn-dark"> Zatwierdź </button>
+            <input type="number" name="amount" value="1" min="1" class="form-control mb-3">
+            <input type="number" name="purchasePrice" value="0.01" class="form-control mb-3">
+            <button type="submit" class="btn btn-dark"> Confirm </button>
         </form>
         <#if owner?has_content && itemname?has_content && pprice?has_content && sprice?has_content>
             ${owner}, ${itemname}, ${pprice}, ${sprice}
         </#if>
-        <button id="buttonAdd" class="btn btn-dark mt-5" onclick="toggleItemForm()">Dodaj zamówienie</button>
-
+        <button id="buttonAdd" class="btn btn-dark mt-5" onclick="toggleItemForm()">Add order</button>
+    <#else>
+        <h1> Before starting you need to add users and/or products!</h1>
+        <a href="/"><div id="backBtn">Back</div></a>
+    </#if>
         <#if orders?has_content>
-                    <table class="table table-bordered mt-3">
+                    <table id="orderTable" class="table table-bordered mt-3">
                         <thead>
                             <tr>
-                                <th>Zamówienia w systemie:</th>
+                                <th>Orders:</th>
                             </tr>
                             <tr>
-                                <th> ID zamówienia: </th>
-                                <th> Użytkownik: </th>
-                                <th> Produkt: </th>
-                                <th> Ilość: </th>
-                                <th> Cena: </th>
-                                <th> Wartość: </th>
-                                <th> Cena sprzedaży: </th>
-                                <th> Przychód z sprzedaży: </th>
-                                <th> Zysk: </th>
-
+                                <th> Order ID: </th>
+                                <th> Username: </th>
+                                <th> Product: </th>
+                                <th> Amount: </th>
+                                <th> Price: </th>
+                                <th> Value: </th>
                             </tr>
                         </thead>
                         <tbody>

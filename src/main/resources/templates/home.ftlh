@@ -7,6 +7,9 @@
     <title>SKLEPIK</title>
 
     <style>
+        body{
+            background-color:#174001;
+        }
         #container{
             width:100%;
             margin-left:auto;
@@ -19,8 +22,20 @@
         .menuTile{
             border: solid 1px #000000;
             float:left;
+            padding:10px;
         }
-
+        a {
+            color:white;
+            text-decoration:none;
+        }
+        a:hover {
+            color:white;
+            text-decoration:none;
+        }
+        a:visited{
+            color:white;
+            text-decoration:none;
+        }
     </style>
 </head>
 
@@ -30,6 +45,11 @@
             <a href="/shop">
                 <div class="menuTile">
                     Shop
+                </div>
+            </a>
+            <a href="/users">
+                <div class="menuTile">
+                    Users
                 </div>
             </a>
             <a href="/products">

@@ -4,51 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-
     <style>
+        body{
+            background-color:#174001;
+            color:white;
+        }
         #productForm{
-        display:none;
+            display:none;
         }
         #addButton{
-        display:block;
+            display:block;
+        }
+        a {
+            color:white;
+            text-decoration:none;
+        }
+        a:hover {
+            color:white;
+            text-decoration:none;
+        }
+        a:visited{
+             color:white;
+             text-decoration:none;
+        }
+        #productsTable{
+            color:white;
         }
     </style>
 </head>
 
 <body>
    <div id="container">
-
         <#if items?has_content>
-            <table class="table table-bordered mt-3">
+            <table id="productsTable" class="table table-bordered mt-3">
                 <thead>
                     <tr>
-                        <th>Dostępne produkty:</th>
-                    </tr>
-                    <tr>
-                        <th> Produkt: </th>
-                        <th> Cena zakupu: </th>
+                        <th>Available products:</th>
                     </tr>
                 </thead>
                 <tbody>
                     <#list items as item>
                         <tr>
                             <td>${item.name}</td>
-                            <td> ${item.purchasePrice} </td>
                         </tr>
                     </#list>
                 </tbody>
             </table>
         </#if>
-        <button id="addButton" class="btn btn-dark" onclick="toggleProductForm()"> Dodaj produkt </button>
-
+        <button id="addButton" class="btn btn-dark" onclick="toggleProductForm()"> Add product </button>
         <form id="productForm" action="/products" method="post" class="mt-3">
-            <label for="itemName"> Nazwa produktu: </label>
-            <input id="itemName" type="text" name="itemName" class="form-control mb-3" placeholder="nazwa produktu">
-            <label for="purchasePrice"> Cena: </label>
-            <input id="purchasePrice" type="number" name="purchasePrice" min="0.01" class="form-control mb-3" placeholder="0,01">
-            <button type="submit" class="btn btn-dark">Zatwierdź</button>
+            <label for="itemName"> Enter a product name: </label>
+            <input id="itemName" type="text" name="itemName" class="form-control mb-3" placeholder="product name">
+            <button type="submit" class="btn btn-dark">Add product</button>
         </form>
+        <a href="/"><div id="backBtn">Back</div></a>
    </div>
 
   <script>

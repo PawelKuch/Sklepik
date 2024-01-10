@@ -12,7 +12,8 @@ public class Order {
     private Long id;
     private String orderId;
     private int amount;
-    private double totalPurchaseValue;
+    private double purchasePrice;
+    private double totalPurchaseValue = amount * purchasePrice;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
@@ -28,14 +29,22 @@ public class Order {
         return user;
     }
 
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public double getPurchasePrice() {
+        return purchasePrice;
+    }
+
     public void addProductToOrder(Item product){
         if(product != null){
             item = product;
         }
     }
 
-    public void setTotalPurchaseValue(double purchaseValue) {
-        totalPurchaseValue = amount*purchaseValue;
+    public void setTotalPurchaseValue() {
+        totalPurchaseValue = amount * purchasePrice;
     }
 
     public double getTotalPurchaseValue() {
@@ -64,4 +73,6 @@ public class Order {
     public void setItem(Item item) {
         this.item = item;
     }
+
+
 }
