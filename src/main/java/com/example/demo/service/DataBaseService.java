@@ -37,6 +37,7 @@ public class DataBaseService {
 
         Item item = itemRepository.findByItemId(itemId);
         if (item == null) throw new RuntimeException();
+
         Order order = new Order();
         order.setUser(user);
         order.setAmount(amount);
