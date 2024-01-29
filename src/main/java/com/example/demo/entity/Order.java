@@ -18,7 +18,8 @@ public class Order {
     @JoinColumn(name="user_id")
     User user;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="item_id")
     private Item item;
 
     public void setUser(User user) {

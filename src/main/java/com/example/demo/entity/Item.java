@@ -2,6 +2,9 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="items")
 public class Item {
@@ -10,9 +13,8 @@ public class Item {
     private Long id;
     private String name;
     private String itemId;
-    @ManyToOne
-    @JoinColumn(name="order_id")
-    private Order order;
+    @OneToMany(mappedBy = "item")
+    private List<Order> order;
 
     public void setName(String name) {
         this.name = name;
@@ -21,11 +23,6 @@ public class Item {
     public void setItemId(String itemId) {
         this.itemId = itemId;
     }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     public String getName() {
         return name;
     }

@@ -17,6 +17,7 @@ public class ToDataService {
         List<OrderData> orderDataList = new ArrayList<>();
         for (Order order : orders){
             OrderData orderData = new OrderData();
+            orderData.setItem(order.getItem());
             orderData.setAmount(order.getAmount());
             orderData.setOrderId(order.getOrderId());
             orderData.setUser(order.getUser());

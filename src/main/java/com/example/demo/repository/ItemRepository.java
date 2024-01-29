@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    Item findByOrder(Order order);
     Item findByItemId(String itemId);
 }

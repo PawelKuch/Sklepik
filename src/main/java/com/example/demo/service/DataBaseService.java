@@ -43,7 +43,7 @@ public class DataBaseService {
         order.setAmount(amount);
         order.setPurchasePrice(purchasePrice);
         order.setOrderId(UUID.randomUUID().toString());
-        order.addProductToOrder(item);
+        order.setItem(item);
         orderRepository.save(order);
     }
 
