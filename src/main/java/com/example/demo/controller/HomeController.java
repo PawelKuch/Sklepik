@@ -1,20 +1,15 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Item;
-import com.example.demo.entity.Order;
-import com.example.demo.entity.User;
 import com.example.demo.service.DataBaseService;
 import com.example.demo.service.ToDataService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -29,7 +24,6 @@ public class HomeController {
     public String getHome(){
         return "home";
     }
-
     @GetMapping("/shop")
     public String getShop(Model model){
         model.addAttribute("users", dataBaseService.getUsers());
@@ -37,12 +31,12 @@ public class HomeController {
         model.addAttribute("orders", dataBaseService.getOrders());
         return "shop";
     }
+
     @PostMapping("/shop")
     public RedirectView saveOrder(@RequestParam("selectedUser") String userId,
                                   @RequestParam("selectedItem") String itemId,
                                   @RequestParam("amount") String amount,
-                                  @RequestParam("purchasePrice") String purchasePrice,
-                                  RedirectAttributes ra){
+                                  @RequestParam("purchasePrice") String purchasePrice){
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty()){
             dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
             return new RedirectView("/shop");
@@ -55,15 +49,14 @@ public class HomeController {
         model.addAttribute("users", dataBaseService.getUsers());
         return "users";
     }
+
     @PostMapping("/users")
-    public RedirectView addUser(@RequestParam("userName") String userName, RedirectAttributes ra){
+    public RedirectView addUser(@RequestParam("userName") String userName){
         if(!userName.isEmpty()){
             dataBaseService.addUser(userName);
         }
         return new RedirectView("/users");
     }
-
-
     @GetMapping("/products")
     public String getProducts (Model m){
         m.addAttribute("items", dataBaseService.getItems());
@@ -79,8 +72,7 @@ public class HomeController {
     }
 
     @GetMapping("/statistics")
-    public String getOwnerStatistics(Model model){
-
+    public String getOwnerStatistics(){
         return "statistics";
     }
 

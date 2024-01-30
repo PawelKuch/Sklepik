@@ -1,8 +1,5 @@
 package com.example.demo.data;
 
-import com.example.demo.entity.Item;
-import com.example.demo.entity.User;
-
 public class OrderData {
     private String orderId;
     private UserData user;
