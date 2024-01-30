@@ -96,7 +96,7 @@
                                     <td> ${order.user.name} </td>
                                     <td> ${order.item.name} </td>
                                     <td> ${order.amount} </td>
-                                    <td> ${order.item.purchasePrice} </td>
+                                    <td> ${order.purchasePrice} </td>
                                     <td? ${order.totalPurchaseValue} </td>
                                 </tr>
                             </#list>

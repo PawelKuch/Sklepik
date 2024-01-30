@@ -32,9 +32,9 @@ public class HomeController {
 
     @GetMapping("/shop")
     public String getShop(Model model){
-        model.addAttribute("users", toDataService.getUsers(dataBaseService.getUsers()));
-        model.addAttribute("products", toDataService.getItems(dataBaseService.getItems()));
-        model.addAttribute("orders", toDataService.getOrders(dataBaseService.getOrders()));
+        model.addAttribute("users", dataBaseService.getUsers());
+        model.addAttribute("products", dataBaseService.getItems());
+        model.addAttribute("orders", dataBaseService.getOrders());
         return "shop";
     }
     @PostMapping("/shop")

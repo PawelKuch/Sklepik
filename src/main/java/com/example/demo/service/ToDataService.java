@@ -17,10 +17,10 @@ public class ToDataService {
         List<OrderData> orderDataList = new ArrayList<>();
         for (Order order : orders){
             OrderData orderData = new OrderData();
-            orderData.setItem(order.getItem());
+            orderData.setItem(convert(order.getItem()));
             orderData.setAmount(order.getAmount());
             orderData.setOrderId(order.getOrderId());
-            orderData.setUser(order.getUser());
+            orderData.setUser(convert(order.getUser()));
             orderData.setPurchasePrice(order.getPurchasePrice());
             orderData.setTotalPurchaseValue(order.getTotalPurchaseValue());
             orderDataList.add(orderData);
@@ -49,4 +49,18 @@ public class ToDataService {
         }
         return itemDataList;
     }
+
+    public ItemData convert(Item data){
+       ItemData itemData = new ItemData();
+       itemData.setItemId(data.getItemId());
+       itemData.setName(data.getName());
+       return itemData;
+    }
+    public UserData convert(User data){
+        UserData userData = new UserData();
+        userData.setUserId(data.getUserId());
+        userData.setName(data.getName());
+        return userData;
+    }
+
 }

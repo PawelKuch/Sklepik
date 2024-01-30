@@ -5,8 +5,8 @@ import com.example.demo.entity.User;
 
 public class OrderData {
     private String orderId;
-    private User user;
-    private Item item;
+    private UserData user;
+    private ItemData item;
     private int amount;
     private double purchasePrice;
     private double totalPurchaseValue;
@@ -15,11 +15,11 @@ public class OrderData {
         this.orderId = orderId;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserData user) {
         this.user = user;
     }
 
-    public void setItem(Item item) {
+    public void setItem(ItemData item) {
         this.item = item;
     }
 
@@ -35,11 +35,11 @@ public class OrderData {
         return orderId;
     }
 
-    public User getUser() {
+    public UserData getUser() {
         return user;
     }
 
-    public Item getItem() {
+    public ItemData getItem() {
         return item;
     }
 
