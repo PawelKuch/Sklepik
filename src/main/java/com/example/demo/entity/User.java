@@ -1,8 +1,5 @@
 package com.example.demo.entity;
-
-import com.example.demo.entity.Order;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +12,7 @@ public class User {
     private String userId;
     private String name;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>();
+    private final List<Order> orders = new ArrayList<>();
 
     public void setUserId(String userId) {
         this.userId = userId;

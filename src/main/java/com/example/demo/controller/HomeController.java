@@ -13,7 +13,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class HomeController {
-
     DataBaseService dataBaseService;
     ToDataService toDataService;
     public HomeController( DataBaseService dataBaseService, ToDataService toDataService){

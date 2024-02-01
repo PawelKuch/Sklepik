@@ -17,10 +17,10 @@ import java.util.UUID;
 
 @Service
 public class DataBaseService {
-    private UserRepository userRepository;
-    private OrderRepository orderRepository;
-    private ItemRepository itemRepository;
-    private ToDataService toDataService;
+    private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final ItemRepository itemRepository;
+    private final ToDataService toDataService;
 
     public DataBaseService(UserRepository userRepository, OrderRepository orderRepository, ItemRepository itemRepository,
                             ToDataService toDataService) {
@@ -64,21 +64,18 @@ public class DataBaseService {
 
     @Transactional
     public List<UserData> getUsers(){
-        List<User> users = (List<User>) userRepository.findAll();
-        List<UserData> userDataList = toDataService.getUsers(users);
-        return userDataList;
+        List<User> users = userRepository.findAll();
+        return toDataService.getUsers(users);
     }
     @Transactional
     public List<OrderData> getOrders(){
-        List<Order> orders = (List<Order>) orderRepository.findAll();
-        List<OrderData> orderDataList = toDataService.getOrders(orders);
-        return orderDataList;
+        List<Order> orders = orderRepository.findAll();
+        return toDataService.getOrders(orders);
     }
     @Transactional
     public List<ItemData> getItems(){
-        List<Item> items = (List<Item>) itemRepository.findAll();
-        List<ItemData> itemDataList = toDataService.getItems(items);
-        return itemDataList;
+        List<Item> items = itemRepository.findAll();
+        return toDataService.getItems(items);
     }
 
 }

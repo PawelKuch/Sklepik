@@ -13,7 +13,7 @@ public class Order {
     private String orderId;
     private int amount;
     private double purchasePrice;
-    private double totalPurchaseValue = amount * purchasePrice;
+    private final double totalPurchaseValue = amount * purchasePrice;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
@@ -36,16 +36,6 @@ public class Order {
 
     public double getPurchasePrice() {
         return purchasePrice;
-    }
-
-    public void addProductToOrder(Item product){
-        if(product != null){
-            item = product;
-        }
-    }
-
-    public void setTotalPurchaseValue() {
-        totalPurchaseValue = amount * purchasePrice;
     }
 
     public double getTotalPurchaseValue() {
