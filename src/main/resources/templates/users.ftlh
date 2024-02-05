@@ -8,12 +8,30 @@
 
     <style>
         body{
-            background-color:#174001;
-            color:white;
+            background-color: #21211f;
+            color: #ffffff;
+        }
+        #container {
+            align-items: center;
+            text-align: center;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
         #backBtn {
-            border: solid 1px #000000;
-            width: 100px;
+            width: 80px;
+            color: #FFFFFF;
+        }
+        #addBtn {
+            color: #FFFFFF;
+            background-color: #edb007;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        #inputField {
+            width: 400px;
+            margin-right: auto;
+            margin-left: auto;
         }
         a {
             color:white;
@@ -38,8 +56,8 @@
 
    Enter a username:
            <form id="userForm" action="/users" method="post" clas="mt-3">
-               <input type="text" name="userName" class="form-control mb-3" placeholder="first name">
-               <button type="submit" class="btn btn-dark">Add user</button>
+               <input id="inputField" type="text" name="userName" class="form-control mb-3" placeholder="first name">
+               <button id="addBtn" type="submit" class="btn mb-3">Add user</button>
            </form>
         <#if users?has_content>
             <table id="usersTable" class="table table-bordered mt-3">
@@ -57,7 +75,8 @@
                 </tbody>
             </table>
         </#if>
-        <a href="/"><div id="backBtn">Back</div></a>
+        <a href="/"><button id="backBtn" class="btn btn-dark">Back</button></a>
+
    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

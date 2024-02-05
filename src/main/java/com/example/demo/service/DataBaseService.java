@@ -48,6 +48,7 @@ public class DataBaseService {
         order.setUser(user);
         order.setAmount(amount);
         order.setPurchasePrice(purchasePrice);
+        order.setTotalPurchaseValue(amount, purchasePrice);
         order.setOrderId(UUID.randomUUID().toString());
         order.setItem(item);
         orderRepository.save(order);
@@ -64,18 +65,15 @@ public class DataBaseService {
 
     @Transactional
     public List<UserData> getUsers(){
-        List<User> users = userRepository.findAll();
-        return toDataService.getUsers(users);
+        return toDataService.getUsers(userRepository.findAll());
     }
     @Transactional
     public List<OrderData> getOrders(){
-        List<Order> orders = orderRepository.findAll();
-        return toDataService.getOrders(orders);
+        return toDataService.getOrders(orderRepository.findAll());
     }
     @Transactional
     public List<ItemData> getItems(){
-        List<Item> items = itemRepository.findAll();
-        return toDataService.getItems(items);
+        return toDataService.getItems(itemRepository.findAll());
     }
 
 }

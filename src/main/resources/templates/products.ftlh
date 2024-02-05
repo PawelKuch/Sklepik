@@ -6,14 +6,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         body{
-            background-color:#174001;
-            color:white;
+            background-color:#21211f;
+            color:#ffffff;
         }
-        #productForm{
-            display:none;
+        #container {
+             align-items: center;
+             text-align: center;
+             max-width: 400px;
+             margin-left: auto;
+             margin-right: auto;
         }
-        #addButton{
-            display:block;
+        #addBtn{
+            background-color: #edb007;
+            color: #FFFFFF;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        #backBtn {
+            width: 80px;
         }
         a {
             color:white;
@@ -35,6 +45,11 @@
 
 <body>
    <div id="container">
+           <form id="productForm" action="/products" method="post" class="mt-3">
+               <label for="itemName"> Enter a product name: </label>
+               <input id="itemName" type="text" name="itemName" class="form-control mb-3" placeholder="product name">
+               <button id="addBtn" type="submit" class="btn mb-3">Add product</button>
+           </form>
         <#if items?has_content>
             <table id="productsTable" class="table table-bordered mt-3">
                 <thead>
@@ -51,29 +66,8 @@
                 </tbody>
             </table>
         </#if>
-        <button id="addButton" class="btn btn-dark" onclick="toggleProductForm()"> Add product </button>
-        <form id="productForm" action="/products" method="post" class="mt-3">
-            <label for="itemName"> Enter a product name: </label>
-            <input id="itemName" type="text" name="itemName" class="form-control mb-3" placeholder="product name">
-            <button type="submit" class="btn btn-dark">Add product</button>
-        </form>
-        <a href="/"><div id="backBtn">Back</div></a>
+        <a href="/"><button id="backBtn" class="btn btn-dark"> Back </button></a>
    </div>
-
-  <script>
-        function toggleProductForm() {
-            var productForm = document.getElementById("productForm");
-            var addButton = document.getElementById("addButton");
-            if (productForm.style.display === "none") {
-                  productForm.style.display = "block";
-                  addButton.style.display = "none"
-            } else {
-                  productForm.style.display = "none";
-                  addButton.style.display = "block";
-            }
-        }
-  </script>
-
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

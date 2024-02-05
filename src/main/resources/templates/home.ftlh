@@ -8,21 +8,36 @@
 
     <style>
         body{
-            background-color:#174001;
+            background-color: #21211f;
+            color: #ffffff;
         }
         #container{
-            width:100%;
-            margin-left:auto;
+            width: 625px;
+            margin-left: auto;
             margin-right: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         #menu{
             text-align:center;
-            border: 2px solid #000000;
         }
         .menuTile{
-            border: solid 1px #000000;
+            color: #FFFFFF;
+            background-color: #edb007;
+            width: 200px;
+            height: 200px;
             float:left;
-            padding:10px;
+            margin-left: 5px;
+            border-radius: 10px;
+            font-weight: 800px;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         a {
             color:white;
@@ -43,24 +58,13 @@
    <div id="container">
         <div id="menu">
             <a href="/shop">
-                <div class="menuTile">
-                    Shop
-                </div>
+                <button class="menuTile"> Shop </button>
             </a>
             <a href="/users">
-                <div class="menuTile">
-                    Users
-                </div>
+                <button class="menuTile"> Users </button>
             </a>
             <a href="/products">
-                <div class="menuTile">
-                    Products
-                </div>
-            </a>
-            <a href="/statistics">
-                <div class="menuTile">
-                    Statistics
-                </div>
+                <button class="menuTile"> Products </button>
             </a>
             <div style="clear:both;"> </div>
         </div>

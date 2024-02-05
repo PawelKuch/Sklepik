@@ -13,10 +13,14 @@ public class Order {
     private String orderId;
     private int amount;
     private double purchasePrice;
-    private final double totalPurchaseValue = amount * purchasePrice;
+    private double totalPurchaseValue = amount * purchasePrice;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
+
+    public void setTotalPurchaseValue(int amount, double totalPurchaseValue) {
+        this.totalPurchaseValue = totalPurchaseValue*amount;
+    }
 
     @ManyToOne
     @JoinColumn(name="item_id")
