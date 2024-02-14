@@ -9,21 +9,11 @@
             background-color:#21211f;
             color:#ffffff;
         }
-        #container {
-             align-items: center;
-             text-align: center;
-             max-width: 400px;
-             margin-left: auto;
-             margin-right: auto;
+        .custom-width {
+            width: 100px;
         }
-        #addBtn{
-            background-color: #edb007;
-            color: #FFFFFF;
-            margin-right: auto;
-            margin-left: auto;
-        }
-        #backBtn {
-            width: 80px;
+        .custom-max-width-400 {
+            max-width: 400px;
         }
         a {
             color:white;
@@ -37,21 +27,13 @@
              color:white;
              text-decoration:none;
         }
-        #productsTable{
-            color:white;
-        }
     </style>
 </head>
 
 <body>
-   <div id="container">
-           <form id="productForm" action="/products" method="post" class="mt-3">
-               <label for="itemName"> Enter a product name: </label>
-               <input id="itemName" type="text" name="itemName" class="form-control mb-3" placeholder="product name">
-               <button id="addBtn" type="submit" class="btn mb-3">Add product</button>
-           </form>
+   <div class="container align-items-center text-center custom-max-width-400" id="container">
         <#if items?has_content>
-            <table id="productsTable" class="table table-bordered mt-3">
+            <table id="productsTable" class="table table-bordered table-dark table-stripped mt-3">
                 <thead>
                     <tr>
                         <th>Available products:</th>
@@ -66,8 +48,32 @@
                 </tbody>
             </table>
         </#if>
-        <a href="/"><button id="backBtn" class="btn btn-dark"> Back </button></a>
+        <button id="openModalBtn" type="button" class="btn btn-warning mt-3 custom-width" data-bs-toggle="modal" data-bs-target="#addProductModal"> Add </button>
+        <a href="/"><button id="backBtn" class="btn btn-dark mt-3 custom-width"> Back </button></a>
+        <div class="modal" tabindex="-1" id="addProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header text-center">
+                        <h5 class="modal-title"> Add a product </h5>
+                        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="productForm" action="/products" method="post" class="mt-3">
+                            <div class="input-group align-items-center">
+                                <span class="input-group-text mb-3"> Product </span>
+                                <input class="form-control mb-3" type="text" name="itemName" class="form-control mb-3">
+                            </div>
+                            <button id="addBtn" type="submit" class="btn btn-warning mb-1 custom-width"> Add </button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal"> Back </button>
+                    </div>
+                </div>
+            </div>
+        </div>
    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

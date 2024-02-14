@@ -7,68 +7,42 @@
     <title>SKLEPIK</title>
 
     <style>
-        body{
+        body {
             background-color: #21211f;
             color: #ffffff;
         }
-        #container{
-            width: 625px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: auto;
-            margin-bottom: auto;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #menu{
-            text-align:center;
-        }
-        .menuTile{
-            color: #FFFFFF;
-            background-color: #edb007;
-            width: 200px;
-            height: 200px;
-            float:left;
-            margin-left: 5px;
-            border-radius: 10px;
-            font-weight: 800px;
-            font-size: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
         a {
             color:white;
-            text-decoration:none;
+
         }
         a:hover {
             color:white;
-            text-decoration:none;
         }
         a:visited{
             color:white;
-            text-decoration:none;
+
         }
     </style>
 </head>
 
 <body>
-   <div id="container">
-        <div id="menu">
-            <a href="/shop">
-                <button class="menuTile"> Shop </button>
-            </a>
-            <a href="/users">
-                <button class="menuTile"> Users </button>
-            </a>
-            <a href="/products">
-                <button class="menuTile"> Products </button>
-            </a>
-            <div style="clear:both;"> </div>
-        </div>
-   </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-warning" id="menu1">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/"><p class="fs-3 fw-bolder"> MENU </p></a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <a class="nav-link" href="/shop">
+                        <p class="fs-3 fw-bolder"> Shop </p>
+                    </a>
+                    <a class="nav-link" href="/users">
+                        <p class="fs-3 fw-bolder"> Users </p>
+                    </a>
+                    <a class="nav-link" href="/products">
+                        <p class="fs-3 fw-bolder"> Products </p>
+                    </a>
+                </div>
+        </nav>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

@@ -9,42 +9,12 @@
             color: #ffffff;
             padding: 20px;
         }
-        #container {
+        .custom-max-width-800 {
             max-width: 800px;
-            margin: 0 auto;
-            items-align: center;
-            text-align: center;
         }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        select, input {
-            margin-bottom: 10px;
-        }
-        #addBtn {
-            background-color: #edb007;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 10px;
-        }
-        #backBtn {
-            border: solid 1px #000000;
+        .custom-width-100 {
             width: 100px;
-            display: inline-block;
-            text-align: center;
-            padding: 5px;
-            margin-top: 10px;
         }
-        #amount {
-            max-width: 80px;
-        }
-        #purchasePrice {
-            max-width: 80px;
-        }
-
         a {
             color: white;
             text-decoration: none;
@@ -54,46 +24,12 @@
             color: white;
             text-decoration: underline;
         }
-
-        #orderTable {
-            color: white;
-            margin-top: 20px;
-        }
-
-        #buttonAdd {
-            display: block;
-            margin-top: 20px;
-        }
     </style>
 </head>
 
 <body>
-    <div id="container">
+    <div class="container align-items-center text-center custom-max-width-800">
         <#if users?has_content && products?has_content>
-            <form id="orderForm" action="/shop" method="post">
-                <label for="selectedUser">Select User:</label>
-                <select id="selectedUser" name="selectedUser">
-                    <option> - </option>
-                    <#list users as user>
-                        <option value=${user.userId}>${user.name}</option>
-                    </#list>
-                </select>
-
-                <label for="selectedItem">Select Item:</label>
-                <select id="selectedItem" name="selectedItem">
-                    <option> - </option>
-                    <#list products as product>
-                        <option value=${product.itemId}>${product.name}</option>
-                    </#list>
-                </select>
-
-                <label for="amount">Quantity:</label>
-                <input id="amount" type="number" name="amount" value="1" min="1" step="1">
-                <label for="purchasePrice">Purchase Price:</label>
-                <input id="purchasePrice" type="number" name="purchasePrice" step="0.01">
-
-                <button id="addBtn" type="submit" class="btn btn-dark">Confirm</button>
-            </form>
 
             <#if owner?has_content && itemname?has_content && pprice?has_content && sprice?has_content>
                 ${owner}, ${itemname}, ${pprice}, ${sprice}
@@ -103,7 +39,7 @@
         </#if>
 
         <#if orders?has_content>
-            <table id="orderTable" class="table table-bordered">
+            <table id="orderTable" class="table table-bordered table-dark table-stripped mt-3">
                 <thead>
                     <tr>
                         <th>Order ID</th>
@@ -128,7 +64,54 @@
                 </tbody>
             </table>
         </#if>
-        <a href="/"><button id="backBtn" class="btn btn-dark"> Back </button></a>
+        <div class="d-grid gap-5 d-md-block">
+            <button id="openModalBtn" type="button" class="btn btn-sm btn-warning mt-3 custom-width-100" data-bs-toggle="modal" data-bs-target="#addOrderModal"> Add </button>
+            <a href="/"><button id="backBtn" type="button" class="btn btn-sm btn-dark mt-3 custom-width-100"> Back </button></a>
+        </div>
+        <div class="modal" tabindex="-1" id="addOrderModal">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header text-center">
+                        <h5 class="modal-title"> Add an order </h5>
+                        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mb-3" id="orderForm" action="/shop" method="post">
+                            <select class="form-select mb-2" id="selectedUser" name="selectedUser">
+                                <option> Select user </option>
+                                <#list users as user>
+                                    <option value=${user.userId}>${user.name}</option>
+                                </#list>
+                            </select>
+
+                            <select class="form-select mb-2" id="selectedItem" name="selectedItem">
+                                <option> Select product </option>
+                                <#list products as product>
+                                    <option value=${product.itemId}>${product.name}</option>
+                                </#list>
+                            </select>
+
+                            <div class="input-group align-items-center">
+                                <span class="input-group-text mb-2" aria-label="Quantity"> Quantity </span>
+                                <input class="form-control mb-2" id="amount" type="number" name="amount" value="1" min="1" step="1" aria-describedby="addon-wrapping">
+                            </div>
+
+                            <div class="input-group align-items-center">
+                                <span class="input-group-text mb-2" aria-label="Purchase"> Purchase </span>
+                                <input class="form-control mb-2" id="purchasePrice" type="number" name="purchasePrice" step="0.01">
+                                <span class="input-group-text mb-2"> PLN </span>
+                            </div>
+                            <br>
+                            <button id="addBtn" type="submit" class="btn btn-warning custom-width-100"> Confirm </button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal"> Back </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 

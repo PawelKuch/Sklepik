@@ -11,27 +11,11 @@
             background-color: #21211f;
             color: #ffffff;
         }
-        #container {
-            align-items: center;
-            text-align: center;
+        .custom-width-400 {
             max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
         }
-        #backBtn {
-            width: 80px;
-            color: #FFFFFF;
-        }
-        #addBtn {
-            color: #FFFFFF;
-            background-color: #edb007;
-            margin-right: auto;
-            margin-left: auto;
-        }
-        #inputField {
-            width: 400px;
-            margin-right: auto;
-            margin-left: auto;
+        .custom-width-100 {
+            width: 100px;
         }
         a {
             color:white;
@@ -52,13 +36,7 @@
 </head>
 
 <body>
-   <div id="container">
-
-   Enter a username:
-           <form id="userForm" action="/users" method="post" clas="mt-3">
-               <input id="inputField" type="text" name="userName" class="form-control mb-3" placeholder="first name">
-               <button id="addBtn" type="submit" class="btn mb-3">Add user</button>
-           </form>
+   <div class="container custom-width-400 align-items-center text-center">
         <#if users?has_content>
             <table id="usersTable" class="table table-bordered mt-3">
                 <thead>
@@ -75,8 +53,30 @@
                 </tbody>
             </table>
         </#if>
-        <a href="/"><button id="backBtn" class="btn btn-dark">Back</button></a>
-
+        <button id="openModalBtn" type="button" class="btn btn-warning mt-3 custom-width-100" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add user </button>
+        <a href="/"><button id="backBtn" class="btn btn-dark mt-3 custom-width-100">Back</button></a>
+    <div class="modal" tabindex="-1" id="addUserModal">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header text-center">
+                        <h5 class="modal-title"> Add a user </h5>
+                        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body align-items-center">
+                        <form id="userForm" action="/users" method="post" clas="mt-3">
+                            <div class="input-group align-items-center">
+                                <span class="input-group-text mb-3"> User name </span>
+                                <input class="form-control mb-3" id="inputField" type="text" name="userName" class="form-control mb-3"><br>
+                            </div>
+                            <button id="addBtn" type="submit" class="btn btn-warning mb-1 custom-width-100"> Add </button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal"> Back </button>
+                    </div>
+                </div>
+            </div>
+           </div>
    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
