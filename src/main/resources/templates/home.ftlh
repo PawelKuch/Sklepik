@@ -13,7 +13,6 @@
         }
         a {
             color:white;
-
         }
         a:hover {
             color:white;

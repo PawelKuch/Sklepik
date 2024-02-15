@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
     <style>
         body{
@@ -68,16 +70,29 @@
                                 <span class="input-group-text mb-3"> User name </span>
                                 <input class="form-control mb-3" id="inputField" type="text" name="userName" class="form-control mb-3"><br>
                             </div>
-                            <button id="addBtn" type="submit" class="btn btn-warning mb-1 custom-width-100"> Add </button>
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <button id="addBtn" type="submit" class="btn btn-warning mb-1 custom-width-100" onclick="submitForm()" data-bs-dismiss="modal"> Add </button>
                         <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal"> Back </button>
                     </div>
                 </div>
             </div>
            </div>
    </div>
+    <script>
+        function submitForm(){
+            var userName =  $("#inputField").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/users",
+                contentType: "application/json",
+                data: userName
+            });
+        }
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
