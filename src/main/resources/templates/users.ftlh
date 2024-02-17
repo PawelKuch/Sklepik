@@ -13,12 +13,6 @@
             background-color: #21211f;
             color: #ffffff;
         }
-        .custom-width-400 {
-            max-width: 400px;
-        }
-        .custom-width-100 {
-            width: 100px;
-        }
         a {
             color:white;
             text-decoration:none;
@@ -31,16 +25,25 @@
             color:white;
             text-decoration:none;
         }
-        #usersTable {
-            color:white;
-        }
+
     </style>
 </head>
 
 <body>
-   <div class="container custom-width-400 align-items-center text-center">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-warning py-0">
+        <div class="container">
+            <a class="navbar-brand" href="/"><p class="fs-3 fw-bolder"> MENU </p></a>
+            <div class="collapse navbar-collapse">
+                <a class="nav-link" href="/"> Shop </a>
+                <a class="nav-link" href="/users"> Users </a>
+                <a class="nav-link" href="/products"> Products </a>
+            </div>
+        </div>
+    </nav>
+
+   <div id="container" class="container col-5 align-items-center text-center">
         <#if users?has_content>
-            <table id="usersTable" class="table table-bordered mt-3">
+            <table class="table table-bordered table-dark mt-3">
                 <thead>
                     <tr>
                         <th>Available users:</th>
@@ -55,8 +58,11 @@
                 </tbody>
             </table>
         </#if>
-        <button id="openModalBtn" type="button" class="btn btn-warning mt-3 custom-width-100" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add user </button>
-        <a href="/"><button id="backBtn" class="btn btn-dark mt-3 custom-width-100">Back</button></a>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-5 mt-3 mb-3">
+                <button type="button" class="btn btn-warning col-12" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add user </button>
+            </div>
+        </div>
     <div class="modal" tabindex="-1" id="addUserModal">
             <div class="modal-dialog">
                 <div class="modal-content bg-dark">
@@ -73,7 +79,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button id="addBtn" type="submit" class="btn btn-warning mb-1 custom-width-100" onclick="submitForm()" data-bs-dismiss="modal"> Add </button>
+                        <button id="addBtn" class="btn btn-warning mb-1 col-2" onclick="submitForm()" data-bs-dismiss="modal"> Add </button>
                         <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal"> Back </button>
                     </div>
                 </div>
@@ -82,14 +88,7 @@
    </div>
     <script>
         function submitForm(){
-            var userName =  $("#inputField").val();
-
-            $.ajax({
-                type: "POST",
-                url: "/users",
-                contentType: "application/json",
-                data: userName
-            });
+            $("#userForm").submit();
         }
     </script>
 

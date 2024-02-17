@@ -20,11 +20,7 @@ public class HomeController {
         this.dataBaseService = dataBaseService;
         this.toDataService = toDataService;
     }
-    @GetMapping("")
-    public String getHome(){
-        return "home";
-    }
-    @GetMapping("/shop")
+    @GetMapping("/")
     public String getShop(Model model){
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("products", dataBaseService.getItems());
@@ -32,14 +28,14 @@ public class HomeController {
         return "shop";
     }
 
-    @PostMapping("/shop")
+    @PostMapping("/")
     public RedirectView saveOrder(@RequestParam("selectedUser") String userId,
                                   @RequestParam("selectedItem") String itemId,
                                   @RequestParam("amount") String amount,
                                   @RequestParam("purchasePrice") String purchasePrice){
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty()){
             dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
-            return new RedirectView("/shop");
+            return new RedirectView("/");
         }
         return new RedirectView("/error");
     }
@@ -51,7 +47,7 @@ public class HomeController {
     }
 
     @PostMapping("/users")
-    public RedirectView addUser(@RequestBody String userName){
+    public RedirectView addUser(@RequestParam("userName") String userName){
         if(!userName.isEmpty()){
             dataBaseService.addUser(userName);
         }
@@ -70,11 +66,4 @@ public class HomeController {
         }
         return new RedirectView("/products");
     }
-
-    @GetMapping("/statistics")
-    public String getOwnerStatistics(){
-        return "statistics";
-    }
-
-
 }
