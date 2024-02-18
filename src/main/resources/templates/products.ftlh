@@ -60,8 +60,7 @@
    </div>
     <script>
         $(document).ready(function(){
-            var form = $("#productForm");
-            $("#addBtn").click(function() {
+            $("#addBtn").click(function($("#productForm")) {
                 submitForm(form);
             });
         });

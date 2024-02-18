@@ -59,9 +59,8 @@
    </div>
     <script>
         $(document).ready(function() {
-            var form = $("#userForm");
             $("#addBtn").click(function() {
-                submitForm(form);
+                submitForm($("#userForm"));
             });
         });
     </script>

@@ -93,9 +93,8 @@
     </div>
     <script>
         $(document).ready(function() {
-            var form = $("#orderForm");
             $("#addBtn").click(function() {
-                submitForm(form);
+                submitForm($("#orderForm"));
             });
         });
     </script>
