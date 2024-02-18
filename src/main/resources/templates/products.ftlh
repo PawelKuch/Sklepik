@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <script src="main.js"></script>
 </head>
 
 <body>
@@ -49,7 +51,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary mb-1 col-2" onclick="submitForm()"> Add </button>
+                        <button id="addBtn" class="btn btn-primary mb-1 col-2"> Add </button>
                         <button type="button" class="btn btn-outline-primary col-2" data-bs-dismiss="modal"> Back </button>
                     </div>
                 </div>
@@ -57,9 +59,12 @@
         </div>
    </div>
     <script>
-        function submitForm(){
-            $("#productForm").submit();
-        }
+        $(document).ready(function(){
+            var form = $("#productForm");
+            $("#addBtn").click(function() {
+                submitForm(form);
+            });
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
