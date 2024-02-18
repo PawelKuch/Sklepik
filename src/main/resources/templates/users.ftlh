@@ -8,42 +8,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
-    <style>
-        body{
-            background-color: #21211f;
-            color: #ffffff;
-        }
-        a {
-            color:white;
-            text-decoration:none;
-        }
-        a:hover {
-            color:white;
-            text-decoration:none;
-        }
-        a:visited {
-            color:white;
-            text-decoration:none;
-        }
-
-    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-warning py-0">
-        <div class="container">
-            <a class="navbar-brand" href="/"><p class="fs-3 fw-bolder"> MENU </p></a>
-            <div class="collapse navbar-collapse">
-                <a class="nav-link" href="/"> Shop </a>
-                <a class="nav-link" href="/users"> Users </a>
-                <a class="nav-link" href="/products"> Products </a>
-            </div>
-        </div>
-    </nav>
-
+<#include "/navbar1.ftlh">
    <div id="container" class="container col-5 align-items-center text-center">
         <#if users?has_content>
-            <table class="table table-bordered table-dark mt-3">
+            <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
                         <th>Available users:</th>
@@ -60,12 +31,12 @@
         </#if>
         <div class="row justify-content-center align-items-center">
             <div class="col-5 mt-3 mb-3">
-                <button type="button" class="btn btn-warning col-12" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add user </button>
+                <button type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add user </button>
             </div>
         </div>
     <div class="modal" tabindex="-1" id="addUserModal">
             <div class="modal-dialog">
-                <div class="modal-content bg-dark">
+                <div class="modal-content">
                     <div class="modal-header text-center">
                         <h5 class="modal-title"> Add a user </h5>
                         <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -79,8 +50,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button id="addBtn" class="btn btn-warning mb-1 col-2" onclick="submitForm()" data-bs-dismiss="modal"> Add </button>
-                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal"> Back </button>
+                        <button id="addBtn" class="btn btn-primary mb-1 col-2" onclick="submitForm()" data-bs-dismiss="modal"> Add </button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"> Back </button>
                     </div>
                 </div>
             </div>

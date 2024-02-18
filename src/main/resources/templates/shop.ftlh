@@ -6,42 +6,13 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
-    <style>
-        body {
-            background-color:#21211f;;
-            color: #ffffff;
-        }
-        a {
-            color: white;
-            text-decoration: none;
-        }
-        a:hover {
-            color: white;
-            text-decoration: none;
-        }
-        a:visited {
-            color: white;
-            text-decoration: none;
-        }
-    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-warning py-0">
-        <div class="container">
-            <a class="navbar-brand" href="/"><p class="fs-3 fw-bolder"> MENU </p></a>
-            <div class="collapse navbar-collapse">
-                <a class="nav-link" href="/"> Shop </a>
-                <a class="nav-link" href="/users"> Users </a>
-                <a class="nav-link" href="/products"> Products </a>
-            </div>
-        </div>
-    </nav>
-
+<#include "/navbar1.ftlh">
     <div class="container align-items-center text-center">
         <#if orders?has_content>
-            <table class="table table-bordered table-dark mt-3">
+            <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
                         <th>Order ID</th>
@@ -69,12 +40,12 @@
         <#if users?has_content && products?has_content>
             <div class="row justify-content-center align-items-center">
                 <div class="col-3 mt-3 mb-3">
-                    <button id="openModalBtn" type="button" class="btn btn-warning col-12" data-bs-toggle="modal" data-bs-target="#addOrderModal"> Add </button>
+                    <button id="openModalBtn" type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addOrderModal"> Add </button>
                 </div>
             </div>
             <div class="modal" tabindex="-1" id="addOrderModal">
                 <div class="modal-dialog">
-                    <div class="modal-content bg-dark">
+                    <div class="modal-content">
                         <div class="modal-header text-center">
                             <h5 class="modal-title"> Add an order </h5>
                             <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -108,14 +79,14 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button id="addBtn" class="btn btn-warning col-2" onclick="submitForm()"> Confirm </button>
-                            <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal"> Back </button>
+                            <button id="addBtn" class="btn btn-primary col-2" onclick="submitForm()"> Confirm </button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"> Back </button>
                         </div>
                     </div>
                 </div>
             </div>
         <#else>
-                <div class="col"><h1>Before starting you need to add users and/or products!</h1></div>
+                <div class="alert alert-danger">Before starting you need to add <a class="alert-link" href="/users">users</a> and/or <a class="alert-link" href="/products">products</a>!</div>
         </#if>
 
     </div>
