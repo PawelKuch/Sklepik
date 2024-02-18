@@ -50,7 +50,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button id="addBtn" class="btn btn-primary mb-1 col-2" onclick="submitForm()" data-bs-dismiss="modal"> Add </button>
+                        <button id="addBtn" class="btn btn-primary mb-1 col-2" data-bs-dismiss="modal"> Add </button>
                         <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"> Back </button>
                     </div>
                 </div>

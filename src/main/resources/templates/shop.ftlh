@@ -80,7 +80,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button id="addBtn" class="btn btn-primary col-2" onclick="submitForm()"> Confirm </button>
+                            <button id="addBtn" class="btn btn-primary col-2"> Confirm </button>
                             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"> Back </button>
                         </div>
                     </div>
