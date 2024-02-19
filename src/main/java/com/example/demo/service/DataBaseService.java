@@ -48,7 +48,7 @@ public class DataBaseService {
         order.setUser(user);
         order.setAmount(amount);
         order.setPurchasePrice(purchasePrice);
-        order.setTotalPurchaseValue(amount, purchasePrice);
+        order.setTotalPurchaseValue((amount*purchasePrice));
         order.setOrderId(UUID.randomUUID().toString());
         order.setItem(item);
         orderRepository.save(order);

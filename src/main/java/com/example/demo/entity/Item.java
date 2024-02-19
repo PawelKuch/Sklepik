@@ -8,7 +8,9 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="NAME", nullable = false, length = 512)
     private String name;
+    @Column(name = "ITEM_ID", nullable = false, length = 512)
     private String itemId;
     @OneToMany(mappedBy = "item")
     private List<Order> order;

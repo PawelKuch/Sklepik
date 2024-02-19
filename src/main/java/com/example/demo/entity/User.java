@@ -9,11 +9,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="USER_ID", nullable = false, length = 512)
     private String userId;
+    @Column(name = "NAME", nullable = false, length = 512)
     private String name;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private final List<Order> orders = new ArrayList<>();
-
     public void setUserId(String userId) {
         this.userId = userId;
     }

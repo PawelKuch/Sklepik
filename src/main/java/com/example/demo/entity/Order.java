@@ -10,21 +10,25 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "ORDER_ID", nullable = false, length = 512)
     private String orderId;
+    @Column(name="AMOUNT", nullable=false, length=512)
     private int amount;
+    @Column(name = "PURCHASE_PRICE", nullable = false, length = 512)
     private double purchasePrice;
-    private double totalPurchaseValue = amount * purchasePrice;
+    @Column(name = "TOTAL_PURCHASE_VALUE", nullable = false, length = 512)
+    private double totalPurchaseValue;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
 
-    public void setTotalPurchaseValue(int amount, double totalPurchaseValue) {
-        this.totalPurchaseValue = totalPurchaseValue*amount;
-    }
-
     @ManyToOne
     @JoinColumn(name="item_id")
     private Item item;
+
+    public void setTotalPurchaseValue(double totalPurchaseValue) {
+        this.totalPurchaseValue = totalPurchaseValue;
+    }
 
     public void setUser(User user) {
         this.user = user;

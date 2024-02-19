@@ -1,5 +1,7 @@
 package com.example.demo.data;
 
+import jakarta.persistence.Column;
+
 public class OrderData {
     private String orderId;
     private UserData user;
