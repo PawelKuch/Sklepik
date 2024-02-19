@@ -29,6 +29,9 @@ public class ToDataService {
         orderData.setAmount(order.getAmount());
         orderData.setPurchasePrice(order.getPurchasePrice());
         orderData.setTotalPurchaseValue(order.getTotalPurchaseValue());
+        orderData.setSellPrice(order.getSellPrice());
+        orderData.setRevenue(order.getRevenue());
+        orderData.setIncome(order.getIncome());
         orderData.setUser(convert(order.getUser()));
         orderData.setItem(convert(order.getItem()));
         return orderData;

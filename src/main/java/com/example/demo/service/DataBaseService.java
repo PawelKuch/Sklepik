@@ -37,7 +37,7 @@ public class DataBaseService {
         userRepository.save(user);
     }
     @Transactional
-    public void addOrder(String userId, String itemId, int amount, double purchasePrice){
+    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice){
         User user = userRepository.findByUserId(userId);
         if (user == null) throw new RuntimeException();
 
@@ -48,7 +48,10 @@ public class DataBaseService {
         order.setUser(user);
         order.setAmount(amount);
         order.setPurchasePrice(purchasePrice);
-        order.setTotalPurchaseValue((amount*purchasePrice));
+        order.setTotalPurchaseValue(amount*purchasePrice);
+        order.setSellPrice(sellPrice);
+        order.setRevenue(amount*sellPrice);
+        order.setIncome(order.getRevenue() - order.getTotalPurchaseValue());
         order.setOrderId(UUID.randomUUID().toString());
         order.setItem(item);
         orderRepository.save(order);

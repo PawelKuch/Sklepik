@@ -32,9 +32,10 @@ public class HomeController {
     public RedirectView saveOrder(@RequestParam("selectedUser") String userId,
                                   @RequestParam("selectedItem") String itemId,
                                   @RequestParam("amount") String amount,
-                                  @RequestParam("purchasePrice") String purchasePrice){
+                                  @RequestParam("purchasePrice") String purchasePrice,
+                                  @RequestParam("sellPrice") String sellPrice){
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty()){
-            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
+            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice));
             return new RedirectView("/");
         }
         return new RedirectView("/error");

@@ -12,12 +12,18 @@ public class Order {
     private Long id;
     @Column(name = "ORDER_ID", nullable = false, length = 512)
     private String orderId;
-    @Column(name="AMOUNT", nullable=false, length=512)
+    @Column(name = "AMOUNT", nullable=false, length=512)
     private int amount;
     @Column(name = "PURCHASE_PRICE", nullable = false, length = 512)
     private double purchasePrice;
     @Column(name = "TOTAL_PURCHASE_VALUE", nullable = false, length = 512)
     private double totalPurchaseValue;
+    @Column(name = "SELL_PRICE", nullable = false, length = 512)
+    private double sellPrice;
+    @Column(name = "REVENUE", nullable = false, length = 512)
+    private double revenue;
+    @Column(name = "INCOME", nullable = false, length = 512)
+    private double income;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
@@ -73,5 +79,27 @@ public class Order {
         this.item = item;
     }
 
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
 
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setRevenue(double revenue) {
+        this.revenue = revenue;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
+    }
+
+    public double getRevenue() {
+        return revenue;
+    }
+
+    public double getIncome() {
+        return income;
+    }
 }

@@ -9,6 +9,9 @@ public class OrderData {
     private int amount;
     private double purchasePrice;
     private double totalPurchaseValue;
+    private double sellPrice;
+    private double revenue;
+    private double income;
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -56,5 +59,29 @@ public class OrderData {
 
     public double getTotalPurchaseValue() {
         return totalPurchaseValue;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setRevenue(double revenue) {
+        this.revenue = revenue;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
+    }
+
+    public double getRevenue() {
+        return revenue;
+    }
+
+    public double getIncome() {
+        return income;
     }
 }

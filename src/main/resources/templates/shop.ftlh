@@ -22,6 +22,9 @@
                         <th>Amount</th>
                         <th>Price</th>
                         <th>Value</th>
+                        <th>Sell Price</th>
+                        <th>Revenue</th>
+                        <th>Income</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +36,9 @@
                             <td>${order.amount} PCS</td>
                             <td>${order.purchasePrice} PLN</td>
                             <td>${order.totalPurchaseValue} PLN</td>
+                            <td>${order.sellPrice} PLN</td>
+                            <td>${order.revenue} PLN</td>
+                            <td>${order.income} PLN</td>
                         </tr>
                     </#list>
                 </tbody>
@@ -75,6 +81,12 @@
                                 <div class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="Purchase"> Purchase </span>
                                     <input class="form-control mb-2" id="purchasePrice" type="number" name="purchasePrice" step="0.01">
+                                    <span class="input-group-text mb-2"> PLN </span>
+                                </div>
+
+                                <div class="input-group align-items-center">
+                                    <span class="input-group-text mb-2" aria-label="SellPrice"> SellPrice </span>
+                                    <input class="form-control mb-2" id="sellPrice" type="number" name="sellPrice" step="0.01">
                                     <span class="input-group-text mb-2"> PLN </span>
                                 </div><br>
                             </form>
