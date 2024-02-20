@@ -18,12 +18,14 @@ public class Order {
     private double purchasePrice;
     @Column(name = "TOTAL_PURCHASE_VALUE", nullable = false, length = 512)
     private double totalPurchaseValue;
-    @Column(name = "SELL_PRICE", nullable = false, length = 512)
+    @Column(name = "SELL_PRICE", nullable = true, length = 512)
     private double sellPrice;
-    @Column(name = "REVENUE", nullable = false, length = 512)
+    @Column(name = "REVENUE", nullable = true, length = 512)
     private double revenue;
-    @Column(name = "INCOME", nullable = false, length = 512)
+    @Column(name = "INCOME", nullable = true, length = 512)
     private double income;
+    @Column(name = "IS_FOR_SALE", nullable = false)
+    private boolean isForSale = true;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
@@ -101,5 +103,12 @@ public class Order {
 
     public double getIncome() {
         return income;
+    }
+
+    public void setForSale(boolean forSale) {
+        isForSale = forSale;
+    }
+    public boolean isForSale() {
+        return isForSale;
     }
 }

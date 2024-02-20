@@ -73,6 +73,11 @@
                                     </#list>
                                 </select>
 
+                                <div class="form-check form-control justify-content-start">
+                                    <input class="form-check-input" type="checkbox" value="" id="isForSaleCheck">
+                                    <label class="form-check-label" for="isForSaleCheck"> unsalable </label>
+                                </div>
+
                                 <div class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="Quantity"> Quantity </span>
                                     <input class="form-control mb-2" id="amount" type="number" name="amount" value="1" min="1" step="1" aria-describedby="addon-wrapping">
