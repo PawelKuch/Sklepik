@@ -5,9 +5,12 @@
 
         $("#isForSaleCheck").change(function(){
             if($(this).prop("checked")){
-                $("#sellPrice").attr("disabled", "disabled");
+                $("#sellPrice").val("0");
+                $("#inputSellPrice").hide();
+
             }else {
-                $("#sellPrice").removeAttr("disabled");
+                $("#inputSellPrice").show();
+                $("#sellPrice").val("");
             }
         });
     });

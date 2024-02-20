@@ -2,6 +2,8 @@ package com.example.demo.data;
 
 import jakarta.persistence.Column;
 
+import java.time.LocalDateTime;
+
 public class OrderData {
     private String orderId;
     private UserData user;
@@ -12,6 +14,7 @@ public class OrderData {
     private double sellPrice;
     private double revenue;
     private double income;
+    private String orderDateTime;
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -83,5 +86,13 @@ public class OrderData {
 
     public double getIncome() {
         return income;
+    }
+
+    public void setOrderDateTime(String orderDateTime) {
+        this.orderDateTime = orderDateTime;
+    }
+
+    public String getOrderDateTime() {
+        return orderDateTime;
     }
 }

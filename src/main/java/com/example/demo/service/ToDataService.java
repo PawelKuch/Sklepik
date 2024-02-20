@@ -34,6 +34,7 @@ public class ToDataService {
         orderData.setIncome(order.getIncome());
         orderData.setUser(convert(order.getUser()));
         orderData.setItem(convert(order.getItem()));
+        orderData.setOrderDateTime(order.getOrderDateTime());
         return orderData;
     }
     public ItemData convert(Item data){

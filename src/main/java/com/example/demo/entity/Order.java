@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -18,14 +19,14 @@ public class Order {
     private double purchasePrice;
     @Column(name = "TOTAL_PURCHASE_VALUE", nullable = false, length = 512)
     private double totalPurchaseValue;
-    @Column(name = "SELL_PRICE", nullable = true, length = 512)
+    @Column(name = "SELL_PRICE", length = 512)
     private double sellPrice;
-    @Column(name = "REVENUE", nullable = true, length = 512)
+    @Column(name = "REVENUE", length = 512)
     private double revenue;
-    @Column(name = "INCOME", nullable = true, length = 512)
+    @Column(name = "INCOME", length = 512)
     private double income;
-    @Column(name = "IS_FOR_SALE", nullable = false)
-    private boolean isForSale = true;
+    @Column(name = "DATE", nullable = false, length = 512)
+    private String orderDateTime;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
@@ -105,10 +106,11 @@ public class Order {
         return income;
     }
 
-    public void setForSale(boolean forSale) {
-        isForSale = forSale;
+    public void setOrderDateTime(String orderDateTime) {
+        this.orderDateTime = orderDateTime;
     }
-    public boolean isForSale() {
-        return isForSale;
+
+    public String getOrderDateTime() {
+        return orderDateTime;
     }
 }

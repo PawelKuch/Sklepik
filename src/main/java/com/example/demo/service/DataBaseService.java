@@ -12,6 +12,8 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,13 +52,19 @@ public class DataBaseService {
         order.setPurchasePrice(purchasePrice);
         order.setTotalPurchaseValue(amount*purchasePrice);
         order.setSellPrice(sellPrice);
-        order.setRevenue(amount*sellPrice);
-        order.setIncome(order.getRevenue() - order.getTotalPurchaseValue());
+        if (sellPrice == 0){
+            order.setRevenue(0);
+            order.setIncome(0);
+        } else {
+            order.setRevenue(amount*sellPrice);
+            order.setIncome(order.getRevenue() - order.getTotalPurchaseValue());
+        }
         order.setOrderId(UUID.randomUUID().toString());
         order.setItem(item);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        order.setOrderDateTime(LocalDateTime.now().format(formatter));
         orderRepository.save(order);
     }
-
 
     @Transactional
     public void addItem(String name) {

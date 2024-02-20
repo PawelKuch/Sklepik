@@ -16,7 +16,7 @@
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
+                        <th>Order Date</th>
                         <th>Username</th>
                         <th>Product</th>
                         <th>Amount</th>
@@ -30,7 +30,7 @@
                 <tbody>
                     <#list orders as order>
                         <tr>
-                            <td><a href="/orderDetails/${order.orderId}">${order.orderId}</a></td>
+                            <td>${order.orderDateTime}
                             <td>${order.user.name}</td>
                             <td>${order.item.name}</td>
                             <td>${order.amount} PCS</td>
@@ -89,7 +89,7 @@
                                     <span class="input-group-text mb-2"> PLN </span>
                                 </div>
 
-                                <div class="input-group align-items-center">
+                                <div id="inputSellPrice" class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="SellPrice"> SellPrice </span>
                                     <input class="form-control mb-2" id="sellPrice" type="number" name="sellPrice" step="0.01">
                                     <span class="input-group-text mb-2"> PLN </span>
