@@ -39,7 +39,7 @@ public class DataBaseService {
         userRepository.save(user);
     }
     @Transactional
-    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice){
+    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isExpense){
         User user = userRepository.findByUserId(userId);
         if (user == null) throw new RuntimeException();
 
@@ -63,6 +63,7 @@ public class DataBaseService {
         order.setItem(item);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         order.setOrderDateTime(LocalDateTime.now().format(formatter));
+        order.setExpense(isExpense);
         orderRepository.save(order);
     }
 

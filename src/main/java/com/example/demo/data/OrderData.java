@@ -15,6 +15,7 @@ public class OrderData {
     private double revenue;
     private double income;
     private String orderDateTime;
+    private boolean isExpense;
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -94,5 +95,11 @@ public class OrderData {
 
     public String getOrderDateTime() {
         return orderDateTime;
+    }
+    public void setExpense(boolean expense) {
+        isExpense = expense;
+    }
+    public boolean getIsExpense() {
+        return isExpense;
     }
 }

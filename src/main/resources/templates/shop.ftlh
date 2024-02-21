@@ -16,6 +16,9 @@
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
+                        <th colspan="9"> Products to sell <th>
+                    </tr>
+                    <tr>
                         <th>Order Date</th>
                         <th>Username</th>
                         <th>Product</th>
@@ -29,8 +32,9 @@
                 </thead>
                 <tbody>
                     <#list orders as order>
+                        <#if !order.isExpense>
                         <tr>
-                            <td>${order.orderDateTime}
+                            <td>${order.orderDateTime}</td>
                             <td>${order.user.name}</td>
                             <td>${order.item.name}</td>
                             <td>${order.amount} PCS</td>
@@ -40,9 +44,40 @@
                             <td>${order.revenue} PLN</td>
                             <td>${order.income} PLN</td>
                         </tr>
+                        </#if>
                     </#list>
                 </tbody>
             </table>
+
+            <table class="table table-bordered mt-3">
+                            <thead>
+                                <tr>
+                                    <th colspan="6"> Expenses </th>
+                                </tr>
+                                <tr>
+                                    <th>Order Date</th>
+                                    <th>Username</th>
+                                    <th>Product</th>
+                                    <th>Amount</th>
+                                    <th>Price</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <#list orders as order>
+                                    <#if order.isExpense>
+                                    <tr>
+                                        <td>${order.orderDateTime}</td>
+                                        <td>${order.user.name}</td>
+                                        <td>${order.item.name}</td>
+                                        <td>${order.amount} PCS</td>
+                                        <td>${order.purchasePrice} PLN</td>
+                                        <td>${order.totalPurchaseValue} PLN</td>
+                                    </tr>
+                                    </#if>
+                                </#list>
+                            </tbody>
+                        </table>
         </#if>
         <#if users?has_content && products?has_content>
             <div class="row justify-content-center align-items-center">
@@ -74,8 +109,9 @@
                                 </select>
 
                                 <div class="form-check form-control justify-content-start">
-                                    <input class="form-check-input" type="checkbox" value="" id="isForSaleCheck">
-                                    <label class="form-check-label" for="isForSaleCheck"> unsalable </label>
+                                    <input class="form-check-input" id="expenseFlag" name="isExpense" type="checkbox" value="false" checked>
+                                    <input class="form-check-input" id="isExpenseFlag" type="checkbox" name="isExpense">
+                                    <label class="form-check-label" for="isExpenseFlag"> product as expense </label>
                                 </div>
 
                                 <div class="input-group align-items-center">

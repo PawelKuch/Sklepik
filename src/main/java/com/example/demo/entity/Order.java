@@ -27,6 +27,8 @@ public class Order {
     private double income;
     @Column(name = "DATE", nullable = false, length = 512)
     private String orderDateTime;
+    @Column(name = "IS_EXPENSE", nullable = false)
+    private boolean isExpense;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
@@ -112,5 +114,13 @@ public class Order {
 
     public String getOrderDateTime() {
         return orderDateTime;
+    }
+
+    public void setExpense(boolean expense) {
+        isExpense = expense;
+    }
+
+    public boolean getExpense() {
+        return isExpense;
     }
 }

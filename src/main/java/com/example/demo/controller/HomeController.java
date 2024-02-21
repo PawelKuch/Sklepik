@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.servlet.view.RedirectView;
@@ -33,9 +32,10 @@ public class HomeController {
                                   @RequestParam("selectedItem") String itemId,
                                   @RequestParam("amount") String amount,
                                   @RequestParam("purchasePrice") String purchasePrice,
-                                  @RequestParam("sellPrice") String sellPrice){
+                                  @RequestParam("sellPrice") String sellPrice,
+                                  @RequestParam("isExpense") boolean isExpense){
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty()){
-            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice));
+            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), isExpense);
             return new RedirectView("/");
         }
         return new RedirectView("/error");
