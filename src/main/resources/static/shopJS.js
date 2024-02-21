@@ -2,8 +2,8 @@
         $("#addBtn").click(function(){
             $("#orderForm").submit();
         });
-        $("#expenseFlag").hide();
         $("#expenseFlag").attr("checked", "checked");
+        $("#expenseFlagDiv").hide();
         $("#isExpenseFlag").change(function(){
             if($(this).prop("checked")){
                 $("#sellPrice").val("0");
