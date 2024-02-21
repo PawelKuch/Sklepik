@@ -1,9 +1,5 @@
 package com.example.demo.data;
 
-import jakarta.persistence.Column;
-
-import java.time.LocalDateTime;
-
 public class OrderData {
     private String orderId;
     private UserData user;
