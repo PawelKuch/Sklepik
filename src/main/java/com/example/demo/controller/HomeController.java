@@ -21,9 +21,11 @@ public class HomeController {
     }
     @GetMapping("/")
     public String getShop(Model model){
+        boolean shopPage = true;
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("products", dataBaseService.getItems());
         model.addAttribute("orders", dataBaseService.getOrders());
+        model.addAttribute("shopPage", shopPage);
         return "shop";
     }
 
@@ -43,7 +45,9 @@ public class HomeController {
 
     @GetMapping("/users")
     public String getAddUser(Model model){
+        boolean usersPage = true;
         model.addAttribute("users", dataBaseService.getUsers());
+        model.addAttribute("usersPage", usersPage);
         return "users";
     }
 
@@ -55,8 +59,10 @@ public class HomeController {
         return new RedirectView("/users");
     }
     @GetMapping("/products")
-    public String getProducts (Model m){
-        m.addAttribute("items", dataBaseService.getItems());
+    public String getProducts (Model model){
+        boolean productsPage = true;
+        model.addAttribute("items", dataBaseService.getItems());
+        model.addAttribute("productsPage", productsPage);
         return "products";
     }
 
