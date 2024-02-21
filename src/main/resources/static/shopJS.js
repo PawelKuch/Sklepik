@@ -2,6 +2,7 @@
         $("#addBtn").click(function(){
             $("#orderForm").submit();
         });
+
         $("#expenseFlag").attr("checked", "checked");
         $("#expenseFlagDiv").hide();
         $("#isExpenseFlag").change(function(){

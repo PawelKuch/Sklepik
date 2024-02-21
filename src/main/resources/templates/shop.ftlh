@@ -107,7 +107,7 @@
                                         <option value=${product.itemId}>${product.name}</option>
                                     </#list>
                                 </select>
-                                <div id="expenseFlagDiv" class="form-check form-control justify-content-start">
+                                <div class="form-check form-control justify-content-start" id="expenseFlagDiv">
                                     <input class="form-check-input" id="expenseFlag" name="isExpense" type="checkbox" value="false">
                                     <label class="form-check-label" for="expenseFlag"> product as expense </label>
                                 </div>
