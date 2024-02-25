@@ -16,8 +16,7 @@ public class FileHandlerService {
         this.dataBaseService = dataBaseService;
     }
 
-    public List<User> getUsersFromFile() throws IOException{
-        List<User> users = new ArrayList<>();
+    public List<String> getUsersFromFile() throws IOException{
         List<String> names = new ArrayList<>();
         String content = IOUtils.toString(FileHandlerService.class.getResourceAsStream("/arkusz.csv"));
         String[] lines = content.split("\\n");
@@ -30,24 +29,16 @@ public class FileHandlerService {
                     String name = cols[0];
                     if(names.size() < 1){
                         names.add(name);
-                        User user = new User();
-                        user.setUserId(UUID.randomUUID().toString());
-                        user.setName(cols[0]);
-                        users.add(user);
                     }else if(names.size() > 0) {
                         if(!names.contains(name)){
                             names.add(name);
-                            User user = new User();
-                            user.setUserId(UUID.randomUUID().toString());
-                            user.setName(cols[0]);
-                            users.add(user);
                         }
                     }
                 }
             }
             headerLine++;
         }
-        return users;
+        return names;
     }
 
     public List<Item> getItemsFromFile() throws IOException{

@@ -54,25 +54,24 @@ public class HomeController {
     @GetMapping("/users")
     public String getAddUser(Model model){
         try {
-            List<User> newUsers = fileHandlerService.getUsersFromFile();
+            List<String> names = fileHandlerService.getUsersFromFile();
             List<UserData> users = dataBaseService.getUsers();
-
           if(!users.isEmpty()){
-              for(User newUser : newUsers){
+              for(String name : names){
                   boolean userExists = false;
                   for(UserData user : users){
-                      if(newUser.getName().equals(user.getName())){
+                      if(name.equals(user.getName())){
                           userExists = true;
                           break;
                       }
                   }
                   if(!userExists){
-                      dataBaseService.addUser(newUser);
+                      dataBaseService.addUser(name);
                   }
               }
           }else{
-             for(User newUser : newUsers){
-                 dataBaseService.addUser(newUser);
+             for(String name : names){
+                 dataBaseService.addUser(name);
              }
           }
         }catch (IOException e){
