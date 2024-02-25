@@ -1,3 +1,4 @@
-﻿Paweł;Whisky;6;25
-Kamila ;Twix;2;3,2
-Kamil;Black;30;2,19
+﻿Kto;Co;Ilość;Cena;Razem;Czy rozliczono;Cena sprzedaży ;Suma;Zysk
+Paweł;Whisky;6;25;150;nierozliczono;35;210;60
+Kamila ;Twix;2;3;6;nierozliczono;5;10;4
+Kamil;Black;30;2;60;nierozliczono;3;90;30

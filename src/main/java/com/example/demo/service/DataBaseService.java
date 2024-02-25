@@ -83,6 +83,7 @@ public class DataBaseService {
                 order.setAmount(amounts.get(i));
                 order.setPurchasePrice(purchasePrices.get(i));
                 order.setSellPrice(sellPrices.get(i));
+                order.setExpense(false);
                 orderRepository.save(order);
             }
         }
