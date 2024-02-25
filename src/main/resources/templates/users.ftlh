@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<#include "/navbar1.ftlh">
+<#include "navbar1.ftlh">
    <div id="container" class="container col-5 align-items-center text-center">
         <#if users?has_content>
             <table class="table table-bordered mt-3">

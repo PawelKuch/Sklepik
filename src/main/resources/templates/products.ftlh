@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<#include "/navbar1.ftlh">
+<#include "navbar1.ftlh">
    <div class="bg-secondary-subtle container align-items-center text-center col-5" id="container">
         <#if items?has_content>
             <table id="productsTable" class="table table-bordered mt-3">

@@ -1,31 +1,45 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.DataBaseService;
+import com.example.demo.service.FileHandlerService;
 import com.example.demo.service.ToDataService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.tools.ForwardingFileObject;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 @Controller
 public class HomeController {
     DataBaseService dataBaseService;
     ToDataService toDataService;
-    public HomeController( DataBaseService dataBaseService, ToDataService toDataService){
+    FileHandlerService fileHandlerService;
+    public HomeController(DataBaseService dataBaseService, ToDataService toDataService, FileHandlerService fileHandlerService){
         this.dataBaseService = dataBaseService;
         this.toDataService = toDataService;
+        this.fileHandlerService = fileHandlerService;
     }
     @GetMapping("/")
     public String getShop(Model model){
-        boolean shopPage = true;
+        try {
+            dataBaseService.addOrders(fileHandlerService.getUsersFromFile(),
+                    fileHandlerService.getItemsFromFile(),
+                    fileHandlerService.getAmountFromFile(),
+                    fileHandlerService.getPurchasePricesFromFile(),
+                    fileHandlerService.getSellPricesFromFile());
+        }catch(IOException e){
+            e.printStackTrace();
+        }
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("products", dataBaseService.getItems());
         model.addAttribute("orders", dataBaseService.getOrders());
-        model.addAttribute("shopPage", shopPage);
+        model.addAttribute("shopPage", true);
         return "shop";
     }
 
@@ -45,9 +59,8 @@ public class HomeController {
 
     @GetMapping("/users")
     public String getAddUser(Model model){
-        boolean usersPage = true;
         model.addAttribute("users", dataBaseService.getUsers());
-        model.addAttribute("usersPage", usersPage);
+        model.addAttribute("usersPage", true);
         return "users";
     }
 
@@ -60,9 +73,8 @@ public class HomeController {
     }
     @GetMapping("/products")
     public String getProducts (Model model){
-        boolean productsPage = true;
         model.addAttribute("items", dataBaseService.getItems());
-        model.addAttribute("productsPage", productsPage);
+        model.addAttribute("productsPage", true);
         return "products";
     }
 

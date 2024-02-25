@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<#include "/navbar1.ftlh">
+<#include "navbar1.ftlh">
     <div class="container align-items-center text-center">
         <#if orders?has_content>
             <table class="table table-bordered mt-3">
@@ -143,6 +143,9 @@
             </div>
         <#else>
                 <div class="alert alert-danger">Before starting you need to add <a class="alert-link" href="/users">users</a> and/or <a class="alert-link" href="/products">products</a>!</div>
+                <#list exampleSplit as split>
+                ${split} <br>
+                </#list>
         </#if>
 
     </div>

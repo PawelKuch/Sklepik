@@ -11,7 +11,6 @@ import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -66,7 +65,28 @@ public class DataBaseService {
         order.setExpense(isExpense);
         orderRepository.save(order);
     }
-
+    @Transactional
+    public void addOrders(List<User> users, List<Item> items, List<Integer> amounts, List<Double> purchasePrices, List<Double> sellPrices){
+        if (users == null) throw new RuntimeException();
+        if (items == null) throw new RuntimeException();
+        boolean somethingNull = true;
+        int usersLength = users.size();
+        int itemsLength = items.size();
+        int amountLength = amounts.size();
+        int purchasePricesLength = purchasePrices.size();
+        int sellPricesLength = sellPrices.size();
+        if((usersLength == itemsLength) && (usersLength == amountLength) && (usersLength == purchasePricesLength) && (usersLength == sellPricesLength)){
+            for(int i=0; i<itemsLength; i++){
+                Order order = new Order();
+                order.setUser(users.get(i));
+                order.setItem(items.get(i));
+                order.setAmount(amounts.get(i));
+                order.setPurchasePrice(purchasePrices.get(i));
+                order.setSellPrice(sellPrices.get(i));
+                orderRepository.save(order);
+            }
+        }
+    }
     @Transactional
     public void addItem(String name) {
         Item item = new Item();
