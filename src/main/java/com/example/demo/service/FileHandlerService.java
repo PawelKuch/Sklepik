@@ -2,19 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Item;
 import com.example.demo.entity.User;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -57,26 +47,6 @@ public class FileHandlerService {
             }
             headerLine++;
         }
-
-
-
-        //InputStream inputStream = FileHandlerService.class.getResourceAsStream("/arkusz.csv");
-        /*InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-        CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader());
-
-            for (CSVRecord csvRecord : csvParser){
-                String name = csvRecord.get("Kto");
-                names.add(name);
-                if(names.size() > 0){
-                    if(!names.contains(name)){
-                        User user = new User();
-                        user.setUserId(UUID.randomUUID().toString());
-                        user.setName(name);
-                        users.add(user);
-                    }
-                }
-            }
-            return users;*/
         return users;
     }
 
