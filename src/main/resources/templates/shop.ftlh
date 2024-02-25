@@ -143,9 +143,6 @@
             </div>
         <#else>
                 <div class="alert alert-danger">Before starting you need to add <a class="alert-link" href="/users">users</a> and/or <a class="alert-link" href="/products">products</a>!</div>
-                <#list exampleSplit as split>
-                ${split} <br>
-                </#list>
         </#if>
 
     </div>

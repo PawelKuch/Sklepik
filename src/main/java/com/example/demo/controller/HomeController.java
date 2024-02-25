@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.data.UserData;
+import com.example.demo.entity.User;
 import com.example.demo.service.DataBaseService;
 import com.example.demo.service.FileHandlerService;
 import com.example.demo.service.ToDataService;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.tools.ForwardingFileObject;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 
 @Controller
@@ -27,15 +30,6 @@ public class HomeController {
     }
     @GetMapping("/")
     public String getShop(Model model){
-        try {
-            dataBaseService.addOrders(fileHandlerService.getUsersFromFile(),
-                    fileHandlerService.getItemsFromFile(),
-                    fileHandlerService.getAmountFromFile(),
-                    fileHandlerService.getPurchasePricesFromFile(),
-                    fileHandlerService.getSellPricesFromFile());
-        }catch(IOException e){
-            e.printStackTrace();
-        }
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("products", dataBaseService.getItems());
         model.addAttribute("orders", dataBaseService.getOrders());
@@ -59,8 +53,34 @@ public class HomeController {
 
     @GetMapping("/users")
     public String getAddUser(Model model){
-        model.addAttribute("users", dataBaseService.getUsers());
-        model.addAttribute("usersPage", true);
+        try {
+            List<User> newUsers = fileHandlerService.getUsersFromFile();
+            List<UserData> users = dataBaseService.getUsers();
+
+          if(!users.isEmpty()){
+              for(User newUser : newUsers){
+                  boolean userExists = false;
+                  for(UserData user : users){
+                      if(newUser.getName().equals(user.getName())){
+                          userExists = true;
+                          break;
+                      }
+                  }
+                  if(!userExists){
+                      dataBaseService.addUser(newUser);
+                  }
+              }
+          }else{
+             for(User newUser : newUsers){
+                 dataBaseService.addUser(newUser);
+             }
+          }
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally{
+            model.addAttribute("users", dataBaseService.getUsers());
+            model.addAttribute("usersPage", true);
+        }
         return "users";
     }
 
