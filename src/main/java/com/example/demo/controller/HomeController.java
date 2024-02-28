@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.data.UserData;
-import com.example.demo.entity.User;
 import com.example.demo.service.DataBaseService;
 import com.example.demo.service.FileHandlerService;
 import com.example.demo.service.ToDataService;
@@ -12,10 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.tools.ForwardingFileObject;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 
 @Controller

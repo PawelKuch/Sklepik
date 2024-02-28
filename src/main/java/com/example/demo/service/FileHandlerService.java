@@ -1,13 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.data.ItemData;
 import com.example.demo.data.OrderFromCSV;
 import com.example.demo.data.UserData;
-import com.example.demo.entity.Item;
-import com.example.demo.entity.User;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -38,7 +36,6 @@ public class FileHandlerService {
     public List<OrderFromCSV> getOrdersFromCSV(){
         List<String> lines = getLinesFromCSV();
         List<OrderFromCSV> ordersFromCSV = new ArrayList<>();
-        String[] cols;
         for (String line : lines){
             ordersFromCSV.add(getOrderFromCSV(line));
         }
@@ -47,96 +44,68 @@ public class FileHandlerService {
     public String getUserNameFromCSV(OrderFromCSV orderFromCSV){
         return orderFromCSV.getUserName();
     }
-    public String getItemNameFromCVS(OrderFromCSV orderFromCSV){
-        return orderFromCSV.getItemName();
-    }
+
     public Set<String> convertToSet(List<String> list){
         return list.stream().collect(Collectors.toSet());
     }
     public Set<String> getUserNamesFromCSV(List<OrderFromCSV> ordersFromCSV){
         return convertToSet(ordersFromCSV.stream().map(this::getUserNameFromCSV).toList());
     }
+    public String getItemNameFromCSV(OrderFromCSV orderFromCSV){
+        return orderFromCSV.getItemName();
+    }
+    public Set<String> getItemNamesFromCSV(List<OrderFromCSV> ordersFromCSV){
+        return convertToSet(ordersFromCSV.stream().map(this::getItemNameFromCSV).toList());
+    }
+    public void addUser(String name){
+        dataBaseService.addUser(name);
+    }
     @PostConstruct
     public void addUsersFromFile(){
-        List<String> lines = getLinesFromCSV();
+        Set<String> userNames = getUserNamesFromCSV(getOrdersFromCSV());
+        userNames.stream().forEach(this::addUser);
+    }
+    public void addItem(String name){
+        dataBaseService.addItem(name);
+    }
+    @PostConstruct
+    public void addItemsFromFile(){
+        Set<String> itemNames = getItemNamesFromCSV(getOrdersFromCSV());
+        itemNames.stream().forEach(this::addItem);
+    }
+    public Integer getAmountFromFile(OrderFromCSV orderFromCSV){
+        return orderFromCSV.getAmount();
+    }
+    public List<Integer> getAmountsFromFile(List<OrderFromCSV> ordersFromCSV){
+        return ordersFromCSV.stream().map(this::getAmountFromFile).toList();
+    }
+    public UserData getUserDataForOrder(String userName){
+        List<UserData> users = dataBaseService.getUsers();
+        UserData userData = new UserData();
+        for(UserData user : users){
+            if(user.getName().equals(userName)){
+                userData = user;
+            }
+        }
+        return userData;
+    }
+    public ItemData getItemDataForOrder(String itemName){
+        List<ItemData> items = dataBaseService.getItems();
+        ItemData itemData = new ItemData();
+        for(ItemData item : items){
+            if(item.getName().equals(itemName)){
+                itemData = item;
+            }
+        }
+        return itemData;
+    }
+    @PostConstruct
+    public void addOrdersFromFile(){
         List<OrderFromCSV> ordersFromCSV = getOrdersFromCSV();
-        Set<String> userNames = getUserNamesFromCSV(ordersFromCSV);
-        for(String userName : userNames) {
-            dataBaseService.addUser(userName);
+        for(OrderFromCSV orderFromCSV : ordersFromCSV) {
+            String userId = getUserDataForOrder(orderFromCSV.getUserName()).getUserId();
+            String itemId = getItemDataForOrder(orderFromCSV.getItemName()).getItemId();
+            dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(),orderFromCSV.getSellPrice(), false);
         }
     }
-
-    public List<Item> getItemsFromFile() throws IOException{
-        List<Item> items = new ArrayList<>();
-        String content = IOUtils.toString(FileHandlerService.class.getResourceAsStream("/arkusz.csv"));
-        String[] lines = content.split("\\n"); //wiersze z pliku
-        String[] cols; //wiersze podzielone na kolumny - czyli wartości komórek
-        int headerLine = 0;
-        for (String line : lines) {
-            if(headerLine > 0){
-                cols = line.split(";");
-                if(!cols[1].isEmpty()){
-                    Item item = new Item();
-                    item.setItemId(UUID.randomUUID().toString());
-                    item.setName(cols[1]);
-                    items.add(item);
-                }
-            }
-            headerLine++;
-        }
-        return items;
-    }
-    public List<Integer> getAmountFromFile() throws IOException{
-        List<Integer> amounts = new ArrayList<>();
-        String content = IOUtils.toString(FileHandlerService.class.getResourceAsStream("/arkusz.csv"));
-        String[] lines = content.split("\\n");
-        String[] cols;
-        int headerLine = 0;
-        for (String line : lines) {
-            if(headerLine > 0){
-                cols = line.split(";");
-                if(!cols[2].isEmpty()){
-                    amounts.add(Integer.parseInt(cols[2]));
-                }
-            }
-            headerLine++;
-        }
-        return amounts;
-    }
-    public List<Double> getPurchasePricesFromFile() throws IOException{
-        List<Double> purchasePrices = new ArrayList<>();
-        String content = IOUtils.toString(FileHandlerService.class.getResourceAsStream("/arkusz.csv"));
-        String[] lines = content.split("\\n");
-        String[] cols;
-        int headerLine = 0;
-        for (String line : lines) {
-            if(headerLine > 0){
-                cols = line.split(";");
-                if(!cols[3].isEmpty()){
-                    purchasePrices.add(Double.parseDouble(cols[3]));
-                }
-            }
-            headerLine++;
-        }
-        return purchasePrices;
-    }
-    public List<Double> getSellPricesFromFile() throws IOException {
-        List<Double> sellPrices = new ArrayList<>();
-        String content = IOUtils.toString(FileHandlerService.class.getResourceAsStream("/arkusz.csv"));
-        String[] lines = content.split("\\n");
-        String[] cols;
-        int headerLine = 0;
-        for (String line : lines) {
-            if(headerLine > 0){
-                cols = line.split(";");
-                if(!cols[6].isEmpty()){
-                   sellPrices.add(Double.parseDouble(cols[6]));
-                }
-            }
-            headerLine++;
-        }
-        return sellPrices;
-    }
-
-
 }

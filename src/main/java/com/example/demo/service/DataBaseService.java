@@ -38,10 +38,6 @@ public class DataBaseService {
         userRepository.save(user);
     }
     @Transactional
-    public void addUser(User user){
-            userRepository.save(user);
-    }
-    @Transactional
     public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isExpense){
         User user = userRepository.findByUserId(userId);
         if (user == null) throw new RuntimeException();
@@ -73,7 +69,7 @@ public class DataBaseService {
     public void addOrders(List<User> users, List<Item> items, List<Integer> amounts, List<Double> purchasePrices, List<Double> sellPrices){
         if (users == null) throw new RuntimeException();
         if (items == null) throw new RuntimeException();
-        boolean somethingNull = true;
+
         int usersLength = users.size();
         int itemsLength = items.size();
         int amountLength = amounts.size();
@@ -112,5 +108,6 @@ public class DataBaseService {
     public List<ItemData> getItems(){
         return toDataService.getItems(itemRepository.findAll());
     }
+
 
 }
