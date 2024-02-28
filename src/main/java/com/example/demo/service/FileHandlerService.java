@@ -33,8 +33,7 @@ public class FileHandlerService {
         }
         return orderFromCSV;
     }
-    public List<OrderFromCSV> getOrdersFromCSV(){
-        List<String> lines = getLinesFromCSV();
+    public List<OrderFromCSV> getOrdersFromCSV(List<String> lines){
         List<OrderFromCSV> ordersFromCSV = new ArrayList<>();
         for (String line : lines){
             ordersFromCSV.add(getOrderFromCSV(line));
@@ -60,24 +59,21 @@ public class FileHandlerService {
     public void addUser(String name){
         dataBaseService.addUser(name);
     }
-    @PostConstruct
-    public void addUsersFromFile(){
-        Set<String> userNames = getUserNamesFromCSV(getOrdersFromCSV());
+
+    public void addUsersFromFile(List<String> lines){
+        Set<String> userNames = getUserNamesFromCSV(getOrdersFromCSV(lines));
         userNames.stream().forEach(this::addUser);
     }
     public void addItem(String name){
         dataBaseService.addItem(name);
     }
-    @PostConstruct
-    public void addItemsFromFile(){
-        Set<String> itemNames = getItemNamesFromCSV(getOrdersFromCSV());
+
+    public void addItemsFromFile(List<String> lines){
+        Set<String> itemNames = getItemNamesFromCSV(getOrdersFromCSV(lines));
         itemNames.stream().forEach(this::addItem);
     }
     public Integer getAmountFromFile(OrderFromCSV orderFromCSV){
         return orderFromCSV.getAmount();
-    }
-    public List<Integer> getAmountsFromFile(List<OrderFromCSV> ordersFromCSV){
-        return ordersFromCSV.stream().map(this::getAmountFromFile).toList();
     }
     public UserData getUserDataForOrder(String userName){
         List<UserData> users = dataBaseService.getUsers();
@@ -101,7 +97,10 @@ public class FileHandlerService {
     }
     @PostConstruct
     public void addOrdersFromFile(){
-        List<OrderFromCSV> ordersFromCSV = getOrdersFromCSV();
+        List<String> lines = getLinesFromCSV();
+        addUsersFromFile(lines);
+        addItemsFromFile(lines);
+        List<OrderFromCSV> ordersFromCSV = getOrdersFromCSV(lines);
         for(OrderFromCSV orderFromCSV : ordersFromCSV) {
             String userId = getUserDataForOrder(orderFromCSV.getUserName()).getUserId();
             String itemId = getItemDataForOrder(orderFromCSV.getItemName()).getItemId();

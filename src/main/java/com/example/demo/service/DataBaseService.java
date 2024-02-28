@@ -65,29 +65,7 @@ public class DataBaseService {
         order.setExpense(isExpense);
         orderRepository.save(order);
     }
-    @Transactional
-    public void addOrders(List<User> users, List<Item> items, List<Integer> amounts, List<Double> purchasePrices, List<Double> sellPrices){
-        if (users == null) throw new RuntimeException();
-        if (items == null) throw new RuntimeException();
 
-        int usersLength = users.size();
-        int itemsLength = items.size();
-        int amountLength = amounts.size();
-        int purchasePricesLength = purchasePrices.size();
-        int sellPricesLength = sellPrices.size();
-        if((usersLength == itemsLength) && (usersLength == amountLength) && (usersLength == purchasePricesLength) && (usersLength == sellPricesLength)){
-            for(int i=0; i<itemsLength; i++){
-                Order order = new Order();
-                order.setUser(users.get(i));
-                order.setItem(items.get(i));
-                order.setAmount(amounts.get(i));
-                order.setPurchasePrice(purchasePrices.get(i));
-                order.setSellPrice(sellPrices.get(i));
-                order.setExpense(false);
-                orderRepository.save(order);
-            }
-        }
-    }
     @Transactional
     public void addItem(String name) {
         Item item = new Item();
