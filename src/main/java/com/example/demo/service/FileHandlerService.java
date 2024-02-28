@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Service
 public class FileHandlerService {
     DataBaseService dataBaseService;
@@ -45,24 +46,16 @@ public class FileHandlerService {
         return ordersFromCSV;
     }
 
-    public String getUserNameFromCSV(OrderFromCSV orderFromCSV) {
-        return orderFromCSV.getUserName();
-    }
-
-    public Set<String> convertToSet(List<String> list) {
-        return list.stream().collect(Collectors.toSet());
-    }
-
     public Set<String> getUserNamesFromCSV(List<OrderFromCSV> ordersFromCSV) {
-        return convertToSet(ordersFromCSV.stream().map(this::getUserNameFromCSV).toList());
-    }
-
-    public String getItemNameFromCSV(OrderFromCSV orderFromCSV) {
-        return orderFromCSV.getItemName();
+        return ordersFromCSV.stream()
+                .map(OrderFromCSV::getUserName)
+                .collect(Collectors.toSet());
     }
 
     public Set<String> getItemNamesFromCSV(List<OrderFromCSV> ordersFromCSV) {
-        return convertToSet(ordersFromCSV.stream().map(this::getItemNameFromCSV).toList());
+        return ordersFromCSV.stream()
+                .map(OrderFromCSV::getItemName)
+                .collect(Collectors.toSet());
     }
 
     public void addUser(String name) {
@@ -71,7 +64,7 @@ public class FileHandlerService {
 
     public void addUsersFromFile(List<OrderFromCSV> ordersFromCSV) {
         Set<String> userNames = getUserNamesFromCSV(ordersFromCSV);
-        userNames.stream().forEach(this::addUser);
+        userNames.forEach(this::addUser);
     }
 
     public void addItem(String name) {
@@ -80,11 +73,7 @@ public class FileHandlerService {
 
     public void addItemsFromFile(List<OrderFromCSV> ordersFromCSV) {
         Set<String> itemNames = getItemNamesFromCSV(ordersFromCSV);
-        itemNames.stream().forEach(this::addItem);
-    }
-
-    public Integer getAmountFromFile(OrderFromCSV orderFromCSV) {
-        return orderFromCSV.getAmount();
+        itemNames.forEach(this::addItem);
     }
 
     public UserData getUserDataForOrder(String userName) {
@@ -121,6 +110,6 @@ public class FileHandlerService {
         List<OrderFromCSV> ordersFromCSV = getOrdersFromCSV(lines);
         addUsersFromFile(ordersFromCSV);
         addItemsFromFile(ordersFromCSV);
-        ordersFromCSV.stream().forEach(this::addOrder);
+        ordersFromCSV.forEach(this::addOrder);
     }
 }
