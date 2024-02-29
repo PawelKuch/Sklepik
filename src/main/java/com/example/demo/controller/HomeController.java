@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 
@@ -53,8 +54,12 @@ public class HomeController {
     }
 
     @PostMapping("/users")
-    public RedirectView addUser(@RequestParam("userName") String userName){
-        if(!userName.isEmpty()){
+    public RedirectView addUser(@RequestParam("userName") String userName, RedirectAttributes ra){
+        if(userName.isEmpty()){
+            ra.addFlashAttribute("isUserEmpty", true);
+        }else if(dataBaseService.userExists(userName)) {
+            ra.addFlashAttribute("userExists", true );
+        }else{
             dataBaseService.addUser(userName);
         }
         return new RedirectView("/users");

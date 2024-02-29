@@ -76,28 +76,6 @@ public class FileHandlerService {
         itemNames.forEach(this::addItem);
     }
 
-    public UserData getUserDataForOrder(String userName) {
-        List<UserData> users = dataBaseService.getUsers();
-        UserData userData = new UserData();
-        for (UserData user : users) {
-            if (user.getName().equals(userName)) {
-                userData = user;
-            }
-        }
-        return userData;
-    }
-
-    public ItemData getItemDataForOrder(String itemName) {
-        List<ItemData> items = dataBaseService.getItems();
-        ItemData itemData = new ItemData();
-        for (ItemData item : items) {
-            if (item.getName().equals(itemName)) {
-                itemData = item;
-            }
-        }
-        return itemData;
-    }
-
     public void addOrderToDataBase(OrderFromCSV orderFromCSV) {
         String userId = dataBaseService.getUserByName(orderFromCSV.getUserName()).getUserId();
         String itemId = dataBaseService.getItemByName(orderFromCSV.getItemName()).getItemId();

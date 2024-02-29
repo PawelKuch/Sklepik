@@ -94,6 +94,12 @@ public class DataBaseService {
     public List<ItemData> getItems(){
         return toDataService.getItems(itemRepository.findAll());
     }
-
+    public boolean userExists(String userName){
+        if (getUserByName(userName) != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }
