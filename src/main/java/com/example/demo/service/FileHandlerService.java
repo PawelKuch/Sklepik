@@ -98,9 +98,9 @@ public class FileHandlerService {
         return itemData;
     }
 
-    public void addOrder(OrderFromCSV orderFromCSV) {
-        String userId = getUserDataForOrder(orderFromCSV.getUserName()).getUserId();
-        String itemId = getItemDataForOrder(orderFromCSV.getItemName()).getItemId();
+    public void addOrderToDataBase(OrderFromCSV orderFromCSV) {
+        String userId = dataBaseService.getUserByName(orderFromCSV.getUserName()).getUserId();
+        String itemId = dataBaseService.getItemByName(orderFromCSV.getItemName()).getItemId();
         dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice(), false);
     }
 
@@ -110,6 +110,6 @@ public class FileHandlerService {
         List<OrderFromCSV> ordersFromCSV = getOrdersFromCSV(lines);
         addUsersFromFile(ordersFromCSV);
         addItemsFromFile(ordersFromCSV);
-        ordersFromCSV.forEach(this::addOrder);
+        ordersFromCSV.forEach(this::addOrderToDataBase);
     }
 }

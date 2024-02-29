@@ -24,7 +24,7 @@ public class DataBaseService {
     private final ToDataService toDataService;
 
     public DataBaseService(UserRepository userRepository, OrderRepository orderRepository, ItemRepository itemRepository,
-                            ToDataService toDataService) {
+                           ToDataService toDataService) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.itemRepository = itemRepository;
@@ -74,6 +74,14 @@ public class DataBaseService {
         itemRepository.save(item);
     }
 
+    @Transactional
+    public User getUserByName(String userName){
+        return userRepository.findByName(userName);
+    }
+    @Transactional
+    public Item getItemByName(String itemName){
+        return itemRepository.findByName(itemName);
+    }
     @Transactional
     public List<UserData> getUsers(){
         return toDataService.getUsers(userRepository.findAll());
