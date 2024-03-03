@@ -29,8 +29,8 @@ public class FileHandlerService {
         String[] cols = line.split(";");
         OrderFromCSV orderFromCSV = new OrderFromCSV();
         if (!cols[0].isEmpty() && !cols[1].isEmpty() && !cols[2].isEmpty() && !cols[3].isEmpty() && !cols[6].isEmpty()) {
-            orderFromCSV.setUserName(cols[0]);
-            orderFromCSV.setItemName(cols[1]);
+            orderFromCSV.setUserName(cols[0].trim());
+            orderFromCSV.setItemName(cols[1].trim());
             orderFromCSV.setAmount(Integer.parseInt(cols[2]));
             orderFromCSV.setPurchasePrice(Double.parseDouble(cols[3]));
             orderFromCSV.setSellPrice(Double.parseDouble(cols[6]));
@@ -79,7 +79,7 @@ public class FileHandlerService {
     public void addOrderToDataBase(OrderFromCSV orderFromCSV) {
         String userId = dataBaseService.getUserByName(orderFromCSV.getUserName()).getUserId();
         String itemId = dataBaseService.getItemByName(orderFromCSV.getItemName()).getItemId();
-        dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice(), false);
+        dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice());
     }
 
     @PostConstruct

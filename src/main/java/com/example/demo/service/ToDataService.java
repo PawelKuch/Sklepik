@@ -1,7 +1,9 @@
 package com.example.demo.service;
+import com.example.demo.data.ExpenseData;
 import com.example.demo.data.ItemData;
 import com.example.demo.data.OrderData;
 import com.example.demo.data.UserData;
+import com.example.demo.entity.Expense;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
@@ -22,7 +24,9 @@ public class ToDataService {
     public List<ItemData> getItems(List<Item> items){
         return items.stream().map(this::convert).toList();
     }
-
+    public List<ExpenseData> getExpenses(List<Expense> expenses){
+        return expenses.stream().map(this::convert).toList();
+    }
     public OrderData convert(Order order){
         OrderData orderData = new OrderData();
         orderData.setOrderId(order.getOrderId());
@@ -35,8 +39,18 @@ public class ToDataService {
         orderData.setUser(convert(order.getUser()));
         orderData.setItem(convert(order.getItem()));
         orderData.setOrderDateTime(order.getOrderDateTime());
-        orderData.setExpense(order.getExpense());
         return orderData;
+    }
+    public ExpenseData convert(Expense expense){
+        ExpenseData expenseData = new ExpenseData();
+        expenseData.setExpenseId(expense.getExpenseId());
+        expenseData.setAmount(expense.getAmount());
+        expenseData.setExpensePrice(expense.getExpensePrice());
+        expenseData.setTotalExpenseValue(expense.getTotalExpenseValue());
+        expenseData.setUser(convert(expense.getUser()));
+        expenseData.setItem(convert(expense.getItem()));
+        expenseData.setExpenseDateTime(expense.getExpenseDateTime());
+        return expenseData;
     }
     public ItemData convert(Item data){
        ItemData itemData = new ItemData();

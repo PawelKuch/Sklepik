@@ -32,7 +32,6 @@
                 </thead>
                 <tbody>
                     <#list orders as order>
-                        <#if !order.isExpense>
                         <tr>
                             <td>${order.orderDateTime}</td>
                             <td>${order.user.name}</td>
@@ -44,46 +43,51 @@
                             <td>${order.revenue} PLN</td>
                             <td>${order.income} PLN</td>
                         </tr>
-                        </#if>
                     </#list>
                 </tbody>
             </table>
-
+        </#if>
+        <#if expenses?has_content>
             <table class="table table-bordered mt-3">
-                            <thead>
-                                <tr>
-                                    <th colspan="6"> Expenses </th>
-                                </tr>
-                                <tr>
-                                    <th>Order Date</th>
-                                    <th>Username</th>
-                                    <th>Product</th>
-                                    <th>Amount</th>
-                                    <th>Price</th>
-                                    <th>Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <#list orders as order>
-                                    <#if order.isExpense>
-                                    <tr>
-                                        <td>${order.orderDateTime}</td>
-                                        <td>${order.user.name}</td>
-                                        <td>${order.item.name}</td>
-                                        <td>${order.amount} PCS</td>
-                                        <td>${order.purchasePrice} PLN</td>
-                                        <td>${order.totalPurchaseValue} PLN</td>
-                                    </tr>
-                                    </#if>
-                                </#list>
-                            </tbody>
-                        </table>
+                <thead>
+                    <tr>
+                        <th colspan="6"> Expenses </th>
+                    </tr>
+                    <tr>
+                        <th>Expense Date</th>
+                        <th>Username</th>
+                        <th>Product</th>
+                        <th>Amount</th>
+                        <th>Cost</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <#list expenses as expense>
+                        <tr>
+                            <td>${expense.expenseDateTime}</td>
+                            <td>${expense.user.name}</td>
+                            <td>${expense.item.name}</td>
+                            <td>${expense.amount} PCS</td>
+                            <td>${expense.expensePrice} PLN</td>
+                            <td>${expense.totalExpenseValue} PLN</td>
+                        </tr>
+                    </#list>
+                </tbody>
+            </table>
         </#if>
         <#if users?has_content && products?has_content>
             <div class="row justify-content-center align-items-center">
+            <div class="col col-6 justify-content-center align-items-center">
                 <div class="col-3 mt-3 mb-3">
-                    <button id="openModalBtn" type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addOrderModal"> Add </button>
+                    <button id="openOrderModalBtn" type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addOrderModal"> Add order</button>
                 </div>
+            </div>
+            <div class="col col-6 justify-content-center align-items-center">
+                <div class="col-3 mt-3 mb-3">
+                    <button id="openExpenseModalBtn" type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addExpenseModal"> Add expanse</button>
+                </div>
+            </div>
             </div>
             <div class="modal" tabindex="-1" id="addOrderModal">
                 <div class="modal-dialog">
@@ -107,13 +111,9 @@
                                         <option value=${product.itemId}>${product.name}</option>
                                     </#list>
                                 </select>
-                                <div class="form-check form-control justify-content-start" id="expenseFlagDiv">
-                                    <input class="form-check-input" id="expenseFlag" name="isExpense" type="checkbox" value="false">
+                                <div class="form-check form-control justify-content-start expenseFlagDiv">
+                                    <input class="form-check-input" id="expenseFlag" name="isExpense" type="checkbox" value="false" checked="checked">
                                     <label class="form-check-label" for="expenseFlag"> product as expense </label>
-                                </div>
-                                <div class="form-check form-control justify-content-start">
-                                    <input class="form-check-input" id="isExpenseFlag" type="checkbox" name="isExpense">
-                                    <label class="form-check-label" for="isExpenseFlag"> product as expense </label>
                                 </div>
 
                                 <div class="input-group align-items-center">
@@ -135,7 +135,59 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button id="addBtn" class="btn btn-primary col-2"> Confirm </button>
+                            <button id="addOrderBtn" class="btn btn-primary col-2"> Confirm </button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"> Back </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal" tabindex="-1" id="addExpenseModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h5 class="modal-title"> Add an order </h5>
+                            <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="mb-3" id="expenseForm" action="/" method="post">
+                                <select class="form-select mb-2" id="selectedUser" name="selectedUser">
+                                    <option> Select user </option>
+                                    <#list users as user>
+                                        <option value=${user.userId}>${user.name}</option>
+                                    </#list>
+                                </select>
+
+                                <div class="form-check form-control justify-content-start expenseFlagDiv">
+                                    <input class="form-check-input" id="expenseFlag" name="isExpense" type="checkbox" value="true" checked="checked">
+                                    <label class="form-check-label" for="expenseFlag"> product as expense </label>
+                                </div>
+
+                                <select class="form-select mb-2" id="selectedItem" name="selectedItem">
+                                    <option> Select product </option>
+                                    <#list products as product>
+                                        <option value=${product.itemId}>${product.name}</option>
+                                    </#list>
+                                </select>
+
+                                <div class="input-group align-items-center">
+                                    <span class="input-group-text mb-2" aria-label="Quantity"> Quantity </span>
+                                    <input class="form-control mb-2" id="amount" type="number" name="amount" value="1" min="1" step="1" aria-describedby="addon-wrapping">
+                                </div>
+
+                                <input class="form-control mb-2" style="display: none;" type="number" name="sellPrice" value="0" aria-describedby="addon-wrapping">
+
+                                <div class="input-group align-items-center">
+                                    <span class="input-group-text mb-2" aria-label="Purchase"> Purchase </span>
+                                    <input class="form-control mb-2" id="purchasePrice" type="number" name="purchasePrice" step="0.01">
+                                    <span class="input-group-text mb-2"> PLN </span>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="addExpenseBtn" class="btn btn-primary col-2"> Confirm </button>
                             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"> Back </button>
                         </div>
                     </div>

@@ -2,6 +2,10 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 
 @Entity
 @Table(name="orders")
@@ -24,9 +28,7 @@ public class Order {
     @Column(name = "INCOME", length = 512)
     private double income;
     @Column(name = "DATE", nullable = false, length = 512)
-    private String orderDateTime;
-    @Column(name = "IS_EXPENSE", nullable = false)
-    private boolean isExpense;
+    private LocalDateTime orderDateTime;
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
@@ -106,19 +108,12 @@ public class Order {
         return income;
     }
 
-    public void setOrderDateTime(String orderDateTime) {
+    public void setOrderDateTime(LocalDateTime orderDateTime) {
         this.orderDateTime = orderDateTime;
     }
 
-    public String getOrderDateTime() {
+    public LocalDateTime getOrderDateTime() {
         return orderDateTime;
     }
 
-    public void setExpense(boolean expense) {
-        isExpense = expense;
-    }
-
-    public boolean getExpense() {
-        return isExpense;
-    }
 }

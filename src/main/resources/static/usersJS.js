@@ -2,5 +2,6 @@
         $("#addBtn").click(function(){
             $("#userForm").submit();
         });
+
     })
 

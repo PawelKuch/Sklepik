@@ -38,13 +38,11 @@ public class DataBaseService {
         userRepository.save(user);
     }
     @Transactional
-    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isExpense){
+    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice){
         User user = userRepository.findByUserId(userId);
         if (user == null) throw new RuntimeException();
-
         Item item = itemRepository.findByItemId(itemId);
         if (item == null) throw new RuntimeException();
-
         Order order = new Order();
         order.setUser(user);
         order.setAmount(amount);
@@ -61,8 +59,8 @@ public class DataBaseService {
         order.setOrderId(UUID.randomUUID().toString());
         order.setItem(item);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        order.setOrderDateTime(LocalDateTime.now().format(formatter));
-        order.setExpense(isExpense);
+        String currentDateString = LocalDateTime.now().format(formatter);
+        order.setOrderDateTime(LocalDateTime.parse(currentDateString, formatter));
         orderRepository.save(order);
     }
 
@@ -96,6 +94,13 @@ public class DataBaseService {
     }
     public boolean userExists(String userName){
         if (getUserByName(userName) != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean itemExists(String itemName){
+        if (getItemByName(itemName)!= null){
             return true;
         }else{
             return false;

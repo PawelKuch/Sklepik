@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.DataBaseService;
+import com.example.demo.service.ExpensesBaseService;
 import com.example.demo.service.FileHandlerService;
 import com.example.demo.service.ToDataService;
 import org.springframework.stereotype.Controller;
@@ -18,16 +19,22 @@ public class HomeController {
     DataBaseService dataBaseService;
     ToDataService toDataService;
     FileHandlerService fileHandlerService;
-    public HomeController(DataBaseService dataBaseService, ToDataService toDataService, FileHandlerService fileHandlerService){
+    ExpensesBaseService expensesBaseService;
+    public HomeController(DataBaseService dataBaseService, ToDataService toDataService,
+                          FileHandlerService fileHandlerService, ExpensesBaseService expensesBaseService){
         this.dataBaseService = dataBaseService;
         this.toDataService = toDataService;
         this.fileHandlerService = fileHandlerService;
+        this.expensesBaseService = expensesBaseService;
     }
     @GetMapping("/")
     public String getShop(Model model){
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("products", dataBaseService.getItems());
         model.addAttribute("orders", dataBaseService.getOrders());
+        if(expensesBaseService.getExpenses() != null){
+            model.addAttribute("expenses", expensesBaseService.getExpenses());
+        }
         model.addAttribute("shopPage", true);
         return "shop";
     }
@@ -38,9 +45,13 @@ public class HomeController {
                                   @RequestParam("amount") String amount,
                                   @RequestParam("purchasePrice") String purchasePrice,
                                   @RequestParam("sellPrice") String sellPrice,
-                                  @RequestParam("isExpense") boolean isExpense){
-        if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty()){
-            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), isExpense);
+                                  @RequestParam("isExpense") Boolean isExpense){
+        if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty() && isExpense != null){
+            if(isExpense){
+                expensesBaseService.addExpense(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
+            }else{
+                dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice));
+            }
             return new RedirectView("/");
         }
         return new RedirectView("/error");
@@ -72,8 +83,12 @@ public class HomeController {
     }
 
     @PostMapping("/products")
-    public RedirectView addItem(@RequestParam String itemName){
-        if(!itemName.isEmpty()){
+    public RedirectView addItem(@RequestParam String itemName, RedirectAttributes ra){
+        if(itemName.isEmpty()){
+            ra.addFlashAttribute("isItemEmpty", true);
+        }else if(dataBaseService.itemExists(itemName)) {
+            ra.addFlashAttribute("itemExists", true );
+        }else{
             dataBaseService.addItem(itemName);
         }
         return new RedirectView("/products");

@@ -1,5 +1,8 @@
 package com.example.demo.data;
 
+import java.time.LocalDateTime;
+
+
 public class OrderData {
     private String orderId;
     private UserData user;
@@ -10,8 +13,7 @@ public class OrderData {
     private double sellPrice;
     private double revenue;
     private double income;
-    private String orderDateTime;
-    private boolean isExpense;
+    private LocalDateTime orderDateTime;
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -85,17 +87,12 @@ public class OrderData {
         return income;
     }
 
-    public void setOrderDateTime(String orderDateTime) {
+    public void setOrderDateTime(LocalDateTime orderDateTime) {
         this.orderDateTime = orderDateTime;
     }
 
-    public String getOrderDateTime() {
+    public LocalDateTime getOrderDateTime() {
         return orderDateTime;
     }
-    public void setExpense(boolean expense) {
-        isExpense = expense;
-    }
-    public boolean getIsExpense() {
-        return isExpense;
-    }
+
 }
