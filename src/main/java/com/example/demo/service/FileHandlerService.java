@@ -39,11 +39,7 @@ public class FileHandlerService {
     }
 
     public List<OrderFromCSV> getOrdersFromCSV(List<String> lines) {
-        List<OrderFromCSV> ordersFromCSV = new ArrayList<>();
-        for (String line : lines) {
-            ordersFromCSV.add(getOrderFromCSV(line));
-        }
-        return ordersFromCSV;
+        return lines.stream().map(this::getOrderFromCSV).toList();
     }
 
     public Set<String> getUserNamesFromCSV(List<OrderFromCSV> ordersFromCSV) {
@@ -58,22 +54,14 @@ public class FileHandlerService {
                 .collect(Collectors.toSet());
     }
 
-    public void addUser(String name) {
-        dataBaseService.addUser(name);
-    }
-
     public void addUsersFromFile(List<OrderFromCSV> ordersFromCSV) {
         Set<String> userNames = getUserNamesFromCSV(ordersFromCSV);
-        userNames.forEach(this::addUser);
-    }
-
-    public void addItem(String name) {
-        dataBaseService.addItem(name);
+        userNames.forEach(o -> dataBaseService.addUser(o));
     }
 
     public void addItemsFromFile(List<OrderFromCSV> ordersFromCSV) {
         Set<String> itemNames = getItemNamesFromCSV(ordersFromCSV);
-        itemNames.forEach(this::addItem);
+        itemNames.forEach(o -> dataBaseService.addItem(o));
     }
 
     public void addOrderToDataBase(OrderFromCSV orderFromCSV) {

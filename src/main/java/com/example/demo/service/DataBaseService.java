@@ -103,11 +103,13 @@ public class DataBaseService {
     public List<ItemData> getItems(){
         return toDataService.getItems(itemRepository.findAll());
     }
+    @Transactional
     public boolean userExists(String userName){
-        return getUserByName(userName) != null;
+        return userRepository.existsByName(userName);
     }
+    @Transactional
     public boolean itemExists(String itemName){
-        return getItemByName(itemName) != null;
+        return itemRepository.existsByName(itemName);
     }
 
 }
