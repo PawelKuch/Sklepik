@@ -17,21 +17,28 @@
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
+                        <th> </th>
                         <th>Available users:</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <#list users as user>
-                        <tr>
-                            <td>${user.name}</td>
-                        </tr>
-                    </#list>
+                    <form action="/users" method="POST" id="userList">
+                        <#list users as user>
+                            <tr>
+                                <td> <input type="checkbox" name="selectedUser" value="${user.userId}"> </td>
+                                <td>${user.name}</td>
+                            </tr>
+                        </#list>
+                    </form>
                 </tbody>
             </table>
         </#if>
         <div class="row justify-content-center align-items-center">
-            <div class="col-5 mt-3 mb-3">
+            <div class="col-6 mt-3 mb-3">
                 <button type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add user </button>
+            </div>
+            <div class="col-6 mt-3 mb-3">
+                <button id="deleteUserBtn" type="button" class="btn btn-primary col-12"> Delete user/s </button>
             </div>
         </div>
     <div class="modal" tabindex="-1" id="addUserModal">
@@ -57,8 +64,12 @@
             </div>
     </div>
     <#if userExists!false>
-        <div class="alert alert-danger role="alert">
+        <div class="alert alert-danger" role="alert">
             User has not been added! User already exists.
+        </div>
+    <#elseif isUserEmpty!false>
+        <div class="alert alert-danger" role="alert">
+            Input field of user is empty!
         </div>
     </#if>
    </div>

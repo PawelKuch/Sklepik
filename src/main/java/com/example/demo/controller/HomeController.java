@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
 
 
 @Controller
@@ -32,29 +33,41 @@ public class HomeController {
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("products", dataBaseService.getItems());
         model.addAttribute("orders", dataBaseService.getOrders());
-        if(expensesBaseService.getExpenses() != null){
-            model.addAttribute("expenses", expensesBaseService.getExpenses());
-        }
         model.addAttribute("shopPage", true);
         return "shop";
     }
 
     @PostMapping("/")
-    public RedirectView saveOrder(@RequestParam("selectedUser") String userId,
-                                  @RequestParam("selectedItem") String itemId,
-                                  @RequestParam("amount") String amount,
-                                  @RequestParam("purchasePrice") String purchasePrice,
-                                  @RequestParam("sellPrice") String sellPrice,
-                                  @RequestParam("isExpense") Boolean isExpense){
-        if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty() && isExpense != null){
-            if(isExpense){
-                expensesBaseService.addExpense(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
-            }else{
-                dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice));
-            }
+    public RedirectView saveOrder(@RequestParam(value = "selectedUser", required = false) String userId,
+                                  @RequestParam(value = "selectedItem", required = false) String itemId,
+                                  @RequestParam(value = "amount", required = false) String amount,
+                                  @RequestParam(value = "purchasePrice", required = false) String purchasePrice,
+                                  @RequestParam(value = "sellPrice", required = false) String sellPrice,
+                                  @RequestParam(value = "selectedOrder", required = false) List<String> orderIDs){
+        if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty()){
+            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice));
             return new RedirectView("/");
         }
         return new RedirectView("/error");
+    }
+    @GetMapping("/expenses")
+    public String getExpenses(Model model){
+        model.addAttribute("users", dataBaseService.getUsers());
+        model.addAttribute("products", dataBaseService.getItems());
+        model.addAttribute("expenses", expensesBaseService.getExpenses());
+        model.addAttribute("expensesPage", true);
+        return "expenses";
+    }
+
+    @PostMapping("/expenses")
+    public RedirectView addExpenses(@RequestParam("selectedUser") String userId,
+                                    @RequestParam("selectedItem") String itemId,
+                                    @RequestParam("amount") String amount,
+                                    @RequestParam("purchasePrice") String purchasePrice){
+        if(!userId.isEmpty() && !itemId.isEmpty() && !amount.isEmpty() && !purchasePrice.isEmpty()){
+            expensesBaseService.addExpense(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
+        }
+        return new RedirectView("/expenses");
     }
 
     @GetMapping("/users")
@@ -65,8 +78,12 @@ public class HomeController {
     }
 
     @PostMapping("/users")
-    public RedirectView addUser(@RequestParam("userName") String userName, RedirectAttributes ra){
-        if(userName.isEmpty()){
+    public RedirectView addUser(@RequestParam(value = "userName", required = false) String userName,
+                                @RequestParam(value = "selectedUser", required = false) List<String> userList,
+                                RedirectAttributes ra){
+        if (userList != null){
+            dataBaseService.removeUsers(userList);
+        }else if(userName == null || userName.isEmpty()){
             ra.addFlashAttribute("isUserEmpty", true);
         }else if(dataBaseService.userExists(userName)) {
             ra.addFlashAttribute("userExists", true );
@@ -83,8 +100,12 @@ public class HomeController {
     }
 
     @PostMapping("/products")
-    public RedirectView addItem(@RequestParam String itemName, RedirectAttributes ra){
-        if(itemName.isEmpty()){
+    public RedirectView addItem(@RequestParam(value = "itemName",required = false) String itemName,
+                                @RequestParam(value = "selectedItem", required = false) List<String> productsList,
+                                RedirectAttributes ra){
+        if(productsList != null){
+            dataBaseService.removeItems(productsList);
+        }else if(itemName.isEmpty()){
             ra.addFlashAttribute("isItemEmpty", true);
         }else if(dataBaseService.itemExists(itemName)) {
             ra.addFlashAttribute("itemExists", true );

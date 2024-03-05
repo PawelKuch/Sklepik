@@ -1,6 +1,7 @@
 package com.example.demo.data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 public class OrderData {
@@ -13,7 +14,7 @@ public class OrderData {
     private double sellPrice;
     private double revenue;
     private double income;
-    private LocalDateTime orderDateTime;
+    private Date orderDateTime;
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -87,11 +88,11 @@ public class OrderData {
         return income;
     }
 
-    public void setOrderDateTime(LocalDateTime orderDateTime) {
+    public void setOrderDateTime(Date orderDateTime) {
         this.orderDateTime = orderDateTime;
     }
 
-    public LocalDateTime getOrderDateTime() {
+    public Date getOrderDateTime() {
         return orderDateTime;
     }
 

@@ -8,9 +8,9 @@ public class ExpenseData {
         private UserData user;
         private ItemData item;
         private int amount;
-        private double expensePrice;
-        private double totalExpenseValue;
-        private LocalDateTime expenseDateTime;
+        private Double expensePrice;
+        private Double totalExpenseValue;
+        private Date expenseDateTime;
 
 
         public void setExpenseId(String expenseId) {
@@ -49,23 +49,23 @@ public class ExpenseData {
             return amount;
         }
 
-        public double getExpensePrice() {
+        public Double getExpensePrice() {
             return expensePrice;
         }
 
-        public void setTotalExpenseValue(double totalExpenseValue) {
+        public void setTotalExpenseValue(Double totalExpenseValue) {
             this.totalExpenseValue = totalExpenseValue;
         }
 
-        public double getTotalExpenseValue() {
+        public Double getTotalExpenseValue() {
             return totalExpenseValue;
         }
 
-        public void setExpenseDateTime(LocalDateTime expenseDateTime) {
+        public void setExpenseDateTime(Date expenseDateTime) {
             this.expenseDateTime = expenseDateTime;
         }
 
-        public LocalDateTime getExpenseDateTime() {
+        public Date getExpenseDateTime() {
             return expenseDateTime;
         }
 }

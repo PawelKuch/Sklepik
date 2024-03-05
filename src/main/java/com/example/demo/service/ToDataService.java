@@ -8,6 +8,11 @@ import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,7 +43,8 @@ public class ToDataService {
         orderData.setIncome(order.getIncome());
         orderData.setUser(convert(order.getUser()));
         orderData.setItem(convert(order.getItem()));
-        orderData.setOrderDateTime(order.getOrderDateTime());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        orderData.setOrderDateTime(Date.from(order.getOrderDateTime().toInstant(ZoneOffset.UTC)));
         return orderData;
     }
     public ExpenseData convert(Expense expense){
@@ -49,7 +55,7 @@ public class ToDataService {
         expenseData.setTotalExpenseValue(expense.getTotalExpenseValue());
         expenseData.setUser(convert(expense.getUser()));
         expenseData.setItem(convert(expense.getItem()));
-        expenseData.setExpenseDateTime(expense.getExpenseDateTime());
+        expenseData.setExpenseDateTime(Date.from(expense.getExpenseDateTime().toInstant(ZoneOffset.UTC)));
         return expenseData;
     }
     public ItemData convert(Item data){

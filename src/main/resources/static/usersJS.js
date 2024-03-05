@@ -2,6 +2,8 @@
         $("#addBtn").click(function(){
             $("#userForm").submit();
         });
-
+        $("#deleteUserBtn").click(function(){
+            $("#userList").submit();
+        });
     })
 

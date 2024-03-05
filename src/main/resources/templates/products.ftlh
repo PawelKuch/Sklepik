@@ -18,21 +18,28 @@
             <table id="productsTable" class="table table-bordered mt-3">
                 <thead>
                     <tr>
+                        <th> </th>
                         <th>Available products:</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <#list items as item>
-                        <tr>
-                            <td>${item.name}</td>
-                        </tr>
-                    </#list>
+                    <form action="/products" method="POST" id="productList">
+                        <#list items as item>
+                            <tr>
+                                <td><input type="checkbox" name="selectedItem" value="${item.itemId}">${item.itemId}</td>
+                                <td>${item.name}</td>
+                            </tr>
+                        </#list>
+                    </form>
                 </tbody>
             </table>
         </#if>
         <div class="row justify-content-center align-items-center">
-            <div class="col-5 mt-3 mb-3">
+            <div class="col-6 mt-3 mb-3">
                 <button id="openModalBtn" type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addProductModal"> Add </button>
+            </div>
+            <div class="col-6 mt-3 mb-3">
+                <button class="btn btn-primary col-12" id="delBtn" type="button" > Delete product/s </button>
             </div>
         </div>
         <div class="modal" tabindex="-1" id="addProductModal">
@@ -58,8 +65,12 @@
             </div>
         </div>
         <#if itemExists!false>
-            <div class="alert alert-danger role="alert">
+            <div class="alert alert-danger" role="alert">
                 Item has not been added! Item already exists.
+            </div>
+        <#elseif isItemEmpty!false>
+            <div class="alert alert-danger" role="alert">
+                Input field of product is empty!
             </div>
         </#if>
    </div>

@@ -12,52 +12,42 @@
 <body>
 <#include "navbar1.ftlh">
     <div class="container align-items-center text-center">
-        <#if orders?has_content>
+        <#if expenses?has_content>
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
-                        <th colspan="9"> Products to sell </th>
+                        <th colspan="6"> Expenses </th>
                     </tr>
                     <tr>
-                        <th> </th>
-                        <th>Order Date</th>
+                        <th>Expense Date</th>
                         <th>Username</th>
                         <th>Product</th>
                         <th>Amount</th>
-                        <th>Price</th>
+                        <th>Cost</th>
                         <th>Value</th>
-                        <th>Sell Price</th>
-                        <th>Revenue</th>
-                        <th>Income</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <#list orders as order>
+                    <#list expenses as expense>
                         <tr>
-                            <td> <input type="checkbox" name="selectedOrder" value="${order.orderId}">
-                            <td>${order.orderDateTime?datetime?string("dd-MM-yyyy HH:mm:ss")}</td>
-                            <td>${order.user.name}</td>
-                            <td>${order.item.name}</td>
-                            <td>${order.amount} PCS</td>
-                            <td>${order.purchasePrice} PLN</td>
-                            <td>${order.totalPurchaseValue} PLN</td>
-                            <td>${order.sellPrice} PLN</td>
-                            <td>${order.revenue} PLN</td>
-                            <td>${order.income} PLN</td>
+                            <td>${expense.expenseDateTime?datetime?string("dd-MM-yyyy HH:mm:ss")}0</td>
+                            <td>${expense.user.name}</td>
+                            <td>${expense.item.name}</td>
+                            <td>${expense.amount} PCS</td>
+                            <td>${expense.expensePrice} PLN</td>
+                            <td>${expense.totalExpenseValue} PLN</td>
                         </tr>
                     </#list>
                 </tbody>
             </table>
         </#if>
-
         <#if users?has_content && products?has_content>
             <div class="row justify-content-center align-items-center">
                 <div class="col-3 mt-3 mb-3">
-                    <button id="openOrderModalBtn" type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addOrderModal"> Add order</button>
-                    </div>
+                    <button id="openExpenseModalBtn" type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addExpenseModal"> Add expense</button>
                 </div>
             </div>
-            <div class="modal" tabindex="-1" id="addOrderModal">
+            <div class="modal" tabindex="-1" id="addExpenseModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header text-center">
@@ -65,7 +55,7 @@
                             <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="mb-3" id="orderForm" action="/" method="post">
+                            <form class="mb-3" id="expenseForm" action="/expenses" method="post">
                                 <select class="form-select mb-2" id="selectedUser" name="selectedUser">
                                     <option> Select user </option>
                                     <#list users as user>
@@ -73,21 +63,24 @@
                                     </#list>
                                 </select>
 
+                                <div class="form-check form-control justify-content-start expenseFlagDiv">
+                                    <input class="form-check-input" id="expenseFlag" name="isExpense" type="checkbox" value="true" checked="checked">
+                                    <label class="form-check-label" for="expenseFlag"> product as expense </label>
+                                </div>
+
                                 <select class="form-select mb-2" id="selectedItem" name="selectedItem">
                                     <option> Select product </option>
                                     <#list products as product>
                                         <option value=${product.itemId}>${product.name}</option>
                                     </#list>
                                 </select>
-                                <div class="form-check form-control justify-content-start expenseFlagDiv">
-                                    <input class="form-check-input" id="expenseFlag" name="isExpense" type="checkbox" value="false" checked="checked">
-                                    <label class="form-check-label" for="expenseFlag"> product as expense </label>
-                                </div>
 
                                 <div class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="Quantity"> Quantity </span>
                                     <input class="form-control mb-2" id="amount" type="number" name="amount" value="1" min="1" step="1" aria-describedby="addon-wrapping">
                                 </div>
+
+                                <input class="form-control mb-2" style="display: none;" type="number" name="sellPrice" value="0" aria-describedby="addon-wrapping">
 
                                 <div class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="Purchase"> Purchase </span>
@@ -95,15 +88,10 @@
                                     <span class="input-group-text mb-2"> PLN </span>
                                 </div>
 
-                                <div id="inputSellPrice" class="input-group align-items-center">
-                                    <span class="input-group-text mb-2" aria-label="SellPrice"> SellPrice </span>
-                                    <input class="form-control mb-2" id="sellPrice" type="number" name="sellPrice" step="0.01">
-                                    <span class="input-group-text mb-2"> PLN </span>
-                                </div><br>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button id="addOrderBtn" class="btn btn-primary col-2"> Confirm </button>
+                            <button id="addExpenseBtn" class="btn btn-primary col-2"> Confirm </button>
                             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"> Back </button>
                         </div>
                     </div>

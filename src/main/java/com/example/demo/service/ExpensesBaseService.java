@@ -43,9 +43,7 @@ public class ExpensesBaseService {
         expense.setTotalExpenseValue(amount*purchasePrice);
         expense.setExpenseId(UUID.randomUUID().toString());
         expense.setItem(item);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String currentDateString = LocalDateTime.now().format(formatter);
-        expense.setExpenseDateTime(LocalDateTime.parse(currentDateString, formatter));
+        expense.setExpenseDateTime(LocalDateTime.now());
         expenseRepository.save(expense);
     }
 

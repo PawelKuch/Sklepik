@@ -12,7 +12,6 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +36,13 @@ public class DataBaseService {
         user.setUserId(UUID.randomUUID().toString());
         userRepository.save(user);
     }
+
+    @Transactional
+    public void removeUsers(List<String> userIDs){
+        for (String userId : userIDs){
+            userRepository.delete(userRepository.findByUserId(userId));
+        }
+    }
     @Transactional
     public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice){
         User user = userRepository.findByUserId(userId);
@@ -58,11 +64,10 @@ public class DataBaseService {
         }
         order.setOrderId(UUID.randomUUID().toString());
         order.setItem(item);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String currentDateString = LocalDateTime.now().format(formatter);
-        order.setOrderDateTime(LocalDateTime.parse(currentDateString, formatter));
+        order.setOrderDateTime(LocalDateTime.now());
         orderRepository.save(order);
     }
+
 
     @Transactional
     public void addItem(String name) {
@@ -70,6 +75,12 @@ public class DataBaseService {
         item.setName(name);
         item.setItemId(UUID.randomUUID().toString());
         itemRepository.save(item);
+    }
+    @Transactional
+    public void removeItems(List<String> itemIDs){
+        for(String itemId : itemIDs){
+            itemRepository.delete(itemRepository.findByItemId(itemId));
+        }
     }
 
     @Transactional
@@ -93,18 +104,10 @@ public class DataBaseService {
         return toDataService.getItems(itemRepository.findAll());
     }
     public boolean userExists(String userName){
-        if (getUserByName(userName) != null){
-            return true;
-        }else{
-            return false;
-        }
+        return getUserByName(userName) != null;
     }
     public boolean itemExists(String itemName){
-        if (getItemByName(itemName)!= null){
-            return true;
-        }else{
-            return false;
-        }
+        return getItemByName(itemName) != null;
     }
 
 }
