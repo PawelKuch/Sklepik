@@ -31,7 +31,7 @@ public class Order {
     private LocalDateTime orderDateTime;
     @ManyToOne
     @JoinColumn(name="user_id")
-    User user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name="item_id")

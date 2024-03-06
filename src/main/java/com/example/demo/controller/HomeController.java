@@ -6,6 +6,7 @@ import com.example.demo.service.FileHandlerService;
 import com.example.demo.service.ToDataService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,11 +80,8 @@ public class HomeController {
 
     @PostMapping("/users")
     public RedirectView addUser(@RequestParam(value = "userName", required = false) String userName,
-                                @RequestParam(value = "selectedUser", required = false) List<String> userList,
                                 RedirectAttributes ra){
-        if (userList != null){
-            dataBaseService.removeUsers(userList);
-        }else if(userName == null || userName.isEmpty()){
+        if(userName == null || userName.isEmpty()){
             ra.addFlashAttribute("isUserEmpty", true);
         }else if(dataBaseService.userExists(userName)) {
             ra.addFlashAttribute("userExists", true );
@@ -92,6 +90,7 @@ public class HomeController {
         }
         return new RedirectView("/users");
     }
+
     @GetMapping("/products")
     public String getProducts (Model model){
         model.addAttribute("items", dataBaseService.getItems());
@@ -101,16 +100,20 @@ public class HomeController {
 
     @PostMapping("/products")
     public RedirectView addItem(@RequestParam(value = "itemName",required = false) String itemName,
-                                @RequestParam(value = "selectedItem", required = false) List<String> productsList,
                                 RedirectAttributes ra){
-        if(productsList != null){
-            dataBaseService.removeItems(productsList);
-        }else if(itemName.isEmpty()){
+       if(itemName == null || itemName.isEmpty()){
             ra.addFlashAttribute("isItemEmpty", true);
         }else if(dataBaseService.itemExists(itemName)) {
             ra.addFlashAttribute("itemExists", true );
         }else{
             dataBaseService.addItem(itemName);
+        }
+        return new RedirectView("/products");
+    }
+    @DeleteMapping("/products")
+    public RedirectView removeProducts(@RequestParam(value = "selectedItem") List<String> productsList){
+        if (productsList != null) {
+            dataBaseService.removeItems(productsList);
         }
         return new RedirectView("/products");
     }

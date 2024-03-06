@@ -12,7 +12,7 @@ public class Item {
     private String name;
     @Column(name = "ITEM_ID", nullable = false, length = 512)
     private String itemId;
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Order> order;
 
     public void setName(String name) {

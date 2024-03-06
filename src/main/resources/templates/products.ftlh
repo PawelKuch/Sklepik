@@ -23,10 +23,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="/products" method="POST" id="productList">
+                    <form action="/products" method="delete" id="productList">
                         <#list items as item>
                             <tr>
-                                <td><input type="checkbox" name="selectedItem" value="${item.itemId}">${item.itemId}</td>
+                                <td><input type="checkbox" name="selectedItem" value="${item.itemId}"> </td>
                                 <td>${item.name}</td>
                             </tr>
                         </#list>

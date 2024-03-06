@@ -1,11 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.data.ItemData;
 import com.example.demo.data.OrderFromCSV;
-import com.example.demo.data.UserData;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,9 +21,14 @@ public class FileHandlerService {
     }
 
     public List<String> getLinesFromCSV() {
-        List<String> lines = IOUtils.readLines(FileHandlerService.class.getResourceAsStream("/arkusz.csv"), StandardCharsets.UTF_8);
-        lines.remove(0);
-        return lines;
+        try(InputStream inputStream = FileHandlerService.class.getResourceAsStream("/arkusz.csv")){
+            List<String> lines = IOUtils.readLines(inputStream, StandardCharsets.UTF_8);
+            lines.remove(0);
+            return lines;
+        }catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public OrderFromCSV getOrderFromCSV(String line) {
