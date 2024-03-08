@@ -30,7 +30,7 @@
                 <tbody>
                     <#list expenses as expense>
                         <tr>
-                            <td>${expense.expenseDateTime?datetime?string("dd-MM-yyyy HH:mm:ss")}0</td>
+                            <td>${expense.expenseDateTime?datetime?string("dd-MM-yyyy HH:mm:ss")}</td>
                             <td>${expense.user.name}</td>
                             <td>${expense.item}</td>
                             <td>${expense.amount} PCS</td>
