@@ -1,12 +1,10 @@
 package com.example.demo.data;
 
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
 import java.util.Date;
 public class ExpenseData {
         private String expenseId;
         private UserData user;
-        private ItemData item;
+        private String item;
         private int amount;
         private Double expensePrice;
         private Double totalExpenseValue;
@@ -21,7 +19,7 @@ public class ExpenseData {
             this.user = user;
         }
 
-        public void setItem(ItemData item) {
+        public void setItem(String item) {
             this.item = item;
         }
 
@@ -41,7 +39,7 @@ public class ExpenseData {
             return user;
         }
 
-        public ItemData getItem() {
+        public String getItem() {
             return item;
         }
 

@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="/products" method="delete" id="productList">
+                    <form action="/delete-products" method="post" id="productList">
                         <#list items as item>
                             <tr>
                                 <td><input type="checkbox" name="selectedItem" value="${item.itemId}"> </td>

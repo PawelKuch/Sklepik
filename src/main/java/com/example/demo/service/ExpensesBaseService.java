@@ -29,12 +29,9 @@ public class ExpensesBaseService {
         this.itemRepository = itemRepository;
     }
 
-    public void addExpense(String userId, String itemId, int amount, double purchasePrice){
+    public void addExpense(String userId, String item, int amount, double purchasePrice){
         User user = userRepository.findByUserId(userId);
         if (user == null) throw new RuntimeException();
-
-        Item item = itemRepository.findByItemId(itemId);
-        if (item == null) throw new RuntimeException();
 
         Expense expense = new Expense();
         expense.setUser(user);

@@ -25,9 +25,7 @@ public class Expense {
     @JoinColumn(name="user_id")
     User user;
 
-    @ManyToOne
-    @JoinColumn(name="item_id")
-    private Item item;
+    private String item;
 
     public void setTotalExpenseValue(double totalExpenseValue) {
         this.totalExpenseValue = totalExpenseValue;
@@ -59,10 +57,10 @@ public class Expense {
     public int getAmount() {
         return amount;
     }
-    public Item getItem(){
+    public String getItem(){
         return item;
     }
-    public void setItem(Item item) {
+    public void setItem(String item) {
         this.item = item;
     }
     public void setExpenseDateTime(LocalDateTime expenseDateTime) {

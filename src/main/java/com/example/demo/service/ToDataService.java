@@ -9,9 +9,7 @@ import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +41,6 @@ public class ToDataService {
         orderData.setIncome(order.getIncome());
         orderData.setUser(convert(order.getUser()));
         orderData.setItem(convert(order.getItem()));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         orderData.setOrderDateTime(Date.from(order.getOrderDateTime().toInstant(ZoneOffset.UTC)));
         return orderData;
     }
@@ -54,7 +51,7 @@ public class ToDataService {
         expenseData.setExpensePrice(expense.getExpensePrice());
         expenseData.setTotalExpenseValue(expense.getTotalExpenseValue());
         expenseData.setUser(convert(expense.getUser()));
-        expenseData.setItem(convert(expense.getItem()));
+        expenseData.setItem(expense.getItem());
         expenseData.setExpenseDateTime(Date.from(expense.getExpenseDateTime().toInstant(ZoneOffset.UTC)));
         return expenseData;
     }

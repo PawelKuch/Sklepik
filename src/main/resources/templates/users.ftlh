@@ -22,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="/users" method="POST" id="userList">
+                    <form action="/delete-users" method="POST" id="userList">
                         <#list users as user>
                             <tr>
                                 <td> <input type="checkbox" name="selectedUser" value="${user.userId}"> </td>

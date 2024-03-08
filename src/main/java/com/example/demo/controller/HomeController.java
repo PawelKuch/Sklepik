@@ -6,7 +6,6 @@ import com.example.demo.service.FileHandlerService;
 import com.example.demo.service.ToDataService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,11 +61,11 @@ public class HomeController {
 
     @PostMapping("/expenses")
     public RedirectView addExpenses(@RequestParam("selectedUser") String userId,
-                                    @RequestParam("selectedItem") String itemId,
+                                    @RequestParam("item") String item,
                                     @RequestParam("amount") String amount,
                                     @RequestParam("purchasePrice") String purchasePrice){
-        if(!userId.isEmpty() && !itemId.isEmpty() && !amount.isEmpty() && !purchasePrice.isEmpty()){
-            expensesBaseService.addExpense(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
+        if(!userId.isEmpty() && !item.isEmpty() && !amount.isEmpty() && !purchasePrice.isEmpty()){
+            expensesBaseService.addExpense(userId, item, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
         }
         return new RedirectView("/expenses");
     }
@@ -79,7 +78,7 @@ public class HomeController {
     }
 
     @PostMapping("/users")
-    public RedirectView addUser(@RequestParam(value = "userName", required = false) String userName,
+    public RedirectView addUser(@RequestParam(value = "userName") String userName,
                                 RedirectAttributes ra){
         if(userName == null || userName.isEmpty()){
             ra.addFlashAttribute("isUserEmpty", true);
@@ -88,6 +87,12 @@ public class HomeController {
         }else{
             dataBaseService.addUser(userName);
         }
+        return new RedirectView("/users");
+    }
+
+    @PostMapping("/delete-users")
+    public RedirectView removeUsers(@RequestParam("selectedUser") List<String> usersList){
+        dataBaseService.removeUsers(usersList);
         return new RedirectView("/users");
     }
 
@@ -110,7 +115,7 @@ public class HomeController {
         }
         return new RedirectView("/products");
     }
-    @DeleteMapping("/products")
+    @PostMapping("/delete-products")
     public RedirectView removeProducts(@RequestParam(value = "selectedItem") List<String> productsList){
         if (productsList != null) {
             dataBaseService.removeItems(productsList);

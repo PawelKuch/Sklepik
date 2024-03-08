@@ -14,7 +14,7 @@ public class User {
     @Column(name = "NAME", nullable = false, length = 512)
     private String name;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private final List<Order> orders = new ArrayList<>();
+    private List<Order> orders;
     public void setUserId(String userId) {
         this.userId = userId;
     }

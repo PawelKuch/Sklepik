@@ -32,7 +32,7 @@
                         <tr>
                             <td>${expense.expenseDateTime?datetime?string("dd-MM-yyyy HH:mm:ss")}0</td>
                             <td>${expense.user.name}</td>
-                            <td>${expense.item.name}</td>
+                            <td>${expense.item}</td>
                             <td>${expense.amount} PCS</td>
                             <td>${expense.expensePrice} PLN</td>
                             <td>${expense.totalExpenseValue} PLN</td>
@@ -68,19 +68,18 @@
                                     <label class="form-check-label" for="expenseFlag"> product as expense </label>
                                 </div>
 
-                                <select class="form-select mb-2" id="selectedItem" name="selectedItem">
-                                    <option> Select product </option>
-                                    <#list products as product>
-                                        <option value=${product.itemId}>${product.name}</option>
-                                    </#list>
-                                </select>
+                                <div class="input-group align-items-center">
+                                    <span class="input-group-text mb-2" aria-label="Item"> Item </span>
+                                    <input class="form-control mb-2 id="item" name="item" aria-describedby="addon-wrapping">
+                                </div>
 
                                 <div class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="Quantity"> Quantity </span>
                                     <input class="form-control mb-2" id="amount" type="number" name="amount" value="1" min="1" step="1" aria-describedby="addon-wrapping">
+                                    <span class="input-group-text mb-2"> PC/S </span>
                                 </div>
 
-                                <input class="form-control mb-2" style="display: none;" type="number" name="sellPrice" value="0" aria-describedby="addon-wrapping">
+
 
                                 <div class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="Purchase"> Purchase </span>

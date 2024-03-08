@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.data.OrderFromCSV;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class FileHandlerService {
+    private static final Logger LOG = LoggerFactory.getLogger(FileHandlerService.class);
     DataBaseService dataBaseService;
 
     public FileHandlerService(DataBaseService dataBaseService) {
@@ -26,8 +29,8 @@ public class FileHandlerService {
             lines.remove(0);
             return lines;
         }catch(IOException e){
-            e.printStackTrace();
-            return null;
+            LOG.warn("Cannot read arkusz.csv File", e);
+            return Collections.emptyList();
         }
     }
 
