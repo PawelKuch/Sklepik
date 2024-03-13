@@ -42,6 +42,11 @@ public class FileHandlerService {
             orderFromCSV.setItemName(cols[1].trim());
             orderFromCSV.setAmount(Integer.parseInt(cols[2]));
             orderFromCSV.setPurchasePrice(Double.parseDouble(cols[3]));
+            if (cols[5].trim().equals("rozliczono")){
+                orderFromCSV.setSettled(true);
+            }else {
+                orderFromCSV.setSettled(false);
+            }
             orderFromCSV.setSellPrice(Double.parseDouble(cols[6]));
         }
         return orderFromCSV;
@@ -76,7 +81,7 @@ public class FileHandlerService {
     public void addOrderToDataBase(OrderFromCSV orderFromCSV) {
         String userId = dataBaseService.getUserByName(orderFromCSV.getUserName()).getUserId();
         String itemId = dataBaseService.getItemByName(orderFromCSV.getItemName()).getItemId();
-        dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice());
+        dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice(), orderFromCSV.isSettled());
     }
 
     @PostConstruct

@@ -39,16 +39,15 @@ public class DataBaseService {
 
     @Transactional
     public void removeUsers(List<String> userIDs){
-        for (String userId : userIDs){
-            userRepository.delete(userRepository.findByUserId(userId));
-        }
+        userIDs.forEach(o -> userRepository.delete(userRepository.findByUserId(o)));
     }
     @Transactional
-    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice){
+    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isSettled){
         User user = userRepository.findByUserId(userId);
         if (user == null) throw new RuntimeException();
         Item item = itemRepository.findByItemId(itemId);
         if (item == null) throw new RuntimeException();
+
         Order order = new Order();
         order.setUser(user);
         order.setAmount(amount);
@@ -62,12 +61,16 @@ public class DataBaseService {
             order.setRevenue(amount*sellPrice);
             order.setIncome(order.getRevenue() - order.getTotalPurchaseValue());
         }
+        order.setSettled(isSettled);
         order.setOrderId(UUID.randomUUID().toString());
         order.setItem(item);
         order.setOrderDateTime(LocalDateTime.now());
         orderRepository.save(order);
     }
-
+    @Transactional
+    public void settleTheOrder(String orderId){
+        orderRepository.findByOrderId(orderId).setSettled(true);
+    }
 
     @Transactional
     public void addItem(String name) {
@@ -78,9 +81,7 @@ public class DataBaseService {
     }
     @Transactional
     public void removeItems(List<String> itemIDs){
-        for(String itemId : itemIDs){
-            itemRepository.delete(itemRepository.findByItemId(itemId));
-        }
+        itemIDs.forEach(o -> itemRepository.delete(itemRepository.findByItemId(o)));
     }
 
     @Transactional

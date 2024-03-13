@@ -6,6 +6,7 @@ public class OrderFromCSV {
     private int amount;
     private double purchasePrice;
     private double sellPrice;
+    private boolean isSettled;
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -27,6 +28,10 @@ public class OrderFromCSV {
         this.sellPrice = sellPrice;
     }
 
+    public void setSettled(boolean settled) {
+        isSettled = settled;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -45,5 +50,9 @@ public class OrderFromCSV {
 
     public double getSellPrice() {
         return sellPrice;
+    }
+
+    public boolean isSettled() {
+        return isSettled;
     }
 }

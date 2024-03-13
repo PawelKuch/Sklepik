@@ -1,9 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.data.ExpenseData;
-import com.example.demo.data.OrderData;
 import com.example.demo.entity.Expense;
-import com.example.demo.entity.Item;
 import com.example.demo.entity.User;
 import com.example.demo.repository.ExpenseRepository;
 import com.example.demo.repository.ItemRepository;
@@ -11,7 +9,6 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 

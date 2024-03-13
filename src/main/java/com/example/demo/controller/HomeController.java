@@ -7,6 +7,7 @@ import com.example.demo.service.ToDataService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -45,7 +46,7 @@ public class HomeController {
                                   @RequestParam(value = "sellPrice", required = false) String sellPrice,
                                   @RequestParam(value = "selectedOrder", required = false) List<String> orderIDs){
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty()){
-            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice));
+            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false);
             return new RedirectView("/");
         }
         return new RedirectView("/error");
@@ -68,6 +69,19 @@ public class HomeController {
             expensesBaseService.addExpense(userId, item, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
         }
         return new RedirectView("/expenses");
+    }
+
+    @GetMapping("/orderSettlements")
+    public String getOrderSettlements(Model model){
+        model.addAttribute("orders", dataBaseService.getOrders());
+        model.addAttribute("orderSettlementsPage", true);
+        return "/orderSettlements";
+    }
+
+    @GetMapping("/orderSettlements/{id}")
+    public RedirectView settleTheOrder(@PathVariable String id){
+        dataBaseService.settleTheOrder(id);
+        return new RedirectView("/orderSettlements");
     }
 
     @GetMapping("/users")

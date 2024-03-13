@@ -15,6 +15,7 @@ public class OrderData {
     private double revenue;
     private double income;
     private Date orderDateTime;
+    private boolean isSettled;
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -96,4 +97,10 @@ public class OrderData {
         return orderDateTime;
     }
 
+    public void setSettled(boolean settled) {
+        isSettled = settled;
+    }
+    public boolean getIsSettled() {
+        return isSettled;
+    }
 }

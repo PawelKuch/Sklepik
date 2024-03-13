@@ -42,6 +42,7 @@ public class ToDataService {
         orderData.setUser(convert(order.getUser()));
         orderData.setItem(convert(order.getItem()));
         orderData.setOrderDateTime(Date.from(order.getOrderDateTime().toInstant(ZoneOffset.UTC)));
+        orderData.setSettled(order.isSettled());
         return orderData;
     }
     public ExpenseData convert(Expense expense){

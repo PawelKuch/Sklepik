@@ -7,8 +7,10 @@
          <ul class="nav nav-pills">
            <li class="nav-item"><a href="/" class="nav-link <#if shopPage!false>active</#if>">Shop</a></li>
            <li class="nav-item"><a href="/expenses" class="nav-link <#if expensesPage!false>active</#if>">Expenses</a></li>
+           <li class="nav-item"><a href="/orderSettlements" class="nav-link <#if orderSettlementsPage!false>active</#if>">Order Settlements</a></li>
            <li class="nav-item"><a href="/users" class="nav-link <#if usersPage!false>active</#if>">Users</a></li>
            <li class="nav-item"><a href="/products" class="nav-link <#if productsPage!false>active</#if>">Products</a></li>
+
          </ul>
        </header>
      </div>
