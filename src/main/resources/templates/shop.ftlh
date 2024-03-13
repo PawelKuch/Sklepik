@@ -35,7 +35,7 @@
                 <tbody>
                     <#list orders as order>
                         <tr>
-                            <td> <input type="checkbox" name="selectedOrder" value="${order.orderId}">
+                            <td><input type="checkbox" name="selectedOrder" value="${order.orderId}"></td>
                             <td>${order.orderDateTime?datetime?string("dd-MM-yyyy HH:mm:ss")}</td>
                             <td>${order.user.name}</td>
                             <td>${order.item.name}</td>

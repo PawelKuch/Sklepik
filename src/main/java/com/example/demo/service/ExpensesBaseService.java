@@ -7,6 +7,7 @@ import com.example.demo.repository.ExpenseRepository;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ExpensesBaseService {
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
     }
-
+    @Transactional
     public void addExpense(String userId, String item, int amount, double purchasePrice){
         User user = userRepository.findByUserId(userId);
         if (user == null) throw new RuntimeException();
@@ -41,6 +42,7 @@ public class ExpensesBaseService {
         expenseRepository.save(expense);
     }
 
+    @Transactional
     public List<ExpenseData> getExpenses(){
         return toDataService.getExpenses(expenseRepository.findAll());
     }
