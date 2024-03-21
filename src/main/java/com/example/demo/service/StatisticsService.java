@@ -1,0 +1,112 @@
+package com.example.demo.service;
+
+import com.example.demo.data.UserStatistics;
+import com.example.demo.data.UserData;
+import com.example.demo.repository.ExpenseRepository;
+import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.UserRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+@Service
+public class StatisticsService {
+    DataBaseService dataBaseService;
+    OrderRepository orderRepository;
+    ExpenseRepository expenseRepository;
+    ItemRepository itemRepository;
+    UserRepository userRepository;
+    public StatisticsService(DataBaseService dataBaseService, OrderRepository orderRepository, ExpenseRepository expenseRepository,
+                            ItemRepository itemRepository,UserRepository userRepository ){
+        this.dataBaseService = dataBaseService;
+        this.orderRepository = orderRepository;
+        this.expenseRepository = expenseRepository;
+        this.itemRepository = itemRepository;
+        this.userRepository = userRepository;
+    }
+    @Transactional
+    public Double getTotalPurchaseValue(){
+        return orderRepository.getTotalPurchaseValue();
+    }
+    @Transactional
+    public Double getTotalExpenseValue() {
+        return expenseRepository.getTotalPurchaseValue();
+    }
+    public Double getTotalPurchaseAndExpenseValue(){
+        return getTotalPurchaseValue() + getTotalExpenseValue();
+    }
+    @Transactional
+    public Double getTotalIncome(){
+        return orderRepository.getTotalIncome();
+    }
+    @Transactional
+    public Double getTotalRevenue(){
+        return orderRepository.getTotalRevenue();
+    }
+    @Transactional
+    public Long getHowManyOrders(){
+        return orderRepository.count();
+    }
+    @Transactional
+    public Long getHowManyUsers(){
+        return userRepository.count();
+    }
+    @Transactional
+    public Long getHowManyItems(){
+        return itemRepository.count();
+    }
+    @Transactional
+    public int getHowManySettledOrders(){ return orderRepository.countByIsSettled(true);}
+    @Transactional
+    public int getHowManyUnsettledOrders(){return orderRepository.countByIsSettled(false); }
+    @Transactional
+    public Double getUserTotalPurchaseValue(String userId){return orderRepository.getTotalIncomeOfUser(dataBaseService.getUser(userId));}
+    @Transactional
+    public Double getUserTotalExpenseValue(String userId){
+       return expenseRepository.getTotalPurchaseValueOfUser(dataBaseService.getUser(userId));
+    }
+    @Transactional
+    public Double getTotalPurchaseAndExpenseValue(String userId){
+        return getUserTotalPurchaseValue(userId)+getUserTotalExpenseValue(userId);
+    }
+    @Transactional
+    public Double getUserTotalIncome(String userId){
+        return orderRepository.getTotalIncomeOfUser(dataBaseService.getUser(userId));
+    }
+    @Transactional
+    public Double getUserTotalRevenue(String userId){
+        return orderRepository.getTotalRevenueOfUser(dataBaseService.getUser(userId));
+    }
+    @Transactional
+    public Integer getHowManyUserOrders(String userId){
+        return orderRepository.countByUser(dataBaseService.getUser(userId));
+    }
+    @Transactional
+    public int getHowManyUserSettledOrders(String userId){
+        return orderRepository.countByIsSettledAndUser(true, dataBaseService.getUser(userId));
+    }
+    @Transactional
+    public int getHowManyUserUnsettledOrders(String userId){
+        return orderRepository.countByIsSettledAndUser(false, dataBaseService.getUser(userId));
+    }
+    public UserStatistics getUserStatistics(UserData userData){
+        UserStatistics statistics = new UserStatistics();
+        statistics.setUser(userData);
+        statistics.setTotalPurchaseValue(getUserTotalPurchaseValue(userData.getUserId()));
+        statistics.setTotalExpenseValue(getUserTotalExpenseValue(userData.getUserId()));
+        statistics.setTotalIncomeValue(getUserTotalIncome(userData.getUserId()));
+        statistics.setTotalRevenueValue(getUserTotalRevenue(userData.getUserId()));
+        statistics.setHowManyOrders(getHowManyUserOrders(userData.getUserId()));
+        statistics.setHoManySettledOrders(getHowManyUserSettledOrders(userData.getUserId()));
+        statistics.setHowManyUnsettledOrders(getHowManyUserUnsettledOrders(userData.getUserId()));
+        return statistics;
+    }
+    public List<UserStatistics> getUsersStatistics(){
+        List<UserData> users = dataBaseService.getUsers();
+        return users.stream().map(this::getUserStatistics).collect(Collectors.toList());
+    }
+}

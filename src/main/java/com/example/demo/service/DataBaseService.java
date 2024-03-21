@@ -112,5 +112,11 @@ public class DataBaseService {
     public boolean itemExists(String itemName){
         return itemRepository.existsByName(itemName);
     }
+    @Transactional
+    public User getUser(String userId){
+        return userRepository.findByUserId(userId);
+    }
+
+
 
 }

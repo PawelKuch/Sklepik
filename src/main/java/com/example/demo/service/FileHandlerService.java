@@ -42,11 +42,7 @@ public class FileHandlerService {
             orderFromCSV.setItemName(cols[1].trim());
             orderFromCSV.setAmount(Integer.parseInt(cols[2]));
             orderFromCSV.setPurchasePrice(Double.parseDouble(cols[3]));
-            if (cols[5].trim().equals("rozliczono")){
-                orderFromCSV.setSettled(true);
-            }else {
-                orderFromCSV.setSettled(false);
-            }
+            orderFromCSV.setSettled(cols[5].trim().equals("rozliczono"));
             orderFromCSV.setSellPrice(Double.parseDouble(cols[6]));
         }
         return orderFromCSV;

@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.DataBaseService;
-import com.example.demo.service.ExpensesBaseService;
-import com.example.demo.service.FileHandlerService;
-import com.example.demo.service.ToDataService;
+import com.example.demo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +19,15 @@ public class HomeController {
     ToDataService toDataService;
     FileHandlerService fileHandlerService;
     ExpensesBaseService expensesBaseService;
+    StatisticsService statisticsService;
     public HomeController(DataBaseService dataBaseService, ToDataService toDataService,
-                          FileHandlerService fileHandlerService, ExpensesBaseService expensesBaseService){
+                          FileHandlerService fileHandlerService, ExpensesBaseService expensesBaseService,
+                          StatisticsService statisticsService){
         this.dataBaseService = dataBaseService;
         this.toDataService = toDataService;
         this.fileHandlerService = fileHandlerService;
         this.expensesBaseService = expensesBaseService;
+        this.statisticsService = statisticsService;
     }
     @GetMapping("/")
     public String getShop(Model model){
@@ -51,6 +51,12 @@ public class HomeController {
         }
         return new RedirectView("/error");
     }
+
+    @GetMapping("/{id}")
+    public RedirectView settleTheOrders(@PathVariable String id){
+        dataBaseService.settleTheOrder(id);
+        return new RedirectView("/");
+    }
     @GetMapping("/expenses")
     public String getExpenses(Model model){
         model.addAttribute("users", dataBaseService.getUsers());
@@ -69,19 +75,6 @@ public class HomeController {
             expensesBaseService.addExpense(userId, item, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
         }
         return new RedirectView("/expenses");
-    }
-
-    @GetMapping("/orderSettlements")
-    public String getOrderSettlements(Model model){
-        model.addAttribute("orders", dataBaseService.getOrders());
-        model.addAttribute("orderSettlementsPage", true);
-        return "/orderSettlements";
-    }
-
-    @GetMapping("/orderSettlements/{id}")
-    public RedirectView settleTheOrder(@PathVariable String id){
-        dataBaseService.settleTheOrder(id);
-        return new RedirectView("/orderSettlements");
     }
 
     @GetMapping("/users")
@@ -135,5 +128,12 @@ public class HomeController {
             dataBaseService.removeItems(productsList);
         }
         return new RedirectView("/products");
+    }
+
+    @GetMapping("/statistics")
+    public String getStatistics(Model model){
+        model.addAttribute("statisticsPage", true);
+        model.addAttribute("statistics", statisticsService.getUsersStatistics());
+        return "statistics";
     }
 }

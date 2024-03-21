@@ -17,7 +17,7 @@
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
-                        <th colspan="9"> Products to sell </th>
+                        <th colspan="11"> Orders </th>
                     </tr>
                     <tr>
                         <th> </th>
@@ -30,6 +30,8 @@
                         <th>Sell Price</th>
                         <th>Revenue</th>
                         <th>Income</th>
+                        <th>Payment</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +47,16 @@
                             <td>${order.sellPrice} PLN</td>
                             <td>${order.revenue} PLN</td>
                             <td>${order.income} PLN</td>
+                            <#if order.isSettled!false>
+                                <td>settled</td>
+                            <#else>
+                                <td>unsettled</td>
+                            </#if>
+                            <#if order.isSettled!false>
+                                <td> - </td>
+                            <#else>
+                                <td><a href="/${order.orderId}">settle</a></td>
+                            </#if>
                         </tr>
                     </#list>
                 </tbody>
