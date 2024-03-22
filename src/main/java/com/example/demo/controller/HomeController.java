@@ -133,6 +133,7 @@ public class HomeController {
     @GetMapping("/statistics")
     public String getStatistics(Model model){
         model.addAttribute("statisticsPage", true);
+        model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("statistics", statisticsService.getUsersStatistics());
         return "statistics";
     }
