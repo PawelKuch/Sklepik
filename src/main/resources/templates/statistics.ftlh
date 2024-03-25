@@ -35,7 +35,7 @@
                         <tr></tr>
                         <tr>
                             <td>${statistic.user.name}</td>
-                            <td>${statistic.totalPurchaseValue}</td>
+                            <td>${statistic.totalPurchaseValue} PLN</td>
                             <td>${statistic.totalExpenseValue}</td>
                             <td>${statistic.totalRevenueValue}</td>
                             <td>${statistic.totalIncomeValue}</td>

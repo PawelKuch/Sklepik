@@ -2,10 +2,13 @@ package com.example.demo.service;
 
 import com.example.demo.data.UserStatistics;
 import com.example.demo.data.UserData;
+import com.example.demo.entity.User;
 import com.example.demo.repository.ExpenseRepository;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class StatisticsService {
+    private static final Logger LOG = LoggerFactory.getLogger(StatisticsService.class);
     DataBaseService dataBaseService;
     OrderRepository orderRepository;
     ExpenseRepository expenseRepository;
@@ -63,36 +67,37 @@ public class StatisticsService {
     public int getHowManySettledOrders(){ return orderRepository.countByIsSettled(true);}
     @Transactional
     public int getHowManyUnsettledOrders(){return orderRepository.countByIsSettled(false); }
-    @Transactional
-    public Double getUserTotalPurchaseValue(String userId){return orderRepository.getTotalIncomeOfUser(dataBaseService.getUser(userId));}
-    @Transactional
-    public Double getUserTotalExpenseValue(String userId){
-       return expenseRepository.getTotalPurchaseValueOfUser(dataBaseService.getUser(userId));
+    private Double getUserTotalPurchaseValue(String userId){
+        User user = dataBaseService.getUser(userId);
+        return orderRepository.getTotalPurchaseValueOfUser(user);
     }
-    @Transactional
-    public Double getTotalPurchaseAndExpenseValue(String userId){
+    private Double getUserTotalExpenseValue(String userId){
+        User user = dataBaseService.getUser(userId);
+        Double value = expenseRepository.getTotalPurchaseValueOfUser(user);
+        if(value == null){
+            LOG.info("Value is null for user: {}",userId );
+        }
+        return value;
+    }
+    private Double getTotalPurchaseAndExpenseValue(String userId){
         return getUserTotalPurchaseValue(userId)+getUserTotalExpenseValue(userId);
     }
-    @Transactional
-    public Double getUserTotalIncome(String userId){
+    private Double getUserTotalIncome(String userId){
         return orderRepository.getTotalIncomeOfUser(dataBaseService.getUser(userId));
     }
-    @Transactional
-    public Double getUserTotalRevenue(String userId){
+    private Double getUserTotalRevenue(String userId){
         return orderRepository.getTotalRevenueOfUser(dataBaseService.getUser(userId));
     }
-    @Transactional
-    public Integer getHowManyUserOrders(String userId){
+    private Integer getHowManyUserOrders(String userId){
         return orderRepository.countByUser(dataBaseService.getUser(userId));
     }
-    @Transactional
-    public int getHowManyUserSettledOrders(String userId){
+    private int getHowManyUserSettledOrders(String userId){
         return orderRepository.countByIsSettledAndUser(true, dataBaseService.getUser(userId));
     }
-    @Transactional
-    public int getHowManyUserUnsettledOrders(String userId){
+    private int getHowManyUserUnsettledOrders(String userId){
         return orderRepository.countByIsSettledAndUser(false, dataBaseService.getUser(userId));
     }
+    @Transactional
     public UserStatistics getUserStatistics(UserData userData){
         UserStatistics statistics = new UserStatistics();
         statistics.setUser(userData);

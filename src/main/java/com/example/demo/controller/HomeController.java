@@ -29,7 +29,7 @@ public class HomeController {
         this.expensesBaseService = expensesBaseService;
         this.statisticsService = statisticsService;
     }
-    @GetMapping("/")
+    @GetMapping("/home-page")
     public String getShop(Model model){
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("products", dataBaseService.getItems());
@@ -38,7 +38,7 @@ public class HomeController {
         return "shop";
     }
 
-    @PostMapping("/")
+    @PostMapping("/home-page")
     public RedirectView saveOrder(@RequestParam(value = "selectedUser", required = false) String userId,
                                   @RequestParam(value = "selectedItem", required = false) String itemId,
                                   @RequestParam(value = "amount", required = false) String amount,
@@ -47,15 +47,15 @@ public class HomeController {
                                   @RequestParam(value = "selectedOrder", required = false) List<String> orderIDs){
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty()){
             dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false);
-            return new RedirectView("/");
+            return new RedirectView("/home-page");
         }
         return new RedirectView("/error");
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/home-page/{id}")
     public RedirectView settleTheOrders(@PathVariable String id){
         dataBaseService.settleTheOrder(id);
-        return new RedirectView("/");
+        return new RedirectView("/home-page");
     }
     @GetMapping("/expenses")
     public String getExpenses(Model model){

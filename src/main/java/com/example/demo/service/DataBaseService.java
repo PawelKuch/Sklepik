@@ -9,6 +9,8 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -17,6 +19,7 @@ import java.util.UUID;
 
 @Service
 public class DataBaseService {
+    private static final Logger LOG = LoggerFactory.getLogger(DataBaseService.class);
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
@@ -69,7 +72,12 @@ public class DataBaseService {
     }
     @Transactional
     public void settleTheOrder(String orderId){
-        orderRepository.findByOrderId(orderId).setSettled(true);
+       Order order = orderRepository.findByOrderId(orderId);
+       if (order == null){
+           LOG.info("Cannot find order with id {}", orderId);
+       }else {
+           order.setSettled(true);
+       }
     }
 
     @Transactional

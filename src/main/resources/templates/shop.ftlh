@@ -55,7 +55,7 @@
                             <#if order.isSettled!false>
                                 <td> - </td>
                             <#else>
-                                <td><a href="/${order.orderId}">settle</a></td>
+                                <td><a href="/home-page/${order.orderId}">settle</a></td>
                             </#if>
                         </tr>
                     </#list>
@@ -78,7 +78,7 @@
                             <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="mb-3" id="orderForm" action="/" method="post">
+                            <form class="mb-3" id="orderForm" action="/home-page" method="post">
                                 <select class="form-select mb-2" id="selectedUser" name="selectedUser">
                                     <option> Select user </option>
                                     <#list users as user>
