@@ -15,6 +15,8 @@ public class User {
     private String name;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Order> orders;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Expense> expenses;
     public void setUserId(String userId) {
         this.userId = userId;
     }

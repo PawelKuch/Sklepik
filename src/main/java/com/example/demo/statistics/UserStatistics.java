@@ -1,14 +1,17 @@
-package com.example.demo.data;
+package com.example.demo.statistics;
+
+import com.example.demo.data.UserData;
 
 public class UserStatistics {
     private UserData user;
     private Double totalPurchaseValue;
     private Double totalExpenseValue;
+    private Double totalPurchaseAndExpenseValue;
     private Double totalIncomeValue;
     private Double totalRevenueValue;
-    private int howManyOrders;
-    private int hoManySettledOrders;
-    private int howManyUnsettledOrders;
+    private Long howManyOrders;
+    private Long howManySettledOrders;
+    private Long howManyUnsettledOrders;
 
     public void setUser(UserData user) {
         this.user = user;
@@ -22,6 +25,10 @@ public class UserStatistics {
         this.totalExpenseValue = totalExpenseValue;
     }
 
+    public void setTotalPurchaseAndExpenseValue(Double totalPurchaseAndExpenseValue) {
+        this.totalPurchaseAndExpenseValue = totalPurchaseAndExpenseValue;
+    }
+
     public void setTotalIncomeValue(Double totalIncomeValue) {
         this.totalIncomeValue = totalIncomeValue;
     }
@@ -30,15 +37,15 @@ public class UserStatistics {
         this.totalRevenueValue = totalRevenueValue;
     }
 
-    public void setHowManyOrders(int howManyOrders) {
+    public void setHowManyOrders(Long howManyOrders) {
         this.howManyOrders = howManyOrders;
     }
 
-    public void setHoManySettledOrders(int hoManySettledOrders) {
-        this.hoManySettledOrders = hoManySettledOrders;
+    public void setHowManySettledOrders(Long howManySettledOrders) {
+        this.howManySettledOrders = howManySettledOrders;
     }
 
-    public void setHowManyUnsettledOrders(int howManyUnsettledOrders) {
+    public void setHowManyUnsettledOrders(Long howManyUnsettledOrders) {
         this.howManyUnsettledOrders = howManyUnsettledOrders;
     }
 
@@ -54,6 +61,10 @@ public class UserStatistics {
         return totalExpenseValue;
     }
 
+    public Double getTotalPurchaseAndExpenseValue() {
+        return totalPurchaseAndExpenseValue;
+    }
+
     public Double getTotalIncomeValue() {
         return totalIncomeValue;
     }
@@ -62,15 +73,15 @@ public class UserStatistics {
         return totalRevenueValue;
     }
 
-    public int getHowManyOrders() {
+    public Long getHowManyOrders() {
         return howManyOrders;
     }
 
-    public int getHoManySettledOrders() {
-        return hoManySettledOrders;
+    public Long getHowManySettledOrders() {
+        return howManySettledOrders;
     }
 
-    public int getHowManyUnsettledOrders() {
+    public Long getHowManyUnsettledOrders() {
         return howManyUnsettledOrders;
     }
 }

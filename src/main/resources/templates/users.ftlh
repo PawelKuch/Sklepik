@@ -33,6 +33,36 @@
                 </tbody>
             </table>
         </#if>
+       <div class="modal" tabindex="-1" id="addUserModal">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header text-center">
+                       <h5 class="modal-title"> Add user </h5>
+                       <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                   </div>
+                   <div class="modal-body">
+                       <form id="userForm" action="/users" method="post" class="mt-3">
+                           <div class="input-group align-items-center">
+                               <span class="input-group-text mb-3"> User </span>
+                               <input class="form-control mb-3" type="text" name="userName" class="form-control mb-3">
+                           </div>
+                       </form>
+                   </div>
+                   <div class="modal-footer">
+                       <button id="addBtn" class="btn btn-primary mb-1 col-2"> Add </button>
+                       <button type="button" class="btn btn-outline-primary col-2" data-bs-dismiss="modal"> Back </button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="row justify-content-center align-items-center">
+           <div class="col-6 mt-3 mb-3">
+               <button id="openModalBtn" type="button" class="btn btn-primary col-12" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add </button>
+           </div>
+           <div class="col-6 mt-3 mb-3">
+               <button class="btn btn-primary col-12" id="deleteUserBtn" type="button" > Delete user/s </button>
+           </div>
+       </div>
     </div>
     <#if userExists!false>
         <div class="alert alert-danger" role="alert">
