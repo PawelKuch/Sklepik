@@ -27,7 +27,7 @@ public class Order {
     private double income;
     @Column(name = "DATE", nullable = false, length = 512)
     private LocalDateTime orderDateTime;
-    @Column(name = "isSettled", nullable = false, length = 255)
+    @Column(name = "isSettled", nullable = false)
     private boolean isSettled;
     @ManyToOne
     @JoinColumn(name="user_id")

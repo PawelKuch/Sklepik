@@ -63,7 +63,6 @@ public class StatisticsService {
         UserStatistics statistics = new UserStatistics();
         User user = userRepository.findByUserId(userData.getUserId());
         String userId = userData.getUserId();
-        Double totalPurchaseAndExpenseValue = orderRepository.getTotalPurchaseValueOfUser(user).orElse(0.0) + expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
         Double totalPurchaseValue = expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
         Double totalExpenseValue = expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
         Double totalIncome = orderRepository.getTotalIncomeOfUser(dataBaseService.getUser(userId)).orElse(0.0);
@@ -75,7 +74,6 @@ public class StatisticsService {
         statistics.setUser(userData);
         statistics.setTotalPurchaseValue(totalPurchaseValue);
         statistics.setTotalExpenseValue(totalExpenseValue);
-        statistics.setTotalPurchaseAndExpenseValue(totalPurchaseAndExpenseValue);
         statistics.setTotalIncomeValue(totalIncome);
         statistics.setTotalRevenueValue(totalRevenue);
         statistics.setHowManyOrders(howManyOrders);

@@ -6,7 +6,6 @@ public class UserStatistics {
     private UserData user;
     private Double totalPurchaseValue;
     private Double totalExpenseValue;
-    private Double totalPurchaseAndExpenseValue;
     private Double totalIncomeValue;
     private Double totalRevenueValue;
     private Long howManyOrders;
@@ -23,10 +22,6 @@ public class UserStatistics {
 
     public void setTotalExpenseValue(Double totalExpenseValue) {
         this.totalExpenseValue = totalExpenseValue;
-    }
-
-    public void setTotalPurchaseAndExpenseValue(Double totalPurchaseAndExpenseValue) {
-        this.totalPurchaseAndExpenseValue = totalPurchaseAndExpenseValue;
     }
 
     public void setTotalIncomeValue(Double totalIncomeValue) {
@@ -59,10 +54,6 @@ public class UserStatistics {
 
     public Double getTotalExpenseValue() {
         return totalExpenseValue;
-    }
-
-    public Double getTotalPurchaseAndExpenseValue() {
-        return totalPurchaseAndExpenseValue;
     }
 
     public Double getTotalIncomeValue() {

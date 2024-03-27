@@ -3,7 +3,6 @@ package com.example.demo.statistics;
 public class GeneralStatistics {
     private Double totalPurchaseValue;
     private Double totalExpenseValue;
-    private Double totalPurchaseAndExpenseValue;
     private Double totalIncome;
     private Double totalRevenue;
     private Long howManyOrders;
@@ -19,10 +18,6 @@ public class GeneralStatistics {
 
     public void setTotalExpenseValue(Double totalExpenseValue) {
         this.totalExpenseValue = totalExpenseValue;
-    }
-
-    public void setTotalPurchaseAndExpenseValue(Double totalPurchaseAndExpenseValue) {
-        this.totalPurchaseAndExpenseValue = totalPurchaseAndExpenseValue;
     }
 
     public void setTotalIncome(Double totalIncome) {
@@ -61,10 +56,6 @@ public class GeneralStatistics {
 
     public Double getTotalExpenseValue() {
         return totalExpenseValue;
-    }
-
-    public Double getTotalPurchaseAndExpenseValue() {
-        return totalPurchaseAndExpenseValue;
     }
 
     public Double getTotalIncome() {

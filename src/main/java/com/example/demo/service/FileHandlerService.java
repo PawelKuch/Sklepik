@@ -25,6 +25,7 @@ public class FileHandlerService {
 
     public List<String> getLinesFromCSV() {
         try(InputStream inputStream = FileHandlerService.class.getResourceAsStream("/arkusz.csv")){
+            assert inputStream != null;
             List<String> lines = IOUtils.readLines(inputStream, StandardCharsets.UTF_8);
             lines.remove(0);
             return lines;
