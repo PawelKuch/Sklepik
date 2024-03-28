@@ -61,7 +61,8 @@ public class StatisticsService {
     @Transactional
     public UserStatistics getUserStatistics(UserData userData){
         UserStatistics statistics = new UserStatistics();
-        User user = userRepository.findByUserId(userData.getUserId());
+        String userId = userData.getUserId();
+        User user = userRepository.findByUserId(userId);
         Double totalPurchaseValue = expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
         Double totalExpenseValue = expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
         Double totalIncome = orderRepository.getTotalIncomeOfUser(user).orElse(0.0);
