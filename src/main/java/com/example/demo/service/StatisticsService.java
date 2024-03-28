@@ -62,14 +62,13 @@ public class StatisticsService {
     public UserStatistics getUserStatistics(UserData userData){
         UserStatistics statistics = new UserStatistics();
         User user = userRepository.findByUserId(userData.getUserId());
-        String userId = userData.getUserId();
         Double totalPurchaseValue = expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
         Double totalExpenseValue = expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
-        Double totalIncome = orderRepository.getTotalIncomeOfUser(dataBaseService.getUser(userId)).orElse(0.0);
-        Double totalRevenue = orderRepository.getTotalRevenueOfUser(dataBaseService.getUser(userId)).orElse(0.0);
-        Long howManyOrders = orderRepository.countByUser(dataBaseService.getUser(userId));
-        Long howManySettledOrders = orderRepository.countByIsSettledAndUser(true, dataBaseService.getUser(userId));
-        Long howManyUnsettledOrders = orderRepository.countByIsSettledAndUser(false, dataBaseService.getUser(userId));
+        Double totalIncome = orderRepository.getTotalIncomeOfUser(user).orElse(0.0);
+        Double totalRevenue = orderRepository.getTotalRevenueOfUser(user).orElse(0.0);
+        Long howManyOrders = orderRepository.countByUser(user);
+        Long howManySettledOrders = orderRepository.countByIsSettledAndUser(true, user);
+        Long howManyUnsettledOrders = orderRepository.countByIsSettledAndUser(false, user);
 
         statistics.setUser(userData);
         statistics.setTotalPurchaseValue(totalPurchaseValue);
