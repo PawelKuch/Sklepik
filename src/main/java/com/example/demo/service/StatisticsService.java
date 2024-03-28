@@ -63,7 +63,7 @@ public class StatisticsService {
         UserStatistics statistics = new UserStatistics();
         String userId = userData.getUserId();
         User user = userRepository.findByUserId(userId);
-        Double totalPurchaseValue = expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
+        Double totalPurchaseValue = orderRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
         Double totalExpenseValue = expenseRepository.getTotalPurchaseValueOfUser(user).orElse(0.0);
         Double totalIncome = orderRepository.getTotalIncomeOfUser(user).orElse(0.0);
         Double totalRevenue = orderRepository.getTotalRevenueOfUser(user).orElse(0.0);
