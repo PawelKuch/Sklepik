@@ -1,4 +1,5 @@
 package com.example.demo.repository;
+import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 
 import com.example.demo.entity.User;
@@ -26,6 +27,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Double> getTotalIncome();
     @Query("SELECT SUM(o.totalPurchaseValue) FROM Order o")
     Optional<Double> getTotalPurchaseValue();
-
+    @Query("UPDATE Order SET user =?2, item =?3, amount =?4, purchasePrice =?5, sellPrice =?6 WHERE orderId =?1")
+    void updateOrder(String orderId, User user, Item item, Integer amount, Double purchasePrice, Double sellPrice);
 
 }

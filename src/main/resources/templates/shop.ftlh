@@ -46,14 +46,16 @@
                             <td>${order.revenue} PLN</td>
                             <td>${order.income} PLN</td>
                             <#if order.isSettled!false>
-                                <td>settled</td>
+                                <td>settled <br></td>
                             <#else>
                                 <td>unsettled</td>
                             </#if>
                             <#if order.isSettled!false>
-                                <td> - </td>
+                                <td> <a href="/order-page/${order.orderId}">Edit</a> </td>
                             <#else>
-                                <td><a href="/home-page/${order.orderId}">settle</a></td>
+                                <td><a href="/home-page/${order.orderId}">settle</a> <br>
+                                    <a href="/order-page/${order.orderId}">Edit</a>
+                                </td>
                             </#if>
                         </tr>
                     </#list>

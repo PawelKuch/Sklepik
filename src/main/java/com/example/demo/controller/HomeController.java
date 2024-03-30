@@ -103,6 +103,25 @@ public class HomeController {
         return new RedirectView("/users");
     }
 
+    @GetMapping("/order-page/{id}")
+    public String updateOrder(@PathVariable String id, Model model){
+        model.addAttribute("users", dataBaseService.getUsers());
+        model.addAttribute("items", dataBaseService.getItems());
+        model.addAttribute("originalOrder", dataBaseService.getOrder(id));
+
+        return "order";
+    }
+
+    @PostMapping("/order-page/{id}")
+    public RedirectView getUpdatedOrder(@PathVariable String id, @RequestParam("selectedUser") String userId,
+                                        @RequestParam("selectedItem")  String itemId,
+                                        @RequestParam("amount") Integer amount, @RequestParam("purchasePrice") Double purchasePrice,
+                                        @RequestParam("sellPrice") Double sellPrice){
+        dataBaseService.updateOrder(id, userId, itemId, amount, purchasePrice, sellPrice);
+
+        return new RedirectView("/order-page/"+id);
+    }
+
     @GetMapping("/products")
     public String getProducts (Model model){
         model.addAttribute("items", dataBaseService.getItems());
