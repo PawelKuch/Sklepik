@@ -119,7 +119,7 @@ public class HomeController {
                                         @RequestParam("sellPrice") Double sellPrice){
         dataBaseService.updateOrder(id, userId, itemId, amount, purchasePrice, sellPrice);
 
-        return new RedirectView("/order-page/"+id);
+        return new RedirectView("/home-page");
     }
 
     @GetMapping("/products")

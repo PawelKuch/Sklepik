@@ -51,7 +51,7 @@
                                 <td>unsettled</td>
                             </#if>
                             <#if order.isSettled!false>
-                                <td> <a href="/order-page/${order.orderId}">Edit</a> </td>
+                                <td> - </td>
                             <#else>
                                 <td><a href="/home-page/${order.orderId}">settle</a> <br>
                                     <a href="/order-page/${order.orderId}">Edit</a>

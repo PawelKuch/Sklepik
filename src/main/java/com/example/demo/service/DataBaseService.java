@@ -11,7 +11,6 @@ import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -76,7 +75,13 @@ public class DataBaseService {
     public void updateOrder(String originalOrderId, String newUserId, String itemId, Integer amount, Double newPurchasePrice, Double newSellPrice){
         User user = userRepository.findByUserId(newUserId);
         Item item = itemRepository.findByItemId(itemId);
-        orderRepository.updateOrder(originalOrderId, user, item, amount, newPurchasePrice, newSellPrice);
+        Order order = orderRepository.findByOrderId(originalOrderId);
+
+        order.setUser(user);
+        order.setItem(item);
+        order.setAmount(amount);
+        order.setPurchasePrice(newPurchasePrice);
+        order.setSellPrice(newSellPrice);
     }
     @Transactional
     public void settleTheOrder(String orderId){
@@ -94,6 +99,7 @@ public class DataBaseService {
         item.setName(name);
         item.setItemId(UUID.randomUUID().toString());
         itemRepository.save(item);
+
     }
     @Transactional
     public void removeItems(List<String> itemIDs){
