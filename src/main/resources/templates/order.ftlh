@@ -7,7 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="src/main/resources/static/orderJS.js"></script>
-    <script src="js/orderJS.js"></script>
+    <script src="/static/js/orderJS.js"></script>
 
 </head>
 
@@ -21,14 +21,18 @@
                 <select class="form-select mb-2" id="selectedUser" name="selectedUser">
                     <option value="${originalOrder.user.userId}">${originalOrder.user.name}</option>
                     <#list users as user>
-                        <option value="${user.userId}">${user.name}</option>
+                        <#if user.name != originalOrder.user.name>
+                            <option value="${user.userId}">${user.name}</option>
+                        </#if>
                     </#list>
                 </select>
 
                 <select class="form-select mb-2" id="selectedItem" name="selectedItem">
                     <option value="${originalOrder.item.itemId}">${originalOrder.item.name} </option>
                     <#list items as item>
-                        <option value="${item.itemId}">${item.name}</option>
+                        <#if item.name != originalOrder.item.name>
+                            <option value="${item.itemId}">${item.name}</option>
+                        </#if>
                     </#list>
                 </select>
 
