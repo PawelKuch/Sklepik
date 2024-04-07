@@ -19,20 +19,14 @@
             <form class="mb-3" id="updateOrderForm" action="/order-page/${originalOrder.orderId}" method="POST" >
                 <label for="selectedUser">User</label>
                 <select class="form-select mb-2" id="selectedUser" name="selectedUser">
-                    <option value="${originalOrder.user.userId}">${originalOrder.user.name}</option>
                     <#list users as user>
-                        <#if user.name != originalOrder.user.name>
-                            <option value="${user.userId}">${user.name}</option>
-                        </#if>
+                        <option value="${user.userId}" ${(user.userId == originalOrder.user.userId) ? string("selected", "")} > ${user.name}</option>
                     </#list>
                 </select>
 
                 <select class="form-select mb-2" id="selectedItem" name="selectedItem">
-                    <option value="${originalOrder.item.itemId}">${originalOrder.item.name} </option>
                     <#list items as item>
-                        <#if item.name != originalOrder.item.name>
-                            <option value="${item.itemId}">${item.name}</option>
-                        </#if>
+                        <option value="${item.itemId}" ${(item.itemId == originalOrder.item.itemId) ? string("selected", "")}> ${item.name}</option>
                     </#list>
                 </select>
 
