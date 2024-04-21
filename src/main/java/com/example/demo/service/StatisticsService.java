@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.data.CountOrdersQueryData;
 import com.example.demo.statistics.GeneralStatistics;
 import com.example.demo.statistics.UserStatistics;
 import com.example.demo.data.UserData;
@@ -10,7 +11,6 @@ import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +57,9 @@ public class StatisticsService {
         generalStatistics.setHowManyExpenses(howManyExpenses);
         return generalStatistics;
     }
-
+    public List<CountOrdersQueryData> getStatistics(){
+        return orderRepository.getStatistics();
+    }
     @Transactional
     public UserStatistics getUserStatistics(UserData userData){
         UserStatistics statistics = new UserStatistics();

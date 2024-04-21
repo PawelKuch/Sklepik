@@ -17,7 +17,7 @@
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
-                        <th colspan="8">Users statistics</th>
+                        <th colspan="6">Users statistics</th>
                     </tr>
                     <tr>
                         <th>Name</th>
@@ -26,22 +26,20 @@
                         <th>Total revenue</th>
                         <th>Total income</th>
                         <th>Orders quantity</th>
-                        <th>Settled orders</th>
-                        <th>Unsettled orders</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <#list statistics as statistic>
                         <tr></tr>
                         <tr>
-                            <td>${statistic.user.name}</td>
+                            <td>${statistic.name}</td>
                             <td>${statistic.totalPurchaseValue} PLN</td>
                             <td>${statistic.totalExpenseValue} PLN</td>
-                            <td>${statistic.totalRevenueValue} PLN</td>
-                            <td>${statistic.totalIncomeValue} PLN</td>
+                            <td>${statistic.totalRevenue} PLN</td>
+                            <td>${statistic.totalIncome} PLN</td>
                             <td>${statistic.howManyOrders}</td>
-                            <td>${statistic.howManySettledOrders}</td>
-                            <td>${statistic.howManyUnsettledOrders}</td>
+
                         </tr>
                     </#list>
                 </tbody>
