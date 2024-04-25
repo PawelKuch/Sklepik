@@ -153,7 +153,8 @@ public class HomeController {
     public String getStatistics(Model model){
         model.addAttribute("statisticsPage", true);
         model.addAttribute("users", dataBaseService.getUsers());
-        model.addAttribute("statistics", statisticsService.getStatistics());
+        model.addAttribute("ordersStatistics", statisticsService.getUserOrdersStatistics());
+        model.addAttribute("expensesStatistics", statisticsService.getUserExpensesStatistics());
         model.addAttribute("generalStatistics", statisticsService.getGeneralStatistics());
         return "statistics";
     }

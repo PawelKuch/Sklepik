@@ -8,9 +8,17 @@ public class GeneralStatistics {
     private Long howManyOrders;
     private Long howManyUsers;
     private Long howManyItems;
-    public Long howManySettledOrders;
-    public Long howManyUnsettledOrders;
-    public Long howManyExpenses;
+    private Long howManyExpenses;
+
+    public GeneralStatistics(Double totalPurchaseValue, Double totalIncome,
+                             Double totalRevenue, Long howManyOrders, Long howManyUsers, Long howManyItems) {
+        this.totalPurchaseValue = totalPurchaseValue;
+        this.totalIncome = totalIncome;
+        this.totalRevenue = totalRevenue;
+        this.howManyOrders = howManyOrders;
+        this.howManyUsers = howManyUsers;
+        this.howManyItems = howManyItems;
+    }
 
     public void setTotalPurchaseValue(Double totalPurchaseValue) {
         this.totalPurchaseValue = totalPurchaseValue;
@@ -36,14 +44,6 @@ public class GeneralStatistics {
 
     public void setHowManyItems(Long howManyItems) {
         this.howManyItems = howManyItems;
-    }
-
-    public void setHowManySettledOrders(Long howManySettledOrders) {
-        this.howManySettledOrders = howManySettledOrders;
-    }
-
-    public void setHowManyUnsettledOrders(Long howManyUnsettledOrders) {
-        this.howManyUnsettledOrders = howManyUnsettledOrders;
     }
 
     public void setHowManyExpenses(Long howManyExpenses) {
@@ -75,14 +75,6 @@ public class GeneralStatistics {
 
     public Long getHowManyItems() {
         return howManyItems;
-    }
-
-    public Long getHowManySettledOrders() {
-        return howManySettledOrders;
-    }
-
-    public Long getHowManyUnsettledOrders() {
-        return howManyUnsettledOrders;
     }
 
     public Long getHowManyExpenses() {

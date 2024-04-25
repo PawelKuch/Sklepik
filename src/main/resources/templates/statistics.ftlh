@@ -17,12 +17,11 @@
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
-                        <th colspan="6">Users statistics</th>
+                        <th colspan="6">Users orders statistics</th>
                     </tr>
                     <tr>
                         <th>Name</th>
                         <th>Total purchase</th>
-                        <th>Total expense</th>
                         <th>Total revenue</th>
                         <th>Total income</th>
                         <th>Orders quantity</th>
@@ -30,14 +29,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <#list statistics as statistic>
+                    <#list ordersStatistics as statistic>
                         <tr></tr>
                         <tr>
                             <td>${statistic.name}</td>
                             <td>${statistic.totalPurchaseValue} PLN</td>
-                            <td>${statistic.totalExpenseValue} PLN</td>
-                            <td>${statistic.totalRevenue} PLN</td>
-                            <td>${statistic.totalIncome} PLN</td>
+                            <td>${statistic.totalRevenueValue} PLN</td>
+                            <td>${statistic.totalIncomeValue} PLN</td>
                             <td>${statistic.howManyOrders}</td>
 
                         </tr>
@@ -45,10 +43,39 @@
                 </tbody>
             </table>
 
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="3">User expenses statistics </th>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Total value</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr></tr>
+                    <#if expensesStatistics?has_content>
+                        <#list expensesStatistics as statistic>
+                            <tr>
+                                <td>${statistic.name}</td>
+                                <td>${statistic.totalExpenseValue} PLN</td>
+                                <td>${statistic.howManyExpenses}</td>
+                            </tr>
+                        </#list>
+                    <#else>
+                        <tr>
+                            <td colspan="3"> No expenses to show </td>
+                        </tr>
+                    </#if>
+                </tbody>
+            </table>
+
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
-                        <th colspan="8">General statistics</th>
+                        <th colspan="6">General statistics</th>
                     </tr>
                     <tr>
                         <th>General purchase value</th>
@@ -56,8 +83,6 @@
                         <th>General revenue</th>
                         <th>General income</th>
                         <th>Orders</th>
-                        <th>Settled orders</th>
-                        <th>Unsettled orders</th>
                         <th>Expenses</th>
                     </tr>
                 </thead>
@@ -69,8 +94,6 @@
                         <td>${generalStatistics.totalRevenue} PLN</td>
                         <td>${generalStatistics.totalIncome} PLN</td>
                         <td>${generalStatistics.howManyOrders}</td>
-                        <td>${generalStatistics.howManySettledOrders}</td>
-                        <td>${generalStatistics.howManyUnsettledOrders}</td>
                         <td>${generalStatistics.howManyExpenses}</td>
                     </tr>
                 </tbody>
