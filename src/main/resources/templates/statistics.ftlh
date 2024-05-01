@@ -59,7 +59,7 @@
                     <#if expensesStatistics?has_content>
                         <#list expensesStatistics as statistic>
                             <tr>
-                                <td>${statistic.name}</td>
+                                <td>${statistic.userName}</td>
                                 <td>${statistic.totalExpenseValue} PLN</td>
                                 <td>${statistic.howManyExpenses}</td>
                             </tr>
@@ -113,9 +113,9 @@
                 <tbody>
                     <tr></tr>
                     <tr>
-                        <td>${generalStatistics.howManyOrders} PLN</td>
-                        <td>${generalStatistics.howManyUsers} PLN</td>
-                        <td>${generalStatistics.howManyItems} PLN</td>
+                        <td>${generalStatistics.howManyOrders} </td>
+                        <td>${generalStatistics.howManyUsers} </td>
+                        <td>${generalStatistics.howManyItems} </td>
 
                     </tr>
                 </tbody>

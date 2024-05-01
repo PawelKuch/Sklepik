@@ -2,13 +2,13 @@ package com.example.demo.statistics;
 
 public class UserExpensesStatistics {
     private String userId;
-    private String name;
+    private String userName;
     private Double totalExpenseValue;
     private Long howManyExpenses;
 
     public UserExpensesStatistics(String userId, String name, Double totalExpenseValue, Long howManyExpenses) {
         this.userId = userId;
-        this.name = name;
+        this.userName = name;
         this.totalExpenseValue = totalExpenseValue;
         this.howManyExpenses = howManyExpenses;
     }
@@ -17,8 +17,8 @@ public class UserExpensesStatistics {
         this.userId = userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setTotalExpenseValue(Double totalExpenseValue) {
@@ -33,8 +33,8 @@ public class UserExpensesStatistics {
         return userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
     public Double getTotalExpenseValue() {
