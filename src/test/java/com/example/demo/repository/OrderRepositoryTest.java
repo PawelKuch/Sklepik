@@ -1,13 +1,11 @@
 package com.example.demo.repository;
 
-import com.example.demo.data.ExpenseDataQuery;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
 import com.example.demo.statistics.GeneralStatistics;
 import com.example.demo.statistics.UserOrdersStatistics;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
