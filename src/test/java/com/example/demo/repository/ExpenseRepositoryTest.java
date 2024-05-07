@@ -1,9 +1,8 @@
-package com.example.demo.repositoryTest;
+package com.example.demo.repository;
 
+import com.example.demo.data.ExpenseDataQuery;
 import com.example.demo.entity.Expense;
 import com.example.demo.entity.User;
-import com.example.demo.repository.ExpenseRepository;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.statistics.UserExpensesStatistics;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,31 +42,39 @@ public class ExpenseRepositoryTest {
 
     }
 
-
     @Test
-    public void getTotalPurchaseValueForUser(){
+    public void getTotalPurchaseValueForUserTest(){
         Optional<Double> totalPurchaseValueForUser = expenseRepository.getTotalPurchaseValueOfUser(user);
-        Double expectedValue = expense.getAmount() * expense.getExpensePrice();
+        Double expectedValue = expense.getTotalExpenseValue();
         assertTrue(totalPurchaseValueForUser.isPresent());
-        assertEquals(expectedValue, totalPurchaseValueForUser.orElse(0.0));
+        assertNotNull(totalPurchaseValueForUser);
+        assertEquals(expectedValue, totalPurchaseValueForUser.get());
     }
     @Test
-    public void getTotalPurchaseValue(){
+    public void getTotalPurchaseValueTest(){
         Optional<Double> totalPurchaseValue = expenseRepository.getTotalPurchaseValue();
-        Double expectedValue = expense.getAmount() * expense.getExpensePrice();
+        Double expectedValue = expense.getTotalExpenseValue();
         assertTrue(totalPurchaseValue.isPresent());
-        assertEquals(expectedValue, expenseRepository.getTotalPurchaseValue().orElse(0.0));
+        assertNotNull(totalPurchaseValue);
+        assertEquals(expectedValue, totalPurchaseValue.get());
     }
     @Test
-    public void getExpensesForUser(){
+    public void getUserExpensesStatisticsTest(){
         List<UserExpensesStatistics> userExpensesStatistics = expenseRepository.getUserExpensesStatistics();
         assertFalse(userExpensesStatistics.isEmpty());
         assertEquals(user.getUserId(), userExpensesStatistics.get(0).getUserId());
         assertEquals(user.getName(), userExpensesStatistics.get(0).getUserName());
-        Double expectedTotalValue = expense.getAmount() * expense.getExpensePrice();
+        Double expectedTotalValue = expense.getTotalExpenseValue();
         assertEquals(expectedTotalValue, userExpensesStatistics.get(0).getTotalExpenseValue());
         assertEquals(1, userExpensesStatistics.get(0).getHowManyExpenses());
+    }
 
+    @Test
+    public void getExpenseDataQueryTest(){
+        ExpenseDataQuery expenseDataQuery = expenseRepository.getExpenseDataQuery();
+        assertNotNull(expenseDataQuery);
+        assertEquals(expense.getTotalExpenseValue(), expenseDataQuery.getTotalExpensesValue());
+        assertEquals(1, expenseDataQuery.getHowManyExpenses());
     }
     @AfterEach
     public void deleteExpense(){

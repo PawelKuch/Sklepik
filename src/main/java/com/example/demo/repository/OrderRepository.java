@@ -33,7 +33,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "FROM Order o")
     GeneralStatistics getGeneralStatistics();
 
-    @Query("SELECT new com.example.demo.data.ExpenseDataQuery(SUM(e.totalExpenseValue), COUNT(e.expenseId)) " +
-            "FROM Expense e")
-    ExpenseDataQuery getExpenseDataQuery();
 }

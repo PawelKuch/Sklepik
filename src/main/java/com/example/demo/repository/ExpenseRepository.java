@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.data.ExpenseDataQuery;
 import com.example.demo.entity.Expense;
 import com.example.demo.entity.User;
 import com.example.demo.statistics.UserExpensesStatistics;
@@ -20,4 +21,8 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
             "JOIN User u ON e.user = u " +
             "GROUP BY u")
     List<UserExpensesStatistics> getUserExpensesStatistics();
+
+    @Query("SELECT new com.example.demo.data.ExpenseDataQuery(SUM(e.totalExpenseValue), COUNT(e.expenseId)) " +
+            "FROM Expense e")
+    ExpenseDataQuery getExpenseDataQuery();
 }

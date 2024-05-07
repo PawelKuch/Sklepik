@@ -32,7 +32,7 @@ public class StatisticsService {
 
     @Transactional
     public GeneralStatistics getGeneralStatistics(){
-        ExpenseDataQuery expenseDataQuery = orderRepository.getExpenseDataQuery();
+        ExpenseDataQuery expenseDataQuery = expenseRepository.getExpenseDataQuery();
         GeneralStatistics generalStatistics = orderRepository.getGeneralStatistics();
         generalStatistics.setTotalExpenseValue(expenseDataQuery.getTotalExpensesValue());
         generalStatistics.setHowManyExpenses(expenseDataQuery.getHowManyExpenses());

@@ -1,7 +1,6 @@
-package com.example.demo.repositoryTest;
+package com.example.demo.repository;
 
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
