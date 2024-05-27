@@ -48,7 +48,7 @@ public class ExpenseRepositoryTest {
             expense.setUser(user);
             expense.setExpenseId(UUID.randomUUID().toString());
             expense.setItem("testItem");
-            expense.setExpensePrice(0.1);
+            expense.setExpensePrice(1.0);
             expense.setAmount(5);
             expense.setTotalExpenseValue(expense.getAmount()*expense.getExpensePrice());
             expense.setExpenseDateTime(LocalDateTime.now());
@@ -59,7 +59,7 @@ public class ExpenseRepositoryTest {
         expense.setUser(user3);
         expense.setExpenseId(UUID.randomUUID().toString());
         expense.setItem("testItem");
-        expense.setExpensePrice(0.1);
+        expense.setExpensePrice(1.0);
         expense.setAmount(3);
         expense.setTotalExpenseValue(expense.getAmount()*expense.getExpensePrice());
         expense.setExpenseDateTime(LocalDateTime.now());
@@ -69,10 +69,9 @@ public class ExpenseRepositoryTest {
     @Test
     public void getTotalPurchaseValueForUser3Test(){
         Optional<Double> totalPurchaseValueForUser = expenseRepository.getTotalPurchaseValueOfUser(user3);
-        Double expectedValue = expense.getTotalExpenseValue();
         assertTrue(totalPurchaseValueForUser.isPresent());
         assertNotNull(totalPurchaseValueForUser);
-        assertEquals(expectedValue, totalPurchaseValueForUser.get());
+        assertEquals(3.0, totalPurchaseValueForUser.get());
     }
 
     @Test
@@ -80,7 +79,7 @@ public class ExpenseRepositoryTest {
         Optional<Double> totalPurchaseValueForUser = expenseRepository.getTotalPurchaseValueOfUser(user);
         assertTrue(totalPurchaseValueForUser.isPresent());
         assertNotNull(totalPurchaseValueForUser);
-        assertEquals(2.5, totalPurchaseValueForUser.get());
+        assertEquals(25.0, totalPurchaseValueForUser.get());
     }
 
     @Test
@@ -94,7 +93,7 @@ public class ExpenseRepositoryTest {
         Optional<Double> totalPurchaseValue = expenseRepository.getTotalPurchaseValue();
         assertTrue(totalPurchaseValue.isPresent());
         assertNotNull(totalPurchaseValue);
-        assertEquals(2.8, totalPurchaseValue.get());
+        assertEquals(28.0, totalPurchaseValue.get());
     }
     @Test
     public void getUserExpensesStatisticsTest(){
@@ -102,7 +101,7 @@ public class ExpenseRepositoryTest {
         assertFalse(userExpensesStatistics.isEmpty());
         assertEquals("a", userExpensesStatistics.get(0).getUserId());
         assertEquals("testUser", userExpensesStatistics.get(0).getUserName());
-        assertEquals(2.5, userExpensesStatistics.get(0).getTotalExpenseValue());
+        assertEquals(25.0, userExpensesStatistics.get(0).getTotalExpenseValue());
         assertEquals(5, userExpensesStatistics.get(0).getHowManyExpenses());
     }
 
@@ -110,7 +109,7 @@ public class ExpenseRepositoryTest {
     public void getExpenseDataQueryTest(){
         ExpenseDataQuery expenseDataQuery = expenseRepository.getExpenseDataQuery();
         assertNotNull(expenseDataQuery);
-        assertEquals(2.8, expenseDataQuery.getTotalExpensesValue());
+        assertEquals(28.0, expenseDataQuery.getTotalExpensesValue());
         assertEquals(6, expenseDataQuery.getHowManyExpenses());
     }
     @AfterEach

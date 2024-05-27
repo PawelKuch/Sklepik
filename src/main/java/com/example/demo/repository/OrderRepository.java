@@ -29,7 +29,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<UserOrdersStatistics> getUserOrdersStatistics();
 
     @Query("SELECT new com.example.demo.statistics.GeneralStatistics(SUM(o.totalPurchaseValue), SUM(o.income), SUM(o.revenue), " +
-            "COUNT(o), COUNT(o.user), COUNT(o.item)) " +
+            "COUNT(o)) " +
             "FROM Order o")
     GeneralStatistics getGeneralStatistics();
 

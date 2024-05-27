@@ -25,23 +25,23 @@ public class UserRepositoryTest {
 
     @Test
     public void findUserById(){
-        User savedUser = userRepository.findByUserId(testUser.getUserId());
+        User savedUser = userRepository.findByUserId("1");
         assertNotNull(savedUser);
-        assertEquals(testUser.getUserId(), savedUser.getUserId());
-        assertEquals(testUser.getName(), savedUser.getName());
+        assertEquals("1", savedUser.getUserId());
+        assertEquals("testName", savedUser.getName());
     }
 
     @Test
     public void existsUserByName(){
-        assertTrue(userRepository.existsByName(testUser.getName()));
+        assertTrue(userRepository.existsByName("testName"));
     }
 
     @Test
     public void findUserByName(){
-        User savedUser = userRepository.findByName(testUser.getName());
+        User savedUser = userRepository.findByName("testName");
         assertNotNull(savedUser);
-        assertEquals(testUser.getName(), savedUser.getName());
-        assertEquals(testUser.getUserId(), savedUser.getUserId());
+        assertEquals("testName", savedUser.getName());
+        assertEquals("1", savedUser.getUserId());
     }
 
     @AfterEach

@@ -34,6 +34,8 @@ public class StatisticsService {
     public GeneralStatistics getGeneralStatistics(){
         ExpenseDataQuery expenseDataQuery = expenseRepository.getExpenseDataQuery();
         GeneralStatistics generalStatistics = orderRepository.getGeneralStatistics();
+        generalStatistics.setHowManyUsers(userRepository.count());
+        generalStatistics.setHowManyItems(itemRepository.count());
         generalStatistics.setTotalExpenseValue(expenseDataQuery.getTotalExpensesValue());
         generalStatistics.setHowManyExpenses(expenseDataQuery.getHowManyExpenses());
         return generalStatistics;

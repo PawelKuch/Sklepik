@@ -21,30 +21,30 @@ public class ItemRepositoryTest {
     public void saveItem(){
         item = new Item();
         item.setName("testItem");
-        item.setItemId(UUID.randomUUID().toString());
+        item.setItemId("a");
         itemRepository.save(item);
     }
 
     @Test
     public void findByItemIdTest(){
-        Item savedItem = itemRepository.findByItemId(item.getItemId());
+        Item savedItem = itemRepository.findByItemId("a");
         assertNotNull(savedItem);
-        assertEquals(item.getItemId(), savedItem.getItemId());
-        assertEquals(item.getName(), savedItem.getName());
+        assertEquals("a", savedItem.getItemId());
+        assertEquals("testItem", savedItem.getName());
     }
 
     @Test
     public void existsByNameTest(){
-        boolean doesExist = itemRepository.existsByName(item.getName());
+        boolean doesExist = itemRepository.existsByName("testItem");
         assertTrue(doesExist);
     }
 
     @Test
     public void findByNameTest(){
-        Item savedItem = itemRepository.findByName(item.getName());
+        Item savedItem = itemRepository.findByName("testItem");
         assertNotNull(savedItem);
-        assertEquals(item.getName(), savedItem.getName());
-        assertEquals(item.getItemId(), savedItem.getItemId());
+        assertEquals("testItem", savedItem.getName());
+        assertEquals("a", savedItem.getItemId());
     }
 
 

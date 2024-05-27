@@ -11,13 +11,11 @@ public class GeneralStatistics {
     private Long howManyExpenses;
 
     public GeneralStatistics(Double totalPurchaseValue, Double totalIncome,
-                             Double totalRevenue, Long howManyOrders, Long howManyUsers, Long howManyItems) {
+                             Double totalRevenue, Long howManyOrders) {
         this.totalPurchaseValue = totalPurchaseValue;
         this.totalIncome = totalIncome;
         this.totalRevenue = totalRevenue;
         this.howManyOrders = howManyOrders;
-        this.howManyUsers = howManyUsers;
-        this.howManyItems = howManyItems;
     }
 
     public void setTotalPurchaseValue(Double totalPurchaseValue) {
