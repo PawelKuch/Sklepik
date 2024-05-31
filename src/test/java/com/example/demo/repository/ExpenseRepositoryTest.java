@@ -114,7 +114,7 @@ public class ExpenseRepositoryTest {
     }
     @AfterEach
     public void deleteExpense(){
-        expenseRepository.delete(expense);
-        userRepository.delete(user);
+        expenseRepository.deleteAll();
+        userRepository.deleteAll();
     }
 }

@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
+import com.example.demo.service.StatisticsService;
 import com.example.demo.statistics.GeneralStatistics;
 import com.example.demo.statistics.UserOrdersStatistics;
 import org.junit.jupiter.api.AfterEach;
@@ -35,7 +36,6 @@ public class OrderRepositoryTest {
     User testUser3;
     Item testItem;
     Item testItem2;
-
     @BeforeEach
     public void saveOrder(){
         testUser = new User();
@@ -123,6 +123,8 @@ public class OrderRepositoryTest {
     @Test
     public void getGeneralStatisticsTest(){
         GeneralStatistics generalStatistics = orderRepository.getGeneralStatistics();
+        generalStatistics.setHowManyItems(itemRepository.count());
+        generalStatistics.setHowManyUsers(userRepository.count());
         assertNotNull(generalStatistics);
         assertEquals(29.0, generalStatistics.getTotalPurchaseValue());
         assertEquals(36.0, generalStatistics.getTotalRevenue());
@@ -134,12 +136,9 @@ public class OrderRepositoryTest {
 
     @AfterEach
     public void deleteOrder(){
-        orderRepository.delete(testOrder);
-        itemRepository.delete(testItem);
-        itemRepository.delete(testItem2);
-        userRepository.delete(testUser);
-        userRepository.delete(testUser2);
-        userRepository.delete(testUser3);
+        orderRepository.deleteAll();
+        itemRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
 }
