@@ -3,7 +3,6 @@ package com.example.demo.repository;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
-import com.example.demo.service.StatisticsService;
 import com.example.demo.statistics.GeneralStatistics;
 import com.example.demo.statistics.UserOrdersStatistics;
 import org.junit.jupiter.api.AfterEach;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -123,15 +121,13 @@ public class OrderRepositoryTest {
     @Test
     public void getGeneralStatisticsTest(){
         GeneralStatistics generalStatistics = orderRepository.getGeneralStatistics();
-        generalStatistics.setHowManyItems(itemRepository.count());
-        generalStatistics.setHowManyUsers(userRepository.count());
         assertNotNull(generalStatistics);
         assertEquals(29.0, generalStatistics.getTotalPurchaseValue());
         assertEquals(36.0, generalStatistics.getTotalRevenue());
         assertEquals(7.0, generalStatistics.getTotalIncome());
         assertEquals(6, generalStatistics.getHowManyOrders());
-        assertEquals(2, generalStatistics.getHowManyItems());
-        assertEquals(3, generalStatistics.getHowManyUsers());
+        assertNull(generalStatistics.getHowManyItems());
+        assertNull(generalStatistics.getHowManyUsers());
     }
 
     @AfterEach

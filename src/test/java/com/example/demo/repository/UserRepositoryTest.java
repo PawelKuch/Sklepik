@@ -46,7 +46,7 @@ public class UserRepositoryTest {
 
     @AfterEach
     public void deleteUserById(){
-        userRepository.delete(testUser);
+        userRepository.deleteAll();
     }
 
 }

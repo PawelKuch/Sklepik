@@ -50,6 +50,6 @@ public class ItemRepositoryTest {
 
     @AfterEach
     public void deleteItem(){
-        itemRepository.delete(item);
+        itemRepository.deleteAll();
     }
 }

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @DataJpaTest
 public class ExpenseRepositoryTest {
@@ -43,10 +43,10 @@ public class ExpenseRepositoryTest {
         user3.setUserId("c");
         userRepository.save(user3);
 
-        for (int i = 0; i < 5 ;i++){
+        for (int i = 1; i < 6 ;i++){
             expense = new Expense();
             expense.setUser(user);
-            expense.setExpenseId(UUID.randomUUID().toString());
+            expense.setExpenseId("E"+i);
             expense.setItem("testItem");
             expense.setExpensePrice(1.0);
             expense.setAmount(5);
@@ -57,7 +57,7 @@ public class ExpenseRepositoryTest {
 
         expense = new Expense();
         expense.setUser(user3);
-        expense.setExpenseId(UUID.randomUUID().toString());
+        expense.setExpenseId("E6");
         expense.setItem("testItem");
         expense.setExpensePrice(1.0);
         expense.setAmount(3);
