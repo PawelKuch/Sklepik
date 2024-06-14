@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.data.ItemData;
 import com.example.demo.data.OrderData;
 import com.example.demo.data.UserData;
 import com.example.demo.entity.Item;
@@ -205,15 +206,77 @@ public class DataBaseServiceTest {
 
         List<UserData> userDataList = Arrays.asList(userData1, userData2);
 
-        Mockito.verify(userRepository).findAll();
-        Mockito.verify(toDataService).getUsers(users);
-
         Mockito.when(userRepository.findAll()).thenReturn(users);
         Mockito.when(toDataService.getUsers(users)).thenReturn(userDataList);
 
-        List<UserData> listResult = dataBaseService.getUsers();
-        assertNotNull(listResult);
-        assertEquals("user1", listResult.get(0).getUserId());
-        assertEquals("user2", listResult.get(1).getUserId());
+        List<UserData> resultList = dataBaseService.getUsers();
+
+        Mockito.verify(userRepository).findAll();
+        Mockito.verify(toDataService).getUsers(users);
+
+        assertNotNull(resultList);
+        assertEquals("user1", resultList.get(0).getUserId());
+        assertEquals("user2", resultList.get(1).getUserId());
+    }
+
+    @Test
+    public void getOrdersTest(){
+        Order order1 = new Order();
+        order1.setOrderId("order1");
+
+        Order order2 = new Order();
+        order2.setOrderId("order2");
+
+        List<Order> orders = Arrays.asList(order1, order2);
+
+        OrderData orderData1 = new OrderData();
+        orderData1.setOrderId("order1");
+
+        OrderData orderData2 = new OrderData();
+        orderData2.setOrderId("order2");
+
+        List<OrderData> orderDataList = Arrays.asList(orderData1, orderData2);
+        Mockito.when(orderRepository.findAll()).thenReturn(orders);
+        Mockito.when(toDataService.getOrders(orders)).thenReturn(orderDataList);
+
+        List<OrderData> resultList = dataBaseService.getOrders();
+
+        Mockito.verify(orderRepository).findAll();
+        Mockito.verify(toDataService).getOrders(orders);
+
+        assertNotNull(resultList);
+        assertEquals("order1", resultList.get(0).getOrderId());
+        assertEquals("order2", resultList.get(1).getOrderId());
+    }
+
+    @Test
+    public void getItemsTest(){
+        Item item1 = new Item();
+        item1.setItemId("item1");
+
+        Item item2 = new Item();
+        item2.setItemId("item2");
+
+        List<Item> items = Arrays.asList(item1, item2);
+
+        ItemData itemData1 = new ItemData();
+        itemData1.setItemId("item1");
+
+        ItemData itemData2 = new ItemData();
+        itemData2.setItemId("item2");
+
+        List<ItemData> itemDataList = Arrays.asList(itemData1, itemData2);
+
+        Mockito.when(itemRepository.findAll()).thenReturn(items);
+        Mockito.when(toDataService.getItems(items)).thenReturn(itemDataList);
+
+        List<ItemData> resultList = dataBaseService.getItems();
+
+        Mockito.verify(itemRepository).findAll();
+        Mockito.verify(toDataService).getItems(items);
+
+        assertNotNull(resultList);
+        assertEquals("item1", resultList.get(0).getItemId());
+        assertEquals("item2", resultList.get(1).getItemId());
     }
 }
