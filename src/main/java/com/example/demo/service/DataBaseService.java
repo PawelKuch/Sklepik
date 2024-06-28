@@ -42,7 +42,8 @@ public class DataBaseService {
 
     @Transactional
     public void removeUsers(List<String> userIDs){
-        userIDs.forEach(o -> userRepository.delete(userRepository.findByUserId(o)));
+        List<User> users = userRepository.getUserListById(userIDs);
+        users.forEach(userRepository::delete);
     }
     @Transactional
     public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isSettled){
@@ -84,10 +85,11 @@ public class DataBaseService {
         order.setSellPrice(newSellPrice);
     }
     @Transactional
-    public void settleTheOrder(String orderId){
+    public void settleTheOrder(String orderId) throws Exception{
        Order order = orderRepository.findByOrderId(orderId);
        if (order == null){
            LOG.info("Cannot find order with id {}", orderId);
+           throw new Exception("Order not found");
        }else {
            order.setSettled(true);
        }
@@ -103,18 +105,19 @@ public class DataBaseService {
     }
     @Transactional
     public void removeItems(List<String> itemIDs){
-        itemIDs.forEach(o -> itemRepository.delete(itemRepository.findByItemId(o)));
+        List<Item> items = itemRepository.getItemListById(itemIDs);
+        items.forEach(itemRepository::delete);
     }
 
     @Transactional
-    public OrderData getOrder(String orderId){
+    public OrderData getOrder(String orderId) throws Exception{
         Order order = orderRepository.findByOrderId(orderId);
         if(order == null){
             LOG.info("order is null and the orderId is {}", orderId);
+            throw new Exception("order not found");
         }else{
           return toDataService.convert(order);
         }
-        return null;
     }
 
     @Transactional

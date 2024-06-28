@@ -14,7 +14,6 @@ public class Item {
     private String itemId;
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Order> order;
-
     public void setName(String name) {
         this.name = name;
     }

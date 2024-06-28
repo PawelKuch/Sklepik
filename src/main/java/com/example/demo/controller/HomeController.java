@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.data.OrderData;
 import com.example.demo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,8 +55,12 @@ public class HomeController {
 
     @GetMapping("/home-page/{id}")
     public RedirectView settleTheOrders(@PathVariable String id){
-        dataBaseService.settleTheOrder(id);
-        return new RedirectView("/home-page");
+       try {
+           dataBaseService.settleTheOrder(id);
+           return new RedirectView("/home-page");
+       } catch (Exception e){
+           return new RedirectView("/orderNotFound");
+       }
     }
     @GetMapping("/expenses")
     public String getExpenses(Model model){
@@ -107,9 +112,12 @@ public class HomeController {
     public String updateOrder(@PathVariable String id, Model model){
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("items", dataBaseService.getItems());
-        model.addAttribute("originalOrder", dataBaseService.getOrder(id));
-
-        return "order";
+        try {
+            model.addAttribute("originalOrder", dataBaseService.getOrder(id));
+            return "order";
+        }catch (Exception e){
+            return "orderNotFound";
+        }
     }
 
     @PostMapping("/order-page/{id}")

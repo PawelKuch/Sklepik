@@ -11,14 +11,18 @@ import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.commons.logging.LoggerFactory;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@ExtendWith(MockitoExtension.class)
 public class DataBaseServiceTest {
     @InjectMocks DataBaseService dataBaseService;
     @Mock
@@ -29,10 +33,6 @@ public class DataBaseServiceTest {
     ItemRepository itemRepository;
     @Mock
     ToDataService toDataService;
-    @BeforeEach
-    public void setUp(){
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void addUserTest(){
@@ -120,8 +120,12 @@ public class DataBaseServiceTest {
         assertFalse(order1.isSettled());
 
         Mockito.when(orderRepository.findByOrderId("order1")).thenReturn(order1);
-        dataBaseService.settleTheOrder("order1");
-        assertTrue(order1.isSettled());
+        try {
+            dataBaseService.settleTheOrder("order1");
+            assertTrue(order1.isSettled());
+        } catch (Exception e){
+            fail("Exception was thrown");
+        }
     }
 
     @Test
@@ -155,12 +159,15 @@ public class DataBaseServiceTest {
         Mockito.when(orderRepository.findByOrderId("order1")).thenReturn(order1);
         Mockito.when(toDataService.convert(order1)).thenReturn(orderData);
 
-        OrderData orderDataResult = dataBaseService.getOrder("order1");
+        try {
+            OrderData orderDataResult = dataBaseService.getOrder("order1");
+            assertNotNull(orderDataResult);
+            assertEquals("order1", orderDataResult.getOrderId());
+        } catch (Exception e){
+            OrderData orderDataResult = null;
+        }
         Mockito.verify(orderRepository).findByOrderId("order1");
         Mockito.verify(toDataService).convert(order1);
-
-        assertNotNull(orderDataResult);
-        assertEquals("order1", orderDataResult.getOrderId());
     }
     @Test
     public void getUserByNameTest(){

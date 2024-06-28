@@ -33,4 +33,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "FROM Order o")
     GeneralStatistics getGeneralStatistics();
 
+
 }

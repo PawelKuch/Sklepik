@@ -20,8 +20,8 @@
 <body>
    <div id="container">
         <div id="error">
-            <h1> Brak użytkownika lub produktu o żądanym ID! </h1>
-            <a href="/shop"> Wróć do strony zamówienia </a>
+            <h1> Order Id was not found! </h1>
+            <a href="/shop"> Order data incorrect! </a>
         </div>
    </div>
 
