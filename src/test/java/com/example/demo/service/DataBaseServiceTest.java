@@ -16,6 +16,7 @@ import org.junit.platform.commons.logging.LoggerFactory;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -51,8 +52,9 @@ public class DataBaseServiceTest {
         User user2 = new User();
         user2.setUserId("2");
 
-        Mockito.when(userRepository.findByUserId("1")).thenReturn(user1);
-        Mockito.when(userRepository.findByUserId("2")).thenReturn(user2);
+        List<User> users = Arrays.asList(user1, user2);
+        Mockito.when(userRepository.getUserListById(userIds)).thenReturn(users);
+
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 
@@ -137,8 +139,9 @@ public class DataBaseServiceTest {
         Item item2 = new Item();
         item2.setItemId("item2");
 
-        Mockito.when(itemRepository.findByItemId("item1")).thenReturn(item1);
-        Mockito.when(itemRepository.findByItemId("item2")).thenReturn(item2);
+        List<Item> items = Arrays.asList(item1, item2);
+        Mockito.when(itemRepository.getItemListById(itemsIds)).thenReturn(items);
+
 
         ArgumentCaptor<Item> itemCaptor = ArgumentCaptor.forClass(Item.class);
         dataBaseService.removeItems(itemsIds);
@@ -159,6 +162,7 @@ public class DataBaseServiceTest {
         Mockito.when(orderRepository.findByOrderId("order1")).thenReturn(order1);
         Mockito.when(toDataService.convert(order1)).thenReturn(orderData);
 
+
         try {
             OrderData orderDataResult = dataBaseService.getOrder("order1");
             assertNotNull(orderDataResult);
@@ -168,6 +172,16 @@ public class DataBaseServiceTest {
         }
         Mockito.verify(orderRepository).findByOrderId("order1");
         Mockito.verify(toDataService).convert(order1);
+
+        Mockito.when(orderRepository.findByOrderId("order2")).thenReturn(null);
+
+        try {
+            OrderData orderDataResult = dataBaseService.getOrder("order2");
+        } catch (Exception e){
+            assertNotNull(e);
+        }
+
+        Mockito.verify(orderRepository).findByOrderId("order2");
     }
     @Test
     public void getUserByNameTest(){
