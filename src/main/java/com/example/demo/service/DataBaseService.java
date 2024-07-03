@@ -6,6 +6,7 @@ import com.example.demo.data.UserData;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
+import com.example.demo.exception.OrderNotFoundException;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
@@ -85,11 +86,11 @@ public class DataBaseService {
         order.setSellPrice(newSellPrice);
     }
     @Transactional
-    public void settleTheOrder(String orderId) throws Exception{
+    public void settleTheOrder(String orderId) throws OrderNotFoundException{
        Order order = orderRepository.findByOrderId(orderId);
        if (order == null){
            LOG.info("Cannot find order with id {}", orderId);
-           throw new Exception("Order not found");
+           throw new OrderNotFoundException("order not found");
        }else {
            order.setSettled(true);
        }
@@ -110,11 +111,11 @@ public class DataBaseService {
     }
 
     @Transactional
-    public OrderData getOrder(String orderId) throws Exception{
+    public OrderData getOrder(String orderId) throws OrderNotFoundException{
         Order order = orderRepository.findByOrderId(orderId);
         if(order == null){
             LOG.info("order is null and the orderId is {}", orderId);
-            throw new Exception("order not found");
+            throw new OrderNotFoundException("order not found");
         }else{
           return toDataService.convert(order);
         }

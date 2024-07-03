@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.data.OrderData;
+import com.example.demo.exception.OrderNotFoundException;
 import com.example.demo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +59,7 @@ public class HomeController {
        try {
            dataBaseService.settleTheOrder(id);
            return new RedirectView("/home-page");
-       } catch (Exception e){
+       } catch (OrderNotFoundException e){
            return new RedirectView("/orderNotFound");
        }
     }
@@ -115,7 +116,7 @@ public class HomeController {
         try {
             model.addAttribute("originalOrder", dataBaseService.getOrder(id));
             return "order";
-        }catch (Exception e){
+        }catch (OrderNotFoundException e){
             return "orderNotFound";
         }
     }

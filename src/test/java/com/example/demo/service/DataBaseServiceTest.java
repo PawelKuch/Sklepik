@@ -9,6 +9,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -118,12 +119,18 @@ public class DataBaseServiceTest {
         assertFalse(order1.isSettled());
 
         Mockito.when(orderRepository.findByOrderId("order1")).thenReturn(order1);
-        try {
-            dataBaseService.settleTheOrder("order1");
-            assertTrue(order1.isSettled());
-        } catch (Exception e){
-            fail("Exception was thrown");
-        }
+        Assertions.assertDoesNotThrow(()-> dataBaseService.settleTheOrder("order1"));
+        assertTrue(order1.isSettled());
+        Mockito.verify(orderRepository).findByOrderId("order1");
+    }
+    @Test
+    public void settleTheMissingOrderTest(){
+        Mockito.when(orderRepository.findByOrderId("order")).thenReturn(null);
+        Exception ex = Assertions.assertThrows(Exception.class, () -> {
+           dataBaseService.settleTheOrder("order");
+            Mockito.verify(orderRepository.findByOrderId("order"));
+        });
+        assertEquals("order not found", ex.getMessage());
     }
 
     @Test
@@ -158,26 +165,26 @@ public class DataBaseServiceTest {
         Mockito.when(orderRepository.findByOrderId("order1")).thenReturn(order1);
         Mockito.when(toDataService.convert(order1)).thenReturn(orderData);
 
-
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             OrderData orderDataResult = dataBaseService.getOrder("order1");
             assertNotNull(orderDataResult);
             assertEquals("order1", orderDataResult.getOrderId());
-        } catch (Exception e){
-            OrderData orderDataResult = null;
-        }
-        Mockito.verify(orderRepository).findByOrderId("order1");
-        Mockito.verify(toDataService).convert(order1);
+            Mockito.verify(orderRepository).findByOrderId("order1");
+            Mockito.verify(toDataService).convert(order1);
+        });
+    }
 
-        Mockito.when(orderRepository.findByOrderId("order2")).thenReturn(null);
+    @Test
+    public void getMissingOrderTest(){
+        Mockito.when(orderRepository.findByOrderId("order")).thenReturn(null);
 
-        try {
-            OrderData orderDataResult = dataBaseService.getOrder("order2");
-        } catch (Exception e){
-            assertNotNull(e);
-        }
-
-        Mockito.verify(orderRepository).findByOrderId("order2");
+        Exception ex = Assertions.assertThrows(Exception.class, () -> {
+            OrderData orderDataResult = dataBaseService.getOrder("order");
+            Mockito.verify(orderRepository).findByOrderId("order");
+            assertNull(orderDataResult);
+        });
+        assertNotNull(ex);
+        assertEquals("order not found", ex.getMessage());
     }
     @Test
     public void getUserByNameTest(){
