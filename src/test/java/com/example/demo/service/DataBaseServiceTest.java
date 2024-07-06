@@ -6,6 +6,9 @@ import com.example.demo.data.UserData;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
+import com.example.demo.exception.ItemNotFoundException;
+import com.example.demo.exception.OrderNotFoundException;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
@@ -16,8 +19,6 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -73,9 +74,9 @@ public class DataBaseServiceTest {
         Mockito.when(userRepository.findByUserId("user1")).thenReturn(user);
         Mockito.when(itemRepository.findByItemId("item1")).thenReturn(item);
 
-
         ArgumentCaptor<Order> orderCaptor = ArgumentCaptor.forClass(Order.class);
-        dataBaseService.addOrder("user1", "item1", 1, 1.0, 2.0, false );
+
+        Assertions.assertDoesNotThrow( () -> dataBaseService.addOrder("user1", "item1", 1, 1.0, 2.0, false ));
 
         Mockito.verify(orderRepository).save(orderCaptor.capture());
         Order capturedOrder = orderCaptor.getValue();
@@ -86,6 +87,68 @@ public class DataBaseServiceTest {
         assertEquals(2.0, capturedOrder.getSellPrice());
         assertFalse(capturedOrder.isSettled());
         assertNotNull(capturedOrder.getOrderId());
+    }
+
+    @Test
+    public void addOrderMissingUserTest(){
+        Mockito.when(userRepository.findByUserId("user")).thenReturn(null);
+
+        Exception userNotFoundException = Assertions.assertThrows(UserNotFoundException.class, () ->
+                dataBaseService.addOrder("user", "item1", 1, 1.0, 2.0, false ));
+        Mockito.verify(userRepository).findByUserId("user");
+
+        List<Order> orders = orderRepository.findAll();
+        assertTrue(orders.isEmpty());
+        assertEquals("user not found", userNotFoundException.getMessage());
+    }
+
+    @Test
+    public void addOrderMissingItemTest(){
+        User user = new User();
+        user.setUserId("user");
+
+        Mockito.when(userRepository.findByUserId("user")).thenReturn(user);
+        Mockito.when(itemRepository.findByItemId("item")).thenReturn(null);
+
+
+        Exception itemNotFoundException = Assertions.assertThrows(ItemNotFoundException.class, () ->
+            dataBaseService.addOrder("user", "item", 1, 0.2, 0.4, false));
+        Mockito.verify(userRepository).findByUserId("user");
+        Mockito.verify(itemRepository).findByItemId("item");
+
+        List<Order> orders = orderRepository.findAll();
+        assertTrue(orders.isEmpty());
+        assertEquals("item not found",itemNotFoundException.getMessage());
+    }
+
+    @Test
+    public void addOrderMissingUserAndItemTest(){
+        Mockito.when(userRepository.findByUserId("user")).thenReturn(null);
+        Mockito.when(itemRepository.findByItemId("item")).thenReturn(null);
+
+        Exception userNotFoundException = Assertions.assertThrows(UserNotFoundException.class, () ->
+                dataBaseService.addOrder("user", "item", 1, 0.2, 0.4, false));
+
+        List<Order> orders = orderRepository.findAll();
+
+        assertTrue(orders.isEmpty());
+        assertEquals("user not found", userNotFoundException.getMessage());
+
+        User user1 = new User();
+        user1.setUserId("user1");
+
+        Mockito.when(userRepository.findByUserId("user1")).thenReturn(user1);
+
+        Exception itemNotFoundException = Assertions.assertThrows(ItemNotFoundException.class, () ->
+                dataBaseService.addOrder("user1", "item", 1, 0.2, 0.4, false));
+
+        orders = orderRepository.findAll();
+        assertTrue(orders.isEmpty());
+        assertEquals("item not found", itemNotFoundException.getMessage());
+
+        Mockito.verify(userRepository).findByUserId("user");
+        Mockito.verify(userRepository).findByUserId("user1");
+        Mockito.verify(itemRepository).findByItemId("item");
     }
 
     @Test
@@ -103,13 +166,23 @@ public class DataBaseServiceTest {
         Mockito.when(itemRepository.findByItemId("item1")).thenReturn(item1);
         Mockito.when(orderRepository.findByOrderId("order1")).thenReturn(order1);
 
-        dataBaseService.updateOrder("order1", "user1", "item1", 1, 1.0, 2.0);
+        Assertions.assertDoesNotThrow( ()-> dataBaseService.updateOrder("order1", "user1", "item1", 1, 1.0, 2.0));
 
         assertEquals(user1, order1.getUser());
         assertEquals(item1, order1.getItem());
         assertEquals(1, order1.getAmount());
         assertEquals(1.0, order1.getPurchasePrice());
         assertEquals(2.0, order1.getSellPrice());
+    }
+    @Test
+    public void updateMissingOrderTest(){
+        Mockito.when(orderRepository.findByOrderId("order")).thenReturn(null);
+
+        Exception orderNotFoundException = Assertions.assertThrows(OrderNotFoundException.class, () ->
+                dataBaseService.updateOrder("order", "user1", "item1", 1, 1.0, 2.0));
+        Mockito.verify(orderRepository).findByOrderId("order");
+
+        assertEquals("order not found", orderNotFoundException.getMessage());
     }
 
     @Test
@@ -167,11 +240,11 @@ public class DataBaseServiceTest {
 
         Assertions.assertDoesNotThrow(() -> {
             OrderData orderDataResult = dataBaseService.getOrder("order1");
+            Mockito.verify(orderRepository).findByOrderId("order1");
             assertNotNull(orderDataResult);
             assertEquals("order1", orderDataResult.getOrderId());
-            Mockito.verify(orderRepository).findByOrderId("order1");
-            Mockito.verify(toDataService).convert(order1);
         });
+        Mockito.verify(toDataService).convert(order1);
     }
 
     @Test
@@ -192,10 +265,21 @@ public class DataBaseServiceTest {
         user1.setName("user1");
 
         Mockito.when(userRepository.findByName("user1")).thenReturn(user1);
-        User resultUser = dataBaseService.getUserByName("user1");
-        Mockito.verify(userRepository).findByName("user1");
-        assertNotNull(resultUser);
-        assertEquals("user1", resultUser.getName());
+        Assertions.assertDoesNotThrow( () -> {
+            User resultUser = dataBaseService.getUserByName("user1");
+            assertNotNull(resultUser);
+            assertEquals("user1", resultUser.getName())
+            ;
+        });
+    }
+
+    @Test
+    public void getUserByMissingNameTest(){
+        Mockito.when(userRepository.findByName("user")).thenReturn(null);
+        Exception userNotFoundException = Assertions.assertThrows(UserNotFoundException.class, ()->
+                dataBaseService.getUserByName("user"));
+        Mockito.verify(userRepository).findByName("user");
+        assertEquals("user not found", userNotFoundException.getMessage());
     }
 
     @Test
@@ -204,11 +288,22 @@ public class DataBaseServiceTest {
         item1.setName("item1");
 
         Mockito.when(itemRepository.findByName("item1")).thenReturn(item1);
-        Item itemResult = dataBaseService.getItemByName("item1");
-
+        Assertions.assertDoesNotThrow( () -> {
+            Item itemResult = dataBaseService.getItemByName("item1");
+            assertNotNull(itemResult);
+            assertEquals("item1", itemResult.getName());
+        });
         Mockito.verify(itemRepository).findByName("item1");
-        assertNotNull(itemResult);
-        assertEquals("item1", itemResult.getName());
+    }
+
+    @Test
+    public void getItemByMissingName(){
+        Mockito.when(itemRepository.findByName("item")).thenReturn(null);
+
+        Exception ItemNotFoundException = Assertions.assertThrows(com.example.demo.exception.ItemNotFoundException.class, () ->
+                dataBaseService.getItemByName("item"));
+        Mockito.verify(itemRepository).findByName("item");
+        assertEquals("item not found", ItemNotFoundException.getMessage());
     }
 
     @Test

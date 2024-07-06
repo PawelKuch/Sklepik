@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.data.OrderFromCSV;
+import com.example.demo.exception.ItemNotFoundException;
+import com.example.demo.exception.UserNotFoundException;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -76,9 +78,13 @@ public class FileHandlerService {
     }
 
     public void addOrderToDataBase(OrderFromCSV orderFromCSV) {
-        String userId = dataBaseService.getUserByName(orderFromCSV.getUserName()).getUserId();
-        String itemId = dataBaseService.getItemByName(orderFromCSV.getItemName()).getItemId();
-        dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice(), orderFromCSV.isSettled());
+        try {
+            String itemId = dataBaseService.getItemByName(orderFromCSV.getItemName()).getItemId();
+            String userId = dataBaseService.getUserByName(orderFromCSV.getUserName()).getUserId();
+            dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice(), orderFromCSV.isSettled());
+        } catch (UserNotFoundException | ItemNotFoundException ex) {
+            throw new RuntimeException("failed adding order", ex);
+        }
     }
 
     @PostConstruct

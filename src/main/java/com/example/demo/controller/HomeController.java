@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.data.OrderData;
+import com.example.demo.exception.ItemNotFoundException;
 import com.example.demo.exception.OrderNotFoundException;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,8 +49,12 @@ public class HomeController {
                                   @RequestParam(value = "sellPrice", required = false) String sellPrice,
                                   @RequestParam(value = "selectedOrder", required = false) List<String> orderIDs){
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty()){
-            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false);
-            return new RedirectView("/home-page");
+            try {
+                dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false);
+                return new RedirectView("/home-page");
+            } catch (UserNotFoundException | ItemNotFoundException ex) {
+                throw new RuntimeException("failed adding order", ex);
+            }
         }
         return new RedirectView("/error");
     }
@@ -126,9 +131,13 @@ public class HomeController {
                                         @RequestParam("selectedItem")  String itemId,
                                         @RequestParam("amount") Integer amount, @RequestParam("purchasePrice") Double purchasePrice,
                                         @RequestParam("sellPrice") Double sellPrice){
-        dataBaseService.updateOrder(id, userId, itemId, amount, purchasePrice, sellPrice);
+        try {
+            dataBaseService.updateOrder(id, userId, itemId, amount, purchasePrice, sellPrice);
+            return new RedirectView("/home-page");
+        } catch (OrderNotFoundException ex) {
+            return new RedirectView("orderNotFound");
+        }
 
-        return new RedirectView("/home-page");
     }
 
     @GetMapping("/products")

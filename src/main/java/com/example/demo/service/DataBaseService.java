@@ -6,7 +6,9 @@ import com.example.demo.data.UserData;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
+import com.example.demo.exception.ItemNotFoundException;
 import com.example.demo.exception.OrderNotFoundException;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
@@ -47,11 +49,12 @@ public class DataBaseService {
         users.forEach(userRepository::delete);
     }
     @Transactional
-    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isSettled){
+    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isSettled)
+    throws UserNotFoundException, ItemNotFoundException {
         User user = userRepository.findByUserId(userId);
-        if (user == null) throw new RuntimeException();
+        if (user == null) throw new UserNotFoundException("user not found");
         Item item = itemRepository.findByItemId(itemId);
-        if (item == null) throw new RuntimeException();
+        if (item == null) throw new ItemNotFoundException("item not found");
 
         Order order = new Order();
         order.setUser(user);
@@ -74,11 +77,12 @@ public class DataBaseService {
     }
 
     @Transactional
-    public void updateOrder(String originalOrderId, String newUserId, String itemId, Integer amount, Double newPurchasePrice, Double newSellPrice){
+    public void updateOrder(String originalOrderId, String newUserId, String itemId, Integer amount, Double newPurchasePrice, Double newSellPrice)
+    throws OrderNotFoundException{
         User user = userRepository.findByUserId(newUserId);
         Item item = itemRepository.findByItemId(itemId);
         Order order = orderRepository.findByOrderId(originalOrderId);
-
+        if (order == null) throw new OrderNotFoundException("order not found");
         order.setUser(user);
         order.setItem(item);
         order.setAmount(amount);
@@ -122,12 +126,16 @@ public class DataBaseService {
     }
 
     @Transactional
-    public User getUserByName(String userName){
-        return userRepository.findByName(userName);
+    public User getUserByName(String userName) throws UserNotFoundException {
+        User user = userRepository.findByName(userName);
+        if(user == null) throw new UserNotFoundException("user not found");
+        return user;
     }
     @Transactional
-    public Item getItemByName(String itemName){
-        return itemRepository.findByName(itemName);
+    public Item getItemByName(String itemName) throws ItemNotFoundException{
+        Item item = itemRepository.findByName(itemName);
+        if (item == null) throw new ItemNotFoundException("item not found");
+        return item;
     }
     @Transactional
     public List<UserData> getUsers(){
