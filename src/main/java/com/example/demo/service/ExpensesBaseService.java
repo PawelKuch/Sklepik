@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.data.ExpenseData;
 import com.example.demo.entity.Expense;
 import com.example.demo.entity.User;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.ExpenseRepository;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.UserRepository;
@@ -27,9 +28,9 @@ public class ExpensesBaseService {
         this.itemRepository = itemRepository;
     }
     @Transactional
-    public void addExpense(String userId, String item, int amount, double purchasePrice){
+    public void addExpense (String userId, String item, int amount, double purchasePrice) throws UserNotFoundException{
         User user = userRepository.findByUserId(userId);
-        if (user == null) throw new RuntimeException();
+        if (user == null) throw new UserNotFoundException("user not found");
 
         Expense expense = new Expense();
         expense.setUser(user);
