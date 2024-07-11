@@ -19,6 +19,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -238,12 +239,11 @@ public class DataBaseServiceTest {
         Mockito.when(orderRepository.findByOrderId("order1")).thenReturn(order1);
         Mockito.when(toDataService.convert(order1)).thenReturn(orderData);
 
-        Assertions.assertDoesNotThrow(() -> {
-            OrderData orderDataResult = dataBaseService.getOrder("order1");
-            Mockito.verify(orderRepository).findByOrderId("order1");
-            assertNotNull(orderDataResult);
-            assertEquals("order1", orderDataResult.getOrderId());
-        });
+        OrderData orderDataResult = Assertions.assertDoesNotThrow(() ->
+             dataBaseService.getOrder("order1"));
+        Mockito.verify(orderRepository).findByOrderId("order1");
+        assertNotNull(orderDataResult);
+        assertEquals("order1", orderDataResult.getOrderId());
         Mockito.verify(toDataService).convert(order1);
     }
 
@@ -265,12 +265,11 @@ public class DataBaseServiceTest {
         user1.setName("user1");
 
         Mockito.when(userRepository.findByName("user1")).thenReturn(user1);
-        Assertions.assertDoesNotThrow( () -> {
-            User resultUser = dataBaseService.getUserByName("user1");
-            assertNotNull(resultUser);
-            assertEquals("user1", resultUser.getName())
-            ;
-        });
+        User userResult = Assertions.assertDoesNotThrow( () ->
+            dataBaseService.getUserByName("user1"));
+        Mockito.verify(userRepository).findByName("user1");
+        assertNotNull(userResult);
+        assertEquals("user1", userResult.getName());
     }
 
     @Test
@@ -288,11 +287,10 @@ public class DataBaseServiceTest {
         item1.setName("item1");
 
         Mockito.when(itemRepository.findByName("item1")).thenReturn(item1);
-        Assertions.assertDoesNotThrow( () -> {
-            Item itemResult = dataBaseService.getItemByName("item1");
-            assertNotNull(itemResult);
-            assertEquals("item1", itemResult.getName());
-        });
+        Item itemResult = Assertions.assertDoesNotThrow(() ->
+                dataBaseService.getItemByName("item1"));
+        assertNotNull(itemResult);
+        assertEquals("item1", itemResult.getName());
         Mockito.verify(itemRepository).findByName("item1");
     }
 

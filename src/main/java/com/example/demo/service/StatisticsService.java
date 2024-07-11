@@ -21,9 +21,8 @@ public class StatisticsService {
     ExpenseRepository expenseRepository;
     ItemRepository itemRepository;
     UserRepository userRepository;
-    public StatisticsService(DataBaseService dataBaseService, OrderRepository orderRepository, ExpenseRepository expenseRepository,
+    public StatisticsService(OrderRepository orderRepository, ExpenseRepository expenseRepository,
                             ItemRepository itemRepository,UserRepository userRepository ){
-        this.dataBaseService = dataBaseService;
         this.orderRepository = orderRepository;
         this.expenseRepository = expenseRepository;
         this.itemRepository = itemRepository;

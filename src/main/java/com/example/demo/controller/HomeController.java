@@ -83,7 +83,11 @@ public class HomeController {
                                     @RequestParam("amount") String amount,
                                     @RequestParam("purchasePrice") String purchasePrice){
         if(!userId.isEmpty() && !item.isEmpty() && !amount.isEmpty() && !purchasePrice.isEmpty()){
-            expensesBaseService.addExpense(userId, item, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
+            try {
+                expensesBaseService.addExpense(userId, item, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
+            } catch (UserNotFoundException ex){
+                return new RedirectView("/orderNotFound");
+            }
         }
         return new RedirectView("/expenses");
     }
