@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.data.OrderData;
+import com.example.demo.data.UserData;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
@@ -29,10 +30,14 @@ public class ToDataServiceTest {
     @Mock
     ItemRepository itemRepository;
 
+    @Mock
+    Order order1;
+    @Mock
+    User user1;
+
     @Test
     public void getOrdersTest(){
         //String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isSettled
-        User user1 = new User();
         user1.setUserId("user1");
 
         User user2 = new User();
@@ -41,11 +46,18 @@ public class ToDataServiceTest {
         Item item1 = new Item();
         item1.setItemId("item1");
 
-        Order order1 = new Order();
+
         order1.setOrderId("order1");
         order1.setUser(user1);
         order1.setItem(item1);
-
+        order1.setAmount(100);
+        order1.setPurchasePrice(50);
+        order1.setTotalPurchaseValue(5000);
+        order1.setSellPrice(60);
+        order1.setRevenue(6000);
+        order1.setIncome(1000);
+        order1.setOrderDateTime(LocalDateTime.of(2023, 8, 13, 12, 0));
+        order1.setSettled(false);
 
         Order order2 = new Order();
         order2.setOrderId("order2");
@@ -58,9 +70,17 @@ public class ToDataServiceTest {
         OrderData orderData2 = new OrderData();
         orderData2.setOrderId("order2");
 
+        UserData userData1 = new UserData();
+        userData1.setUserId("userData1");
+
+
         Mockito.when(userRepository.findByUserId("user1")).thenReturn(user1);
         Mockito.when(userRepository.findByUserId("user2")).thenReturn(user2);
         Mockito.when(itemRepository.findByItemId("item1")).thenReturn(item1);
+        Mockito.when(order1.getOrderDateTime()).thenReturn(LocalDateTime.of(2023, 8, 13, 12, 0));
+        Mockito.when(user1.getUserId()).thenReturn("user1");
+        Mockito.when(user1.getName()).thenReturn("user1");
+        Mockito.when(toDataService.convert(user1)).thenReturn(userData1);
         Mockito.when(toDataService.convert(order1)).thenReturn(orderData1);
         Mockito.when(toDataService.convert(order2)).thenReturn(orderData2);
 
