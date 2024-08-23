@@ -26,83 +26,70 @@ public class ToDataServiceTest {
     @InjectMocks
     ToDataService toDataService;
 
-    @Mock
-    Order order;
-    @Mock
-    User user;
-    @Mock
-    Expense expense;
-    @Mock
-    Item item;
-
     @Test
     public void convertUser(){
-        Mockito.when(user.getUserId()).thenReturn("user1");
-        Mockito.when(user.getName()).thenReturn("user1Name");
+        User user = new User();
+        user.setName("userName");
+        user.setUserId("user");
 
         UserData userDataResult = toDataService.convert(user);
 
         Assertions.assertNotNull(userDataResult);
-        Assertions.assertEquals("user1",userDataResult.getUserId());
-        Assertions.assertEquals("user1Name", userDataResult.getName());
+        Assertions.assertEquals("user",userDataResult.getUserId());
+        Assertions.assertEquals("userName", userDataResult.getName());
     }
 
     @Test
     public void convertOrderTest(){
-        User user1 = new User();
-        user1.setUserId("user1");
-        
-        Item item1 = new Item();
-        item1.setItemId("item1");
-        
-        Mockito.when(order.getOrderId()).thenReturn("order1");
-        Mockito.when(order.getAmount()).thenReturn(100);
-        Mockito.when(order.getPurchasePrice()).thenReturn(50.0);
-        Mockito.when(order.getTotalPurchaseValue()).thenReturn(5000.0);
-        Mockito.when(order.getSellPrice()).thenReturn(60.0);
-        Mockito.when(order.getRevenue()).thenReturn(6000.0);
-        Mockito.when(order.getIncome()).thenReturn(1000.0);
-        LocalDateTime localDateTime = LocalDateTime.of(2023, 8, 13, 12, 0);
-        Mockito.when(order.getUser()).thenReturn(user1);
-        Mockito.when(order.getItem()).thenReturn(item1);
-        Mockito.when(order.getOrderDateTime()).thenReturn(localDateTime);
-        Mockito.when(order.isSettled()).thenReturn(false);
+        Order order = getOrder();
 
         OrderData orderDataResult = toDataService.convert(order);
 
-        Assertions.assertEquals("order1", orderDataResult.getOrderId());
+        Assertions.assertEquals("order", orderDataResult.getOrderId());
         Assertions.assertEquals(100.0, orderDataResult.getAmount());
         Assertions.assertEquals(50.0, orderDataResult.getPurchasePrice());
         Assertions.assertEquals(60.0, orderDataResult.getSellPrice());
         Assertions.assertEquals(5000.0, orderDataResult.getTotalPurchaseValue());
         Assertions.assertEquals(6000.0, orderDataResult.getRevenue());
         Assertions.assertEquals(1000.0, orderDataResult.getIncome());
-        Date dateResult = Date.from(localDateTime.toInstant(ZoneOffset.UTC));
-        Assertions.assertEquals(dateResult, orderDataResult.getOrderDateTime());
         
         UserData userResult = orderDataResult.getUser();
         ItemData itemResult = orderDataResult.getItem();
         
         Assertions.assertNotNull(userResult);
         Assertions.assertNotNull(itemResult);
-        Assertions.assertEquals("user1", userResult.getUserId());
-        Assertions.assertEquals("item1", itemResult.getItemId());
-
+        Assertions.assertEquals("user", userResult.getUserId());
+        Assertions.assertEquals("item", itemResult.getItemId());
         Assertions.assertFalse(orderDataResult.getIsSettled());
+    }
+
+    private static Order getOrder() {
+        User user = new User();
+        user.setUserId("user");
+
+        Item item = new Item();
+        item.setItemId("item");
+
+        Order order = new Order();
+        order.setOrderId("order");
+        order.setAmount(100);
+        order.setPurchasePrice(50.0);
+        order.setTotalPurchaseValue(5000.0);
+        order.setSellPrice(60.0);
+        order.setRevenue(6000.0);
+        order.setIncome(1000.0);
+        order.setOrderDateTime(LocalDateTime.of(2023, 8, 13, 12, 0));
+        order.setUser(user);
+        order.setItem(item);
+        order.setSettled(false);
+        return order;
     }
 
     @Test
     public void convertExpenseTest(){
-        User user1 = new User();
-        user1.setUserId("user1");
-        Mockito.when(expense.getExpenseId()).thenReturn("expense");
-        Mockito.when(expense.getAmount()).thenReturn(10);
-        Mockito.when(expense.getExpensePrice()).thenReturn(20.0);
-        Mockito.when(expense.getTotalExpenseValue()).thenReturn(200.0);
-        Mockito.when(expense.getUser()).thenReturn(user1);
-        Mockito.when(expense.getItem()).thenReturn("item");
+        Expense expense = getExpense();
         LocalDateTime localDateTime = LocalDateTime.of(2023, 8, 13, 12, 0);
-        Mockito.when(expense.getExpenseDateTime()).thenReturn(localDateTime);
+        Date dateResult = Date.from(localDateTime.toInstant(ZoneOffset.UTC));
 
         ExpenseData expenseDataResult = toDataService.convert(expense);
 
@@ -110,19 +97,34 @@ public class ToDataServiceTest {
         Assertions.assertEquals(10, expenseDataResult.getAmount());
         Assertions.assertEquals(20.0, expenseDataResult.getExpensePrice());
         Assertions.assertEquals(200.0, expenseDataResult.getTotalExpenseValue());
-
-        Date dateResult = Date.from(localDateTime.toInstant(ZoneOffset.UTC));
         Assertions.assertEquals(dateResult, expenseDataResult.getExpenseDateTime());
 
         UserData userResult = expenseDataResult.getUser();
         Assertions.assertNotNull(userResult);
-        Assertions.assertEquals("user1", userResult.getUserId());
+        Assertions.assertEquals("user", userResult.getUserId());
+    }
+
+    private static Expense getExpense(){
+        User user = new User();
+        user.setUserId("user");
+
+        Expense expense = new Expense();
+        expense.setExpenseId("expense");
+        expense.setAmount(10);
+        expense.setExpensePrice(20.0);
+        expense.setTotalExpenseValue(200.0);
+        expense.setUser(user);
+        expense.setItem("item");
+        expense.setExpenseDateTime(LocalDateTime.of(2023, 8, 13, 12, 0));
+
+        return expense;
     }
 
     @Test
     public void convertItemTest(){
-       Mockito.when(item.getItemId()).thenReturn("itemId");
-       Mockito.when(item.getName()).thenReturn("itemName");
+       Item item = new Item();
+       item.setName("itemName");
+       item.setItemId("itemId");
 
        ItemData itemDataResult = toDataService.convert(item);
 
