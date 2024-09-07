@@ -30,7 +30,7 @@
                 <tbody>
                     <#list expenses as expense>
                         <tr>
-                            <td>${expense.expenseDateTime?datetime?string("dd-MM-yyyy HH:mm:ss")}</td>
+                            <td>${expense.expenseDateTime?datetime?string("dd-MM-yyyy")}</td>
                             <td>${expense.user.name}</td>
                             <td>${expense.item}</td>
                             <td>${expense.amount} PCS</td>
@@ -70,7 +70,7 @@
 
                                 <div class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="Item"> Item </span>
-                                    <input class="form-control mb-2 id="item" name="item" aria-describedby="addon-wrapping">
+                                    <input class="form-control mb-2" id="item" name="item" aria-describedby="addon-wrapping">
                                 </div>
 
                                 <div class="input-group align-items-center">
