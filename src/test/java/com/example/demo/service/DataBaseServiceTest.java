@@ -24,7 +24,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DataBaseServiceTest {
-    @InjectMocks DataBaseService dataBaseService;
+    @InjectMocks
+    DataBaseService dataBaseService;
+
     @Mock
     UserRepository userRepository;
     @Mock

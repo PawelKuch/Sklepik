@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/shop.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="/static/static/shopJS.js"></script>
+
 
 </head>
 
@@ -17,45 +20,45 @@
         <#if orders?has_content>
             <table class="table table-bordered mt-3">
                 <thead>
-                    <tr>
-                        <th colspan="11"> Orders </th>
+                    <tr class="border-table">
+                        <th class="border-table" colspan="11"> Orders </th>
                     </tr>
-                    <tr>
-                        <th>Order Date</th>
-                        <th>Username</th>
-                        <th>Product</th>
-                        <th>Amount</th>
-                        <th>Price</th>
-                        <th>Value</th>
-                        <th>Sell Price</th>
-                        <th>Revenue</th>
-                        <th>Income</th>
-                        <th>Payment</th>
-                        <th>Action</th>
+                    <tr class="border-table">
+                        <th class="border-table">Order Date</th>
+                        <th class="border-table">Username</th>
+                        <th class="border-table">Product</th>
+                        <th class="border-table table-info">Amount</th>
+                        <th class="border-table table-info">Price</th>
+                        <th class="border-table table-info">Value</th>
+                        <th class="border-table table-success">Sell Price</th>
+                        <th class="border-table table-success">Revenue</th>
+                        <th class="border-table table-success">Income</th>
+                        <th class="border-table">Payment</th>
+                        <th class="border-table">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <#list orders as order>
-                        <tr>
-                            <td>${order.orderDateTime?datetime?string("dd-MM-yyyy HH:mm:ss")}</td>
-                            <td>${order.user.name}</td>
-                            <td>${order.item.name}</td>
-                            <td>${order.amount} PCS</td>
-                            <td>${order.purchasePrice} PLN</td>
-                            <td>${order.totalPurchaseValue} PLN</td>
-                            <td>${order.sellPrice} PLN</td>
-                            <td>${order.revenue} PLN</td>
-                            <td>${order.income} PLN</td>
+                        <tr class="border-table">
+                            <td class="border-table">${order.orderDateTime?datetime?string("dd-MM-yyyy")}</td>
+                            <td class="border-table">${order.user.name}</td>
+                            <td class="border-table">${order.item.name}</td>
+                            <td class="border-table table-info">${order.amount} PCS</td>
+                            <td class="border-table table-info">${order.purchasePrice} PLN</td>
+                            <td class="border-table table-info">${order.totalPurchaseValue} PLN</td>
+                            <td class="border-table table-success">${order.sellPrice} PLN</td>
+                            <td class="border-table table-success">${order.revenue} PLN</td>
+                            <td class="border-table table-success">${order.income} PLN</td>
                             <#if order.isSettled!false>
-                                <td>settled <br></td>
+                                <td class="border-table">&#9989;<br></td>
                             <#else>
-                                <td>unsettled</td>
+                                <td class="border-table">&#10060;</td>
                             </#if>
                             <#if order.isSettled!false>
-                                <td> - </td>
+                                <td class="border-table"> - </td>
                             <#else>
-                                <td><a href="/home-page/${order.orderId}">settle</a> <br>
-                                    <a href="/order-page/${order.orderId}">Edit</a>
+                                <td class="border-table"><a href="/home-page/${order.orderId}"><i class="fa-solid fa-check"></i></a> <br>
+                                    <a href="/order-page/${order.orderId}"><i class="fa-solid fa-pen"></i></a>
                                 </td>
                             </#if>
                         </tr>
