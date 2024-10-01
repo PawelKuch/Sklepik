@@ -4,12 +4,13 @@
     <title>SHOP</title>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/shop.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="/static/static/shopJS.js"></script>
+    <script src="/static/js/shopJS.js"></script>
 
 
 </head>
@@ -50,15 +51,31 @@
                             <td class="border-table table-success">${order.revenue} PLN</td>
                             <td class="border-table table-success">${order.income} PLN</td>
                             <#if order.isSettled!false>
-                                <td class="border-table">&#9989;<br></td>
+                                <td class="border-table text-success">
+                                    <i class="bi bi-check"></i>
                             <#else>
-                                <td class="border-table">&#10060;</td>
+                                <td class="border-table text-danger">
+                                    <i class="bi bi-x-circle"></i>
+                                </td>
                             </#if>
                             <#if order.isSettled!false>
                                 <td class="border-table"> - </td>
                             <#else>
-                                <td class="border-table"><a href="/home-page/${order.orderId}"><i class="fa-solid fa-check"></i></a> <br>
-                                    <a href="/order-page/${order.orderId}"><i class="fa-solid fa-pen"></i></a>
+                                <td class="border-table">
+                                    <span class="d-flex flex-row align-items-center justify-content-center">
+                                    <a href="/home-page/${order.orderId}">
+                                        <span class="position-relative text-success">
+                                            <i class="bi bi-square bi-xl"></i>
+                                            <i class="bi bi-check position-absolute top-50 start-50 translate-middle"></i>
+                                        </span>
+                                    </a> <br>
+                                    <a href="/order-page/${order.orderId}">
+                                        <span class="position-relative text-primary">
+                                            <i class="bi bi-square"></i>
+                                            <i class="bi bi-pencil position-absolute top-50 start-50 translate-middle"></i>
+                                        </span>
+                                    </a>
+                                    </span>
                                 </td>
                             </#if>
                         </tr>

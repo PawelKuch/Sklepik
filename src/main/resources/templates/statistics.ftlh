@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/css/statistics.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="/static/static/shopJS.js"></script>
+    <script src="/static/js/shopJS.js"></script>
 
 </head>
 
