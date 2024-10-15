@@ -49,7 +49,7 @@ public class DataBaseService {
         users.forEach(userRepository::delete);
     }
     @Transactional
-    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isSettled)
+    public void addOrder(String userId, String itemId, int amount, double purchasePrice, double sellPrice, boolean isSettled, boolean isMultipack)
     throws UserNotFoundException, ItemNotFoundException {
         User user = userRepository.findByUserId(userId);
         if (user == null) throw new UserNotFoundException("user not found");
@@ -59,22 +59,30 @@ public class DataBaseService {
         Order order = new Order();
         order.setUser(user);
         order.setAmount(amount);
-        order.setPurchasePrice(purchasePrice);
-        order.setTotalPurchaseValue(amount*purchasePrice);
-        order.setSellPrice(sellPrice);
-        if (sellPrice == 0){
-            order.setRevenue(0);
-            order.setIncome(0);
-        } else {
-            order.setRevenue(amount*sellPrice);
-            order.setIncome(order.getRevenue() - order.getTotalPurchaseValue());
+        if(isMultipack){
+            order.setTotalPurchaseValue(purchasePrice);
+            order.setPurchasePrice(purchasePrice/amount);
+            if(sellPrice > 0){
+                order.setSellPrice(sellPrice/amount);
+                order.setRevenue(sellPrice);
+            }
+        }else {
+            order.setPurchasePrice(purchasePrice);
+            order.setTotalPurchaseValue(amount*purchasePrice);
+            if(sellPrice > 0){
+                order.setSellPrice(sellPrice);
+                order.setRevenue(amount*sellPrice);
+            }
         }
+        order.setIncome(order.getRevenue() - order.getTotalPurchaseValue());
         order.setSettled(isSettled);
+        order.setIsMultipack(isMultipack);
         order.setOrderId(UUID.randomUUID().toString());
         order.setItem(item);
         order.setOrderDateTime(LocalDateTime.now());
         orderRepository.save(order);
     }
+
 
     @Transactional
     public void updateOrder(String originalOrderId, String newUserId, String itemId, Integer amount, Double newPurchasePrice, Double newSellPrice)
@@ -88,6 +96,16 @@ public class DataBaseService {
         order.setAmount(amount);
         order.setPurchasePrice(newPurchasePrice);
         order.setSellPrice(newSellPrice);
+    }
+
+    @Transactional
+    public void deleteOrder(String orderId) throws OrderNotFoundException{
+        Order order = orderRepository.findByOrderId(orderId);
+        if(order == null){
+            LOG.info("order in dataBase service not found");
+            throw new OrderNotFoundException("order not found");
+        }
+        orderRepository.delete(order);
     }
     @Transactional
     public void settleTheOrder(String orderId) throws OrderNotFoundException{

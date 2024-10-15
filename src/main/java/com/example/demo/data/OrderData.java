@@ -16,6 +16,7 @@ public class OrderData {
     private double income;
     private Date orderDateTime;
     private boolean isSettled;
+    private boolean isMultipack;
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -103,4 +104,9 @@ public class OrderData {
     public boolean getIsSettled() {
         return isSettled;
     }
+
+    public void setIsMultipack(boolean isMultipack){
+        this.isMultipack = isMultipack;
+    }
+    public boolean getIsMultipack() {return isMultipack;}
 }

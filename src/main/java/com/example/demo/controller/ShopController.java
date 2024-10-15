@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.List;
 
 
 @Controller
@@ -31,7 +30,7 @@ public class ShopController {
         this.expensesBaseService = expensesBaseService;
         this.statisticsService = statisticsService;
     }
-    @GetMapping("/home-page")
+    @GetMapping({"/home-page", "/"})
     public String getShop(Model model){
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("products", dataBaseService.getItems());
@@ -46,10 +45,11 @@ public class ShopController {
                                   @RequestParam(value = "amount", required = false) String amount,
                                   @RequestParam(value = "purchasePrice", required = false) String purchasePrice,
                                   @RequestParam(value = "sellPrice", required = false) String sellPrice,
-                                  @RequestParam(value = "selectedOrder", required = false) List<String> orderIDs){
+                                  @RequestParam(value = "isMultipack", required = false) String isMultipack){
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty()){
             try {
-                dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false);
+                boolean isMultipackFlag = isMultipack != null;
+                dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false, isMultipackFlag);
                 return new RedirectView("/home-page");
             } catch (UserNotFoundException | ItemNotFoundException ex) {
                 throw new RuntimeException("failed adding order", ex);
@@ -89,8 +89,17 @@ public class ShopController {
             dataBaseService.updateOrder(id, userId, itemId, amount, purchasePrice, sellPrice);
             return new RedirectView("/home-page");
         } catch (OrderNotFoundException ex) {
-            return new RedirectView("orderNotFound");
+            return new RedirectView("/orderNotFound");
         }
+    }
 
+    @GetMapping("/delete-order/{id}")
+    public RedirectView deleteOrder(@PathVariable String id){
+        try {
+            dataBaseService.deleteOrder(id);
+            return new RedirectView("/home-page");
+        } catch (OrderNotFoundException e) {
+            return new RedirectView("/orderNotFound");
+        }
     }
 }

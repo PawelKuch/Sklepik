@@ -79,7 +79,7 @@ public class DataBaseServiceTest {
 
         ArgumentCaptor<Order> orderCaptor = ArgumentCaptor.forClass(Order.class);
 
-        Assertions.assertDoesNotThrow( () -> dataBaseService.addOrder("user1", "item1", 1, 1.0, 2.0, false ));
+        Assertions.assertDoesNotThrow( () -> dataBaseService.addOrder("user1", "item1", 1, 1.0, 2.0, false, false ));
 
         Mockito.verify(orderRepository).save(orderCaptor.capture());
         Order capturedOrder = orderCaptor.getValue();
@@ -97,7 +97,7 @@ public class DataBaseServiceTest {
         Mockito.when(userRepository.findByUserId("user")).thenReturn(null);
 
         Exception userNotFoundException = Assertions.assertThrows(UserNotFoundException.class, () ->
-                dataBaseService.addOrder("user", "item1", 1, 1.0, 2.0, false ));
+                dataBaseService.addOrder("user", "item1", 1, 1.0, 2.0, false,false ));
         Mockito.verify(userRepository).findByUserId("user");
 
         List<Order> orders = orderRepository.findAll();
@@ -115,7 +115,7 @@ public class DataBaseServiceTest {
 
 
         Exception itemNotFoundException = Assertions.assertThrows(ItemNotFoundException.class, () ->
-            dataBaseService.addOrder("user", "item", 1, 0.2, 0.4, false));
+            dataBaseService.addOrder("user", "item", 1, 0.2, 0.4, false, false));
         Mockito.verify(userRepository).findByUserId("user");
         Mockito.verify(itemRepository).findByItemId("item");
 
@@ -130,7 +130,7 @@ public class DataBaseServiceTest {
         Mockito.when(itemRepository.findByItemId("item")).thenReturn(null);
 
         Exception userNotFoundException = Assertions.assertThrows(UserNotFoundException.class, () ->
-                dataBaseService.addOrder("user", "item", 1, 0.2, 0.4, false));
+                dataBaseService.addOrder("user", "item", 1, 0.2, 0.4, false, false));
 
         List<Order> orders = orderRepository.findAll();
 
@@ -143,7 +143,7 @@ public class DataBaseServiceTest {
         Mockito.when(userRepository.findByUserId("user1")).thenReturn(user1);
 
         Exception itemNotFoundException = Assertions.assertThrows(ItemNotFoundException.class, () ->
-                dataBaseService.addOrder("user1", "item", 1, 0.2, 0.4, false));
+                dataBaseService.addOrder("user1", "item", 1, 0.2, 0.4, false, false));
 
         orders = orderRepository.findAll();
         assertTrue(orders.isEmpty());

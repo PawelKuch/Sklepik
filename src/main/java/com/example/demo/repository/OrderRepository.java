@@ -32,6 +32,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "COUNT(o)) " +
             "FROM Order o")
     GeneralStatistics getGeneralStatistics();
-
-
 }

@@ -29,6 +29,8 @@ public class Order {
     private LocalDateTime orderDateTime;
     @Column(name = "isSettled", nullable = false)
     private boolean isSettled;
+    @Column(name = "isMultipack", nullable = true)
+    private boolean isMultipack;
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
@@ -123,4 +125,9 @@ public class Order {
     public boolean isSettled() {
         return isSettled;
     }
+
+    public void setIsMultipack(boolean isMultipack) {
+        this.isMultipack = isMultipack;
+    }
+    public boolean getIsMultipack() {return isMultipack;}
 }

@@ -81,7 +81,7 @@ public class FileHandlerService {
         try {
             String itemId = dataBaseService.getItemByName(orderFromCSV.getItemName()).getItemId();
             String userId = dataBaseService.getUserByName(orderFromCSV.getUserName()).getUserId();
-            dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice(), orderFromCSV.isSettled());
+            dataBaseService.addOrder(userId, itemId, orderFromCSV.getAmount(), orderFromCSV.getPurchasePrice(), orderFromCSV.getSellPrice(), orderFromCSV.isSettled(), false);
         } catch (UserNotFoundException | ItemNotFoundException ex) {
             throw new RuntimeException("failed adding order", ex);
         }

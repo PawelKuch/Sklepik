@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/shop.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -22,12 +20,13 @@
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr class="border-table">
-                        <th class="border-table" colspan="11"> Orders </th>
+                        <th class="border-table" colspan="12"> Orders </th>
                     </tr>
                     <tr class="border-table">
                         <th class="border-table">Order Date</th>
                         <th class="border-table">Username</th>
                         <th class="border-table">Product</th>
+                        <th class="border-table">Multipack</th>
                         <th class="border-table table-info">Amount</th>
                         <th class="border-table table-info">Price</th>
                         <th class="border-table table-info">Value</th>
@@ -44,6 +43,7 @@
                             <td class="border-table">${order.orderDateTime?datetime?string("dd-MM-yyyy")}</td>
                             <td class="border-table">${order.user.name}</td>
                             <td class="border-table">${order.item.name}</td>
+                            <td class="border-table"><#if order.isMultipack!false>Yes<#else> No </#if></td>
                             <td class="border-table table-info">${order.amount} PCS</td>
                             <td class="border-table table-info">${order.purchasePrice} PLN</td>
                             <td class="border-table table-info">${order.totalPurchaseValue} PLN</td>
@@ -61,21 +61,18 @@
                             <#if order.isSettled!false>
                                 <td class="border-table"> - </td>
                             <#else>
-                                <td class="border-table">
-                                    <span class="d-flex flex-row align-items-center justify-content-center">
-                                    <a href="/home-page/${order.orderId}">
-                                        <span class="position-relative text-success">
-                                            <i class="bi bi-square bi-xl"></i>
-                                            <i class="bi bi-check position-absolute top-50 start-50 translate-middle"></i>
-                                        </span>
-                                    </a> <br>
-                                    <a href="/order-page/${order.orderId}">
-                                        <span class="position-relative text-primary">
-                                            <i class="bi bi-square"></i>
-                                            <i class="bi bi-pencil position-absolute top-50 start-50 translate-middle"></i>
-                                        </span>
-                                    </a>
-                                    </span>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="/home-page/${order.orderId}" class="btn btn-outline-primary">
+                                            <i class="bi bi-check"></i>
+                                        </a>
+                                        <a href="/order-page/${order.orderId}" class="btn btn-outline-success">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="/delete-order/${order.orderId}" class="btn btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </#if>
                         </tr>
@@ -118,7 +115,12 @@
                                     <label class="form-check-label" for="expenseFlag"> product as expense </label>
                                 </div>
 
-                                <div class="input-group align-items-center">
+                                <div class="form-control justify-content-start">
+                                    <input class="form-check-input" type="checkbox" value="true" name="isMultipack" id="isMultipack">
+                                    <label class="form-check-label" for="isMultipack">Multipack</label>
+                                </div>
+
+                                <div id="amount-div" class="input-group align-items-center">
                                     <span class="input-group-text mb-2" aria-label="Quantity"> Quantity </span>
                                     <input class="form-control mb-2" id="amount" type="number" name="amount" value="1" min="1" step="1" aria-describedby="addon-wrapping">
                                 </div>

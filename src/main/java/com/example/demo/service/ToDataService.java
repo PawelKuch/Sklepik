@@ -43,6 +43,7 @@ public class ToDataService {
         orderData.setItem(convert(order.getItem()));
         orderData.setOrderDateTime(Date.from(order.getOrderDateTime().toInstant(ZoneOffset.UTC)));
         orderData.setSettled(order.isSettled());
+        orderData.setIsMultipack(order.getIsMultipack());
         return orderData;
     }
     public ExpenseData convert(Expense expense){
