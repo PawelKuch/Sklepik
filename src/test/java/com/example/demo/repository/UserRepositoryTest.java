@@ -32,8 +32,19 @@ public class UserRepositoryTest {
     }
 
     @Test
+    public void findByUserIdNegativeTest(){
+        User savedUser = userRepository.findByUserId("0");
+        assertNull(savedUser);
+    }
+
+    @Test
     public void existsUserByName(){
         assertTrue(userRepository.existsByName("testName"));
+    }
+
+    @Test
+    public void existsUserByNameNegativeTest(){
+        assertFalse(userRepository.existsByName("0"));
     }
 
     @Test

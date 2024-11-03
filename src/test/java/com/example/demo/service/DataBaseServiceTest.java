@@ -74,6 +74,7 @@ public class DataBaseServiceTest {
         user.setUserId("user1");
         Item item = new Item();
         item.setItemId("item1");
+
         Mockito.when(userRepository.findByUserId("user1")).thenReturn(user);
         Mockito.when(itemRepository.findByItemId("item1")).thenReturn(item);
 

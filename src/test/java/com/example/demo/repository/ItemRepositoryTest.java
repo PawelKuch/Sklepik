@@ -34,9 +34,21 @@ public class ItemRepositoryTest {
     }
 
     @Test
+    public void findByItemIdNegativeTest(){
+        Item savedItem = itemRepository.findByItemId("b");
+        assertNull(savedItem);
+    }
+
+    @Test
     public void existsByNameTest(){
         boolean doesExist = itemRepository.existsByName("testItem");
         assertTrue(doesExist);
+    }
+
+    @Test
+    public void existsByNameNegativeTest(){
+        boolean doesExist = itemRepository.existsByName("b");
+        assertFalse(doesExist);
     }
 
     @Test
@@ -45,6 +57,12 @@ public class ItemRepositoryTest {
         assertNotNull(savedItem);
         assertEquals("testItem", savedItem.getName());
         assertEquals("a", savedItem.getItemId());
+    }
+
+    @Test
+    public void findByNameNegativeTest(){
+        Item savedItem = itemRepository.findByName("b");
+        assertNull(savedItem);
     }
 
 

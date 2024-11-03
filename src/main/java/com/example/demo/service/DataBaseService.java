@@ -63,8 +63,8 @@ public class DataBaseService {
             order.setTotalPurchaseValue(purchasePrice);
             order.setPurchasePrice(purchasePrice/amount);
             if(sellPrice > 0){
-                order.setSellPrice(sellPrice/amount);
-                order.setRevenue(sellPrice);
+                order.setSellPrice(sellPrice);
+                order.setRevenue(sellPrice*amount);
             }
         }else {
             order.setPurchasePrice(purchasePrice);
