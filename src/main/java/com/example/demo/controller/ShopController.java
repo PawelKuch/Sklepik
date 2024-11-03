@@ -45,15 +45,11 @@ public class ShopController {
                                   @RequestParam(value = "amount", required = false) String amount,
                                   @RequestParam(value = "purchasePrice", required = false) String purchasePrice,
                                   @RequestParam(value = "sellPrice", required = false) String sellPrice,
-                                  @RequestParam(value = "isMultipack", required = false) String isMultipack){
+                                  @RequestParam(value = "isMultipack", required = false) String isMultipack) throws UserNotFoundException, ItemNotFoundException{
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty()){
-            try {
                 boolean isMultipackFlag = isMultipack != null;
                 dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false, isMultipackFlag);
                 return new RedirectView("/home-page");
-            } catch (UserNotFoundException | ItemNotFoundException ex) {
-                throw new RuntimeException("failed adding order", ex);
-            }
         }
         return new RedirectView("/error");
     }
