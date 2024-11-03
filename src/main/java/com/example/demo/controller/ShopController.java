@@ -24,6 +24,7 @@ public class ShopController {
     public ShopController(DataBaseService dataBaseService, ToDataService toDataService,
                           FileHandlerService fileHandlerService, ExpensesBaseService expensesBaseService,
                           StatisticsService statisticsService){
+
         this.dataBaseService = dataBaseService;
         this.toDataService = toDataService;
         this.fileHandlerService = fileHandlerService;
@@ -47,55 +48,43 @@ public class ShopController {
                                   @RequestParam(value = "sellPrice", required = false) String sellPrice,
                                   @RequestParam(value = "isMultipack", required = false) String isMultipack) throws UserNotFoundException, ItemNotFoundException{
         if(!userId.isEmpty() && !itemId.isEmpty() && !purchasePrice.isEmpty() && !sellPrice.isEmpty()){
-                boolean isMultipackFlag = isMultipack != null;
-                dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false, isMultipackFlag);
-                return new RedirectView("/home-page");
+            boolean isMultipackFlag = isMultipack != null;
+            dataBaseService.addOrder(userId, itemId, Integer.parseInt(amount), Double.parseDouble(purchasePrice), Double.parseDouble(sellPrice), false, isMultipackFlag);
+            return new RedirectView("/home-page");
         }
         return new RedirectView("/error");
     }
 
     @GetMapping("/home-page/{id}")
-    public RedirectView settleTheOrders(@PathVariable String id){
-        try {
-            dataBaseService.settleTheOrder(id);
-            return new RedirectView("/home-page");
-        } catch (OrderNotFoundException e){
-            return new RedirectView("/orderNotFound");
-        }
+    public RedirectView settleTheOrders(@PathVariable String id) throws OrderNotFoundException{
+        dataBaseService.settleTheOrder(id);
+        return new RedirectView("/home-page");
     }
 
     @GetMapping("/order-page/{id}")
-    public String updateOrder(@PathVariable String id, Model model){
+    public String updateOrder(@PathVariable String id, Model model) throws OrderNotFoundException{
         model.addAttribute("users", dataBaseService.getUsers());
         model.addAttribute("items", dataBaseService.getItems());
-        try {
-            model.addAttribute("originalOrder", dataBaseService.getOrder(id));
-            return "order";
-        }catch (OrderNotFoundException e){
-            return "orderNotFound";
-        }
+        model.addAttribute("originalOrder", dataBaseService.getOrder(id));
+        return "order";
+
     }
 
     @PostMapping("/order-page/{id}")
     public RedirectView getUpdatedOrder(@PathVariable String id, @RequestParam("selectedUser") String userId,
                                         @RequestParam("selectedItem")  String itemId,
                                         @RequestParam("amount") Integer amount, @RequestParam("purchasePrice") Double purchasePrice,
-                                        @RequestParam("sellPrice") Double sellPrice){
-        try {
-            dataBaseService.updateOrder(id, userId, itemId, amount, purchasePrice, sellPrice);
-            return new RedirectView("/home-page");
-        } catch (OrderNotFoundException ex) {
-            return new RedirectView("/orderNotFound");
-        }
+                                        @RequestParam("sellPrice") Double sellPrice) throws OrderNotFoundException{
+
+        dataBaseService.updateOrder(id, userId, itemId, amount, purchasePrice, sellPrice);
+        return new RedirectView("/home-page");
+
     }
 
     @GetMapping("/delete-order/{id}")
-    public RedirectView deleteOrder(@PathVariable String id){
-        try {
-            dataBaseService.deleteOrder(id);
-            return new RedirectView("/home-page");
-        } catch (OrderNotFoundException e) {
-            return new RedirectView("/orderNotFound");
-        }
+    public RedirectView deleteOrder(@PathVariable String id) throws OrderNotFoundException{
+        dataBaseService.deleteOrder(id);
+        return new RedirectView("/home-page");
+
     }
 }

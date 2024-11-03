@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.OrderNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.DataBaseService;
 import com.example.demo.service.ExpensesBaseService;
@@ -33,13 +34,9 @@ public class ExpensesController {
     public RedirectView addExpenses(@RequestParam("selectedUser") String userId,
                                     @RequestParam("item") String item,
                                     @RequestParam("amount") String amount,
-                                    @RequestParam("purchasePrice") String purchasePrice){
+                                    @RequestParam("purchasePrice") String purchasePrice) throws UserNotFoundException {
         if(!userId.isEmpty() && !item.isEmpty() && !amount.isEmpty() && !purchasePrice.isEmpty()){
-            try {
-                expensesBaseService.addExpense(userId, item, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
-            } catch (UserNotFoundException ex){
-                return new RedirectView("/orderNotFound");
-            }
+            expensesBaseService.addExpense(userId, item, Integer.parseInt(amount), Double.parseDouble(purchasePrice));
         }
         return new RedirectView("/expenses");
     }
