@@ -19,4 +19,5 @@ public class UserData {
     public String getName() {
         return name;
     }
+
 }
