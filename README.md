@@ -20,7 +20,7 @@ Uruchamianie projektu
 
 Aplikacja uruchamiana z Java JDK 18+ - Maven
 IntelliJ IDEA
-Instrukcje: Sklonować repozytorium git clone https://github.com/PawelKuch/Eat-With-Me.git
+Instrukcje: Sklonować repozytorium git clone https://github.com/PawelKuch/Sklepik.git
 
 Następnie uruchomić projekt w IDE
 
